@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
+        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -11,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GoodGun"
         tools:targetApi="31">
+        <meta-data android:name="com.doinglab.foodlens.sdk.apptoken" android:value="@string/foodlens_app_token"/>
+        <meta-data android:name="com.doinglab.foodlens.sdk.companytoken" android:value="@string/foodlens_company_token"/>
+        <meta-data android:name="com.doinglab.foodlens.sdk.serveraddr" android:value="www.foodlens.com"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -21,5 +25,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>

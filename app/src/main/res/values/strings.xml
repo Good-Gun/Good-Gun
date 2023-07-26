@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">GoodGun</string>
+    <string name="foodlens_company_token">373314f48e12481b88820b45cb932c78</string>
+    <string name="foodlens_app_token">4684d6b85d5141d594c0b4ca6be28b96</string>
 </resources>
