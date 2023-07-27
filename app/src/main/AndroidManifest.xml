@@ -12,15 +12,26 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GoodGun"
         tools:targetApi="31">
-        <activity
-            android:name=".MainActivity"
+
+        <!--Splash Activity-->
+        <activity android:name=".SplashActivity"
+            android:theme="@style/SplashTheme"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <!--Splash Activity-->
+
+        <activity android:name=".MainActivity"
+            android:exported="true">
+        </activity>
+        <activity android:name=".LoginActivity"
+            android:exported="true">
+        </activity>
+
+
     </application>
 
 </manifest>
