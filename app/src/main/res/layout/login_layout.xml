@@ -35,7 +35,7 @@
         android:background="@drawable/button_round"
         android:elevation="4dp"
         android:ems="10"
-        android:inputType="textPassword"
+        android:inputType="text"
         android:singleLine="false" />
 
     <TextView
@@ -57,7 +57,7 @@
         android:background="@drawable/button_round"
         android:elevation="4dp"
         android:ems="10"
-        android:inputType="text"
+        android:inputType="textPassword"
         />
 
     <LinearLayout
@@ -97,12 +97,12 @@
         >
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/아직회원이"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="아직 회원이 아니신가요?"
             android:textColor="@color/colorOrange"
+            android:text="아직 회원이 아니신가요?"
             android:textStyle="bold"
             android:layout_marginRight="10dp"
             />
