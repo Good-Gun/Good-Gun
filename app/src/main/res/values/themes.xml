@@ -2,7 +2,9 @@
     <!-- Base application theme. -->
 
     <style name="Theme.GoodGun" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Primary brand color. -->
+
+
+    <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
@@ -13,5 +15,4 @@
         <!-- Status bar color. -->
 
     </style>
-
 </resources>
