@@ -23,25 +23,26 @@
             android:orientation="horizontal">
 
             <Spinner
-                android:id="@+id/spinner"
+                android:id="@+id/spinner1"
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:layout_weight="1"
-                android:layout_marginEnd="5dp"
+                android:layout_marginEnd="7dp"
                 android:textAlignment="center"
                 android:background="@drawable/box_radius_10dp"
                 android:backgroundTint="@color/white"
                 android:spinnerMode="dropdown"/>
 
-            <TextView
-                android:id="@+id/tv_graph_date"
+            <Spinner
+                android:id="@+id/spinner2"
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:layout_weight="1"
-                android:layout_marginStart="5dp"
+                android:layout_marginStart="7dp"
                 android:textAlignment="center"
                 android:background="@drawable/box_radius_10dp"
-                android:backgroundTint="@color/white"/>
+                android:backgroundTint="@color/white"
+                android:spinnerMode="dropdown"/>
 
         </LinearLayout>
 
@@ -52,6 +53,8 @@
             android:backgroundTint="@color/white"/>
 
     </LinearLayout>
+
+
 
 
 </LinearLayout>

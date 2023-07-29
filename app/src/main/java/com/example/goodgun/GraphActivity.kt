@@ -22,10 +22,9 @@ class GraphActivity : AppCompatActivity() {
         val items = resources.getStringArray(R.array.my_array)
         binding.apply {
             val myAdapter = ArrayAdapter(this@GraphActivity, android.R.layout.simple_spinner_dropdown_item, items)
-
-            spinner.adapter = myAdapter
-
-            spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            spinner1.adapter = myAdapter
+            spinner1.setSelection(0)
+            spinner1.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>,
                     view: View,
