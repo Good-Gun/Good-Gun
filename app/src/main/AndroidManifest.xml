@@ -16,6 +16,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GoodGun"
         tools:targetApi="31">
+        <activity
+            android:name=".GraphActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FoodActivity"
+            android:exported="false" />
 
         <!--Splash Activity-->
         <activity android:name=".SplashActivity"
