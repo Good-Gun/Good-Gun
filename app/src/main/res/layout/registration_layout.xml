@@ -61,7 +61,7 @@
         />
 
     <EditText
-        android:id="@+id/idInput"
+        android:id="@+id/nameInput"
         android:layout_width="match_parent"
         android:layout_height="49dp"
         android:layout_marginLeft="13dp"
@@ -125,7 +125,7 @@
         />
 
     <EditText
-        android:id="@+id/pwInput"
+        android:id="@+id/registrationPasswordInput"
         android:layout_width="match_parent"
         android:layout_height="49dp"
         android:layout_marginLeft="13dp"
