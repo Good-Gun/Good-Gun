@@ -70,14 +70,14 @@
         >
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/googleloginBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="구글 로그인 자리" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/loginButton"
+            android:id="@+id/loginBtn"
             android:layout_marginLeft="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -97,7 +97,7 @@
         >
 
         <TextView
-            android:id="@+id/아직회원이"
+            android:id="@+id/regiText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -108,7 +108,7 @@
             />
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/regiBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
