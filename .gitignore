@@ -1,3 +1,23 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
+*.iml
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+=======
+=======
+>>>>>>> e44ad905fcccb9691d8e0e791071cc075d07e532
 # Created by https://www.toptal.com/developers/gitignore/api/androidstudio,kotlin
 # Edit at https://www.toptal.com/developers/gitignore?templates=androidstudio,kotlin
 
@@ -153,4 +173,9 @@ fabric.properties
 
 !/gradle/wrapper/gradle-wrapper.jar
 
+<<<<<<< HEAD
 # End of https://www.toptal.com/developers/gitignore/api/androidstudio,kotlin
+>>>>>>> 1297a81dc3d8820d6b182b890da0e89ff27787f9
+=======
+# End of https://www.toptal.com/developers/gitignore/api/androidstudio,kotlin
+>>>>>>> e44ad905fcccb9691d8e0e791071cc075d07e532

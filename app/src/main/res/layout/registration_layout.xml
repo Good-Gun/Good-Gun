@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorWhite"
+
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="horizontal"
+
+        >
+
+        <ImageButton
+            android:id="@+id/backBtn"
+            android:layout_gravity="start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:srcCompat="@drawable/baseline_arrow_back_24" />
+
+        <TextView
+            android:id="@+id/registrationTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:text="회원가입" />
+
+        <ImageButton
+            android:id="@+id/addBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:layout_gravity="right"
+            android:visibility="invisible"
+            app:srcCompat="@drawable/baseline_arrow_back_24" />
+
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/nametextview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="49dp"
+        android:layout_marginLeft="13dp"
+        android:text="이름"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        />
+
+    <EditText
+        android:id="@+id/nameInput"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:layout_marginLeft="13dp"
+        android:layout_marginRight="13dp"
+        android:ems="10"
+        android:inputType="text"
+        android:singleLine="false" />
+
+    <TextView
+        android:id="@+id/idTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="43dp"
+        android:layout_marginLeft="13dp"
+        android:text="아이디"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end"
+        android:layout_marginLeft="13dp"
+        android:layout_marginRight="13dp"
+        >
+
+        <EditText
+            android:id="@+id/registrationIdInput"
+            android:layout_width="224dp"
+            android:layout_height="49dp"
+            android:layout_weight="1"
+            android:layout_marginRight="13dp"
+            android:ems="10"
+            android:inputType="text"
+            android:singleLine="false" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/duplicateCheckButton"
+            android:layout_marginLeft="14dp"
+            android:layout_gravity="end"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/purple_button"
+            android:textStyle="bold"
+            android:textColor="@color/colorWhite"
+
+            android:text="중복확인" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/pwTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="39dp"
+        android:layout_marginLeft="13dp"
+        android:text="비밀번호"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        />
+
+    <EditText
+        android:id="@+id/registrationPasswordInput"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:layout_marginLeft="13dp"
+        android:layout_marginRight="13dp"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:singleLine="false" />
+
+    <TextView
+        android:id="@+id/pwCheckTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="39dp"
+        android:layout_marginLeft="13dp"
+        android:text="비밀번호 확인"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        />
+
+    <EditText
+        android:id="@+id/pwCheckInput"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:layout_marginLeft="13dp"
+        android:layout_marginRight="13dp"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:singleLine="false" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/registrationButton"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="49dp"
+        android:layout_gravity="center"
+
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/purple_button"
+        android:textStyle="bold"
+        android:textColor="@color/colorWhite"
+
+        android:text="회원가입" />
+
+
+</LinearLayout>
