@@ -69,12 +69,14 @@
         android:paddingRight="14dp"
         >
 
-        <Button
-            android:id="@+id/googleloginBtn"
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/googleLoginBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="구글 로그인 자리" />
+
+            android:layout_centerHorizontal="true" />
+
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/loginBtn"

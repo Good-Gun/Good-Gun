@@ -1,10 +1,12 @@
 package com.example.goodgun
 
+import android.net.wifi.hotspot2.pps.Credential
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.goodgun.databinding.RegistrationLayoutBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
@@ -38,7 +40,6 @@ class RegistrationActivity : AppCompatActivity() {
     }
 
     private fun createAccount(ID: String, password: String) {
-        Toast.makeText(this, ID+password, Toast.LENGTH_SHORT).show()
 
         if (ID.isNotEmpty() && password.isNotEmpty()) {
             auth?.createUserWithEmailAndPassword(ID, password)
