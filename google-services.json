@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "757404398715",
+    "firebase_url": "https://goodgun-4740f-default-rtdb.firebaseio.com",
     "project_id": "goodgun-4740f",
     "storage_bucket": "goodgun-4740f.appspot.com"
   },
@@ -14,7 +15,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "757404398715-jm0ar4ksakrsdo1jqqe4i7s8f62hoq79.apps.googleusercontent.com",
+          "client_id": "757404398715-hmmkk2q16o7t8r07h81r1i8pvev0q7nh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.goodgun",
+            "certificate_hash": "e170e931333dfd14a0b89296c4cab244aab4a947"
+          }
+        },
+        {
+          "client_id": "757404398715-uisgl77ckvskfoqnf78bkisfh3argep9.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
