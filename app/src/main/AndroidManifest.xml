@@ -17,14 +17,14 @@
         android:theme="@style/Theme.GoodGun"
         tools:targetApi="31">
         <activity
-            android:name=".GraphActivity"
+            android:name=".main_function.GraphActivity"
             android:exported="false" />
         <activity
-            android:name=".FoodActivity"
+            android:name=".main_function.FoodActivity"
             android:exported="false" />
 
         <!--Splash Activity-->
-        <activity android:name=".SplashActivity"
+        <activity android:name=".login.SplashActivity"
             android:theme="@style/SplashTheme"
             android:exported="true">
             <intent-filter>
@@ -36,22 +36,22 @@
         <activity android:name=".MainActivity"
             android:exported="true">
         </activity>
-        <activity android:name=".LoginActivity"
+        <activity android:name=".login.LoginActivity"
             android:exported="false">
         </activity>
 
-        <activity android:name=".RegistrationActivity"
+        <activity android:name=".login.RegistrationActivity"
             android:exported="false">
 
         </activity>
         <activity
-            android:name=".ProfileActivity"
+            android:name=".login.ProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".FoodPhotoCheck"
+            android:name=".add_food.FoodPhotoCheck"
             android:exported="false" />
         <activity
-            android:name=".ScanInfomation"
+            android:name=".add_food.ScanInfomation"
             android:exported="false" />
 
 

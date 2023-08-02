@@ -1,12 +1,12 @@
-package com.example.goodgun
+package com.example.goodgun.login
 
-import android.R
 import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.goodgun.MainActivity
 import com.example.goodgun.databinding.LoginLayoutBinding
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -54,7 +54,7 @@ class LoginActivity : AppCompatActivity() {
 
         //회원가입으로 이동
         binding.regiBtn.setOnClickListener {
-            startActivity(Intent(this,RegistrationActivity::class.java))
+            startActivity(Intent(this, RegistrationActivity::class.java))
         }
         binding.loginBtn.setOnClickListener {
             signIn(binding.idInput.text.toString(),binding.pwInput.text.toString())
@@ -137,7 +137,7 @@ class LoginActivity : AppCompatActivity() {
 
     fun moveMainPage(user: FirebaseUser?){
         if( user!= null){
-            startActivity(Intent(this,MainActivity::class.java))
+            startActivity(Intent(this, MainActivity::class.java))
             finish()    //로그인 페이지는 종료
         }
     }

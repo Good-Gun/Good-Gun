@@ -1,12 +1,10 @@
-package com.example.goodgun
+package com.example.goodgun.login
 
-import android.net.wifi.hotspot2.pps.Credential
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.goodgun.databinding.RegistrationLayoutBinding
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 

@@ -1,4 +1,4 @@
-package com.example.goodgun
+package com.example.goodgun.login
 
 import android.content.Intent
 import android.os.Bundle

@@ -1,10 +1,11 @@
-package com.example.goodgun
+package com.example.goodgun.main_function
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import com.example.goodgun.R
 import com.example.goodgun.databinding.ActivityGraphBinding
 
 class GraphActivity : AppCompatActivity() {
