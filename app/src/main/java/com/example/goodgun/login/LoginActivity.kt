@@ -30,9 +30,7 @@ class LoginActivity : AppCompatActivity() {
     private var googleSignInClient : GoogleSignInClient ?= null
     var GOOGLE_LOGIN_CODE = 9001
     val database:DatabaseReference = Firebase.database("https://goodgun-4740f-default-rtdb.firebaseio.com/").reference
-    fun addUser(userId: String, user: User) {
-        database.child("users").child(userId).setValue(user)
-    }
+
 
     lateinit var binding:LoginLayoutBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,11 +44,14 @@ class LoginActivity : AppCompatActivity() {
         auth = Firebase.auth
         val currentUser = auth.currentUser
         //자동 로그인
+
         if(currentUser!=null){
             Toast.makeText(this,  currentUser.email+" 로 로그인", Toast.LENGTH_LONG).show()
+            database.child("user_list").child(currentUser.uid).setValue(User(currentUser.email.toString(), currentUser.displayName.toString()))
             startActivity(Intent (this, MainActivity::class.java))
             finish()//로그인 엑티비티는 종료
         }
+
 
         setContentView(binding.root)
 
@@ -124,6 +125,9 @@ class LoginActivity : AppCompatActivity() {
                 if(task.isSuccessful) {
                     // 로그인 성공 시
                     Toast.makeText(this,  "success", Toast.LENGTH_LONG).show()
+                    //구글 로그인 시 데이터 베이스에 회원 정보제공
+                    //구글 로그인의 경우 비밀번호를 제공하지 않으므로 ID토큰으로 대체함
+                    database.child("user_list").child(auth.uid.toString()).setValue(User(account?.email.toString(), account?.familyName.toString()+account?.givenName.toString()))
                     startActivity(Intent (this, MainActivity::class.java))
                     finish()//로그인 엑티비티는 종료
                 } else {
