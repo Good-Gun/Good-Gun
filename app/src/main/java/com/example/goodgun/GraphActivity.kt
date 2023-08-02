@@ -31,25 +31,27 @@ class GraphActivity : AppCompatActivity() {
                     position: Int,
                     id: Long
                 ) {
-
-                    //아이템이 클릭 되면 맨 위부터 position 0번부터 순서대로 동작하게 됩니다.
-                    when (position) {
-                        0 -> {
-
-                        }
-                        1 -> {
-
-                        }
-                        //...
-                        else -> {
-
-                        }
-                    }
+                    dateSelect(position)
                 }
-
                 override fun onNothingSelected(parent: AdapterView<*>) {
 
                 }
+            }
+        }
+    }
+
+    private fun dateSelect(position:Int){
+        //아이템이 클릭 되면 맨 위부터 position 0번부터 순서대로 동작하게 됩니다.
+        when (position) {
+            0 -> {
+
+            }
+            1 -> {
+
+            }
+            //...
+            else -> {
+
             }
         }
     }

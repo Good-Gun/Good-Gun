@@ -11,4 +11,13 @@
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/background_splash</item>
     </style>
+
+    <!--식단 추천 메뉴에서 쓰이는 텍스트 스타일-->
+    <style name="foodText">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
 </resources>
