@@ -7,6 +7,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.goodgun.MainActivity
+import com.example.goodgun.User
 import com.example.goodgun.databinding.LoginLayoutBinding
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -18,6 +19,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
 
@@ -26,13 +29,31 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private var googleSignInClient : GoogleSignInClient ?= null
     var GOOGLE_LOGIN_CODE = 9001
+    val database:DatabaseReference = Firebase.database("https://goodgun-4740f-default-rtdb.firebaseio.com/").reference
+    fun addUser(userId: String, user: User) {
+        database.child("users").child(userId).setValue(user)
+    }
 
     lateinit var binding:LoginLayoutBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = LoginLayoutBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+
+//        DB 연결 test
+//        val myRef= database.getReference("massage")
+//        myRef.setValue("Hello world")
+
         auth = Firebase.auth
+        val currentUser = auth.currentUser
+        //자동 로그인
+        if(currentUser!=null){
+            Toast.makeText(this,  currentUser.email+" 로 로그인", Toast.LENGTH_LONG).show()
+            startActivity(Intent (this, MainActivity::class.java))
+            finish()//로그인 엑티비티는 종료
+        }
+
+        setContentView(binding.root)
+
         var google_sign_in_button = binding.googleLoginBtn
 
         setGoogleButtonText(google_sign_in_button, "Google 계정으로 로그인")
@@ -48,8 +69,7 @@ class LoginActivity : AppCompatActivity() {
             .requestEmail()
             .build()
         googleSignInClient = GoogleSignIn.getClient(this, gso)
-        //default_web_client_id 이 값은 build 를 해야 value.xml 파일에서 긁어올 수 있어요.
-        //오류 뜨더라도 build 한 번 해주세요
+
 
 
         //회원가입으로 이동
