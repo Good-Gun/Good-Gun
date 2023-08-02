@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:padding="15dp"
     android:orientation="vertical"
-    tools:context=".FoodActivity">
+    tools:context=".main_function.FoodActivity">
 
     <LinearLayout
         android:id="@+id/layout_food_today"

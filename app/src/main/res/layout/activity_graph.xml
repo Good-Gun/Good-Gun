@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:padding="15dp"
     android:orientation="vertical"
-    tools:context=".GraphActivity">
+    tools:context=".main_function.GraphActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
