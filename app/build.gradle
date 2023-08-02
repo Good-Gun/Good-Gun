@@ -31,13 +31,13 @@ android {
     }
     //11 -> 17로 변경
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 
     //11 -> 17로 변경
     kotlinOptions {
-        jvmTarget = '17'
+        jvmTarget = '11'
     }
 
     viewBinding{
@@ -77,4 +77,5 @@ dependencies {
 
     /*ProgressBar related GITHUB address*/
     implementation 'com.github.appersiano:imageprogressview:-SNAPSHOT'
+    implementation "com.github.skydoves:progressview:1.1.3"
 }

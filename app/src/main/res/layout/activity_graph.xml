@@ -4,17 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="15dp"
     android:orientation="vertical"
+    android:padding="15dp"
     tools:context=".main_function.GraphActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/box_radius_10dp"
-        android:backgroundTint="@color/deep_purple"
-        android:padding="15dp"
-        android:orientation="vertical">
+        android:backgroundTint="@color/theme2"
+        android:orientation="vertical"
+        android:padding="15dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -23,35 +23,221 @@
             android:orientation="horizontal">
 
             <Spinner
-                android:id="@+id/spinner"
+                android:id="@+id/spinner1"
                 android:layout_width="0dp"
                 android:layout_height="30dp"
+                android:layout_marginEnd="7dp"
                 android:layout_weight="1"
-                android:layout_marginEnd="5dp"
-                android:textAlignment="center"
                 android:background="@drawable/box_radius_10dp"
                 android:backgroundTint="@color/white"
-                android:spinnerMode="dropdown"/>
+                android:spinnerMode="dropdown"
+                android:textAlignment="center" />
 
-            <TextView
-                android:id="@+id/tv_graph_date"
+            <Spinner
+                android:id="@+id/spinner2"
                 android:layout_width="0dp"
                 android:layout_height="30dp"
+                android:layout_marginStart="7dp"
                 android:layout_weight="1"
-                android:layout_marginStart="5dp"
-                android:textAlignment="center"
                 android:background="@drawable/box_radius_10dp"
-                android:backgroundTint="@color/white"/>
+                android:backgroundTint="@color/white"
+                android:spinnerMode="dropdown"
+                android:textAlignment="center" />
 
         </LinearLayout>
 
-        <View
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:orientation="vertical"
             android:background="@drawable/box_radius_10dp"
-            android:backgroundTint="@color/white"/>
+            android:backgroundTint="@color/theme2">
+
+            <com.skydoves.progressview.ProgressView
+                android:id="@+id/progressView1"
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                app:progressView_autoAnimate="true"
+                app:progressView_progressFromPrevious="true"
+                app:progressView_colorBackground="@color/white"
+                app:progressView_colorProgress="#54FD66"
+                app:progressView_labelSize="12sp"
+                app:progressView_labelSpace="10dp"
+                app:progressView_labelTypeface="bold"
+                app:progressView_labelText="@string/calorie"
+                app:progressView_max="100"
+                app:progressView_min="15"
+                app:progressView_padding="1dp"
+                app:progressView_progress="40"
+                app:progressView_radius="12dp" />
+
+            <com.skydoves.progressview.ProgressView
+                android:id="@+id/progressView2"
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:layout_marginTop="10dp"
+                app:progressView_autoAnimate="true"
+                app:progressView_progressFromPrevious="true"
+                app:progressView_colorBackground="@color/white"
+                app:progressView_colorProgress="#54FD66"
+                app:progressView_labelSize="12sp"
+                app:progressView_labelSpace="10dp"
+                app:progressView_labelTypeface="bold"
+                app:progressView_labelText="@string/carbohydrate"
+                app:progressView_max="100"
+                app:progressView_min="15"
+                app:progressView_padding="1dp"
+                app:progressView_progress="40"
+                app:progressView_radius="12dp" />
+
+            <com.skydoves.progressview.ProgressView
+                android:id="@+id/progressView3"
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:layout_marginTop="10dp"
+                app:progressView_autoAnimate="true"
+                app:progressView_progressFromPrevious="true"
+                app:progressView_colorBackground="@color/white"
+                app:progressView_colorProgress="#54FD66"
+                app:progressView_labelSize="12sp"
+                app:progressView_labelSpace="10dp"
+                app:progressView_labelTypeface="bold"
+                app:progressView_labelText="@string/protein"
+                app:progressView_max="100"
+                app:progressView_min="15"
+                app:progressView_padding="1dp"
+                app:progressView_progress="40"
+                app:progressView_radius="12dp" />
+
+            <com.skydoves.progressview.ProgressView
+                android:id="@+id/progressView4"
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:layout_marginTop="10dp"
+                app:progressView_autoAnimate="true"
+                app:progressView_progressFromPrevious="true"
+                app:progressView_colorBackground="@color/white"
+                app:progressView_colorProgress="#54FD66"
+                app:progressView_labelSize="12sp"
+                app:progressView_labelSpace="10dp"
+                app:progressView_labelTypeface="bold"
+                app:progressView_labelText="@string/fat"
+                app:progressView_max="100"
+                app:progressView_min="15"
+                app:progressView_padding="1dp"
+                app:progressView_progress="40"
+                app:progressView_radius="12dp" />
+
+            <com.skydoves.progressview.ProgressView
+                android:id="@+id/progressView5"
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:layout_marginTop="10dp"
+                app:progressView_autoAnimate="true"
+                app:progressView_progressFromPrevious="true"
+                app:progressView_colorBackground="@color/white"
+                app:progressView_colorProgress="#54FD66"
+                app:progressView_labelSize="12sp"
+                app:progressView_labelSpace="10dp"
+                app:progressView_labelTypeface="bold"
+                app:progressView_labelText="@string/trans_fat"
+                app:progressView_max="100"
+                app:progressView_min="15"
+                app:progressView_padding="1dp"
+                app:progressView_progress="40"
+                app:progressView_radius="12dp" />
+
+            <com.skydoves.progressview.ProgressView
+                android:id="@+id/progressView6"
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:layout_marginTop="10dp"
+                app:progressView_autoAnimate="true"
+                app:progressView_progressFromPrevious="true"
+                app:progressView_colorBackground="@color/white"
+                app:progressView_colorProgress="#54FD66"
+                app:progressView_labelSize="12sp"
+                app:progressView_labelSpace="10dp"
+                app:progressView_labelTypeface="bold"
+                app:progressView_labelText="@string/saturated_fat"
+                app:progressView_max="100"
+                app:progressView_min="15"
+                app:progressView_padding="1dp"
+                app:progressView_progress="40"
+                app:progressView_radius="12dp" />
+
+            <com.skydoves.progressview.ProgressView
+                android:id="@+id/progressView7"
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:layout_marginTop="10dp"
+                app:progressView_autoAnimate="true"
+                app:progressView_progressFromPrevious="true"
+                app:progressView_colorBackground="@color/white"
+                app:progressView_colorProgress="#54FD66"
+                app:progressView_labelSize="12sp"
+                app:progressView_labelSpace="10dp"
+                app:progressView_labelTypeface="bold"
+                app:progressView_labelText="@string/cholesterol"
+                app:progressView_max="100"
+                app:progressView_min="15"
+                app:progressView_padding="1dp"
+                app:progressView_progress="40"
+                app:progressView_radius="12dp" />
+
+            <com.skydoves.progressview.ProgressView
+                android:id="@+id/progressView8"
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:layout_marginTop="10dp"
+                app:progressView_autoAnimate="true"
+                app:progressView_progressFromPrevious="true"
+                app:progressView_colorBackground="@color/white"
+                app:progressView_colorProgress="#54FD66"
+                app:progressView_labelSize="12sp"
+                app:progressView_labelSpace="10dp"
+                app:progressView_labelTypeface="bold"
+                app:progressView_labelText="@string/sugar"
+                app:progressView_max="100"
+                app:progressView_min="15"
+                app:progressView_padding="1dp"
+                app:progressView_progress="40"
+                app:progressView_radius="12dp" />
+
+            <com.skydoves.progressview.ProgressView
+                android:id="@+id/progressView9"
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:layout_marginTop="10dp"
+                app:progressView_autoAnimate="true"
+                app:progressView_progressFromPrevious="true"
+                app:progressView_colorBackground="@color/white"
+                app:progressView_colorProgress="#54FD66"
+                app:progressView_labelSize="12sp"
+                app:progressView_labelSpace="10dp"
+                app:progressView_labelTypeface="bold"
+                app:progressView_labelText="@string/sodium"
+                app:progressView_max="100"
+                app:progressView_min="15"
+                app:progressView_padding="1dp"
+                app:progressView_progress="40"
+                app:progressView_radius="12dp" />
+        </LinearLayout>
 
     </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="300dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/box_radius_10dp"
+        android:backgroundTint="@color/light_purple" />
 
 
 </LinearLayout>
