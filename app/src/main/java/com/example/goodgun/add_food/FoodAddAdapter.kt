@@ -5,10 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.goodgun.Food
 import com.example.goodgun.databinding.AddFoodRowBinding
+import com.example.goodgun.roomDB.FoodEntity
 
-class FoodAddAdapter(var items:ArrayList<Food>):RecyclerView.Adapter<FoodAddAdapter.ViewHolder>() {
+class FoodAddAdapter(var items:ArrayList<FoodEntity>):RecyclerView.Adapter<FoodAddAdapter.ViewHolder>() {
     interface OnItemClickListener{
-        fun onItemClick(data: Food, position: Int)
+        fun onItemClick(data: FoodEntity, position: Int)
     }
     // 하나의 data 에 대해 서로다른 이벤트리스너 등록가능
     var itemadd:OnItemClickListener?=null

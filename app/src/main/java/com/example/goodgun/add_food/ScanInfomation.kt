@@ -1,27 +1,54 @@
 package com.example.goodgun.add_food
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.goodgun.Food
 import com.example.goodgun.R
 import com.example.goodgun.databinding.ActivityScanInfomationBinding
+import com.example.goodgun.roomDB.DatabaseManager
+import com.example.goodgun.roomDB.FoodDatabase
+import com.example.goodgun.roomDB.FoodEntity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ScanInfomation : AppCompatActivity() {
 
     lateinit var binding: ActivityScanInfomationBinding
-    var tmpdata:ArrayList<Food> = ArrayList()
-    var foodAddData:ArrayList<Food> = ArrayList()
+    var tmpdata:ArrayList<FoodEntity> = ArrayList()
     lateinit var adapter: FoodAddAdapter
+    lateinit var roomdb: FoodDatabase
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityScanInfomationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // 임시 유저 아이디 - 유저 토큰이나 아이디 사용
+        var userid = "2"
+
+        // db 연결
+        roomdb = DatabaseManager.getDatabaseInstance(userid, applicationContext)
+        // 임시 db 초기화 - 실행할 때마다 초기화되는 상태임
+        GlobalScope.launch(Dispatchers.IO) {
+            roomdb.foodDao().deleteAll()
+        }
+
         initRecyclerView()
+
+        // 임시 룸DB 확인
+        binding.directAdd.setOnClickListener {
+            GlobalScope.launch(Dispatchers.IO) {
+                val tmp: List<FoodEntity> = roomdb.foodDao().getAll()
+                val message = tmp.joinToString("\n") { "FoodEntity(id=${it.id}, name=${it.name})" }
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(this@ScanInfomation, message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 
     private fun initRecyclerView() {
@@ -29,24 +56,29 @@ class ScanInfomation : AppCompatActivity() {
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
         tmpdata.apply {
-            add(Food("data1"))
-            add(Food("data2"))
-            add(Food("data3"))
-            add(Food("data4"))
-            add(Food("data5"))
+            add(FoodEntity("data1"))
+            add(FoodEntity("data2"))
+            add(FoodEntity("data3"))
+            add(FoodEntity("data4"))
+            add(FoodEntity("data5"))
         }
 
         adapter = FoodAddAdapter(tmpdata)
         adapter.itemadd = object :FoodAddAdapter.OnItemClickListener{
-            override fun onItemClick(data: Food, position: Int) {
-                foodAddData.add(data)
+            override fun onItemClick(data: FoodEntity, position: Int) {
+                GlobalScope.launch(Dispatchers.IO) {
+                    roomdb.foodDao().saveFood(data)
+                }
                 binding.recyclerView.findViewHolderForAdapterPosition(position)?.itemView?.findViewById<ImageButton>(R.id.food_add)?.visibility = View.GONE
             }
         }
         adapter.itemdelete=object :FoodAddAdapter.OnItemClickListener{
             // 2번째 onclick 이벤트리스너
-            override fun onItemClick(data: Food, position: Int) {
-                tmpdata.remove(data)
+            override fun onItemClick(data: FoodEntity, position: Int) {
+                tmpdata.removeAt(position)
+                GlobalScope.launch(Dispatchers.IO) {
+                    roomdb.foodDao().deleteFood(data.name, data.registerDate)
+                }
                 adapter.notifyItemRemoved(position)
             }
         }
