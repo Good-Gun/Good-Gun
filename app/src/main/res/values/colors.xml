@@ -20,4 +20,9 @@
     <color name="red">#FFFE0000</color>
     <color name="bright_grey">#FFEEEEEE</color>
     <color name="green">#FF006710</color>
+
+    <color name="theme1">#FF6E179A</color>
+    <color name="theme2">#FFEEEEEE</color>
+    <color name="theme3">#FFB04BFF</color>
+    <color name="theme4">#FFffffff</color>
 </resources>
