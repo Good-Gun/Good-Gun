@@ -185,10 +185,11 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"/>
                     <TextView
+                        android:id="@+id/calory"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="1756 Kcal"
+                        android:text="1756"
                         android:gravity="center"/>
 
                 </LinearLayout>
@@ -205,17 +206,18 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="나트륨"
+                        android:text="탄수화문"
                         android:gravity="center"/>
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_weight="1"/>
                     <TextView
+                        android:id="@+id/carbohydrates"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="2000 mg"
+                        android:text="2000"
                         android:gravity="center"/>
 
                 </LinearLayout>
@@ -232,17 +234,18 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="탄수화물"
+                        android:text="당류"
                         android:gravity="center"/>
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_weight="1"/>
                     <TextView
+                        android:id="@+id/sugar"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="1321412 mg"
+                        android:text="1321412"
                         android:gravity="center"/>
 
                 </LinearLayout>
@@ -266,10 +269,123 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"/>
                     <TextView
+                        android:id="@+id/protein"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="20 g"
+                        android:text="20"
+                        android:gravity="center"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@color/white"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="지방"
+                        android:gravity="center"/>
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:id="@+id/fat"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="20"
+                        android:gravity="center"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@color/white"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="트랜스지방"
+                        android:gravity="center"/>
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:id="@+id/trans_fat"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="20"
+                        android:gravity="center"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@color/white"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="포화지방"
+                        android:gravity="center"/>
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:id="@+id/saturated_fat"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="20"
+                        android:gravity="center"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@color/white"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="콜레스테롤"
+                        android:gravity="center"/>
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:id="@+id/cholesterol"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="20"
                         android:gravity="center"/>
 
                 </LinearLayout>

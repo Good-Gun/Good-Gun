@@ -6,7 +6,9 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
 import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.goodgun.Food
 import com.example.goodgun.MainActivity
 import com.example.goodgun.R
 import com.example.goodgun.User
@@ -44,6 +46,8 @@ class ScanInfomation : AppCompatActivity() {
         // 임시 db 초기화 - 실행할 때마다 초기화되는 상태임
         GlobalScope.launch(Dispatchers.IO) {
             roomdb.foodDao().deleteAll()
+            roomdb.foodDao().saveFood(FoodEntity())
+            // 영양소 합계 저장할 foodentity 생성
         }
 
         database = Firebase.database("https://goodgun-4740f-default-rtdb.firebaseio.com/").reference
@@ -55,11 +59,57 @@ class ScanInfomation : AppCompatActivity() {
         binding.directAdd.setOnClickListener {
             GlobalScope.launch(Dispatchers.IO) {
                 val tmp: List<FoodEntity> = roomdb.foodDao().getAll()
-                val message = tmp.joinToString("\n") { "FoodEntity(id=${it.id}, name=${it.name})" }
+                val message = tmp.joinToString("\n") { "FoodEntity(id=${it.id}, name=${it.name}), calory=${it.calory})" }
                 withContext(Dispatchers.Main) {
                     Toast.makeText(this@ScanInfomation, message, Toast.LENGTH_SHORT).show()
                 }
             }
+        }
+
+        init()
+    }
+
+    private fun init(){
+
+        updateSum()
+    }
+
+    private fun updateSum() {
+        GlobalScope.launch(Dispatchers.IO) {
+            val sumfood = roomdb.foodDao().getSumFood()
+            withContext(Dispatchers.Main) {
+                binding.apply {
+                    calory.text=sumfood.calory.toString()
+                    carbohydrates.text=sumfood.carbohydrates.toString()
+                    sugar.text=sumfood.sugar.toString()
+                    protein.text=sumfood.protein.toString()
+                    fat.text=sumfood.fat.toString()
+                    transFat.text=sumfood.trans_fat.toString()
+                    saturatedFat.text=sumfood.saturated_fat.toString()
+                    cholesterol.text=sumfood.cholesterol.toString()
+                }
+            }
+
+        }
+    }
+
+    private fun updateSumFoodEntity(addFood: FoodEntity){
+        GlobalScope.launch(Dispatchers.IO) {
+            val sumfood = roomdb.foodDao().getSumFood()
+            withContext(Dispatchers.Main) {
+                binding.apply {
+                    sumfood.calory += addFood.calory
+                    sumfood.carbohydrates += addFood.carbohydrates
+                    sumfood.sugar += addFood.sugar
+                    sumfood.protein += addFood.protein
+                    sumfood.fat += addFood.fat
+                    sumfood.trans_fat += addFood.trans_fat
+                    sumfood.saturated_fat += addFood.saturated_fat
+                    sumfood.cholesterol += addFood.cholesterol
+                }
+            }
+            roomdb.foodDao().saveFood(sumfood)
+            updateSum()
         }
     }
 
@@ -72,6 +122,8 @@ class ScanInfomation : AppCompatActivity() {
                         .setValue(food)
                 }
                 roomdb.foodDao().deleteAll()
+                roomdb.foodDao().saveFood(FoodEntity())
+                // 영양소 합계 저장할 foodentity 생성
             }
             startActivity(Intent (this, MainActivity::class.java))
             finish()
@@ -95,6 +147,7 @@ class ScanInfomation : AppCompatActivity() {
             override fun onItemClick(data: FoodEntity, position: Int) {
                 GlobalScope.launch(Dispatchers.IO) {
                     roomdb.foodDao().saveFood(data)
+                    updateSumFoodEntity(data)
                 }
                 binding.recyclerView.findViewHolderForAdapterPosition(position)?.itemView?.findViewById<ImageButton>(R.id.food_add)?.visibility = View.GONE
             }
