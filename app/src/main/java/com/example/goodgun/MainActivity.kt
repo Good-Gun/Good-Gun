@@ -23,10 +23,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initFoodLens() {
+//        val drawable = resources.getDrawable(R.drawable.chicken)
+//        val foodImage = (drawable as BitmapDrawable).bitmap
         val foodImage = BitmapFactory.decodeResource(resources, R.drawable.chicken)
         val ns = FoodLens.createNetworkService(applicationContext)
 
+        Log.i("FoodLens", foodImage.javaClass.simpleName)
+
         ns.languageConfig = LanguageConfig.KO
+        binding.image.setImageBitmap(foodImage)
+
         ns.predictMultipleFood(foodImage, object: RecognizeResultHandler{
             override fun onSuccess(result: RecognitionResult?) {
                 val foodPosList: List<FoodPosition> = result!!.foodPositions // Get food positions
