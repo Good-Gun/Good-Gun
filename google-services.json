@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "757404398715",
+    "firebase_url": "https://goodgun-4740f-default-rtdb.firebaseio.com",
+    "project_id": "goodgun-4740f",
+    "storage_bucket": "goodgun-4740f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:757404398715:android:002b410bd8024322f85ede",
+        "android_client_info": {
+          "package_name": "com.example.goodgun"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "757404398715-hmmkk2q16o7t8r07h81r1i8pvev0q7nh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.goodgun",
+            "certificate_hash": "e170e931333dfd14a0b89296c4cab244aab4a947"
+          }
+        },
+        {
+          "client_id": "757404398715-uisgl77ckvskfoqnf78bkisfh3argep9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJsmSKbvUu28EvFoLSub1QLHnl7UXxb28"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "757404398715-jm0ar4ksakrsdo1jqqe4i7s8f62hoq79.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
