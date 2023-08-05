@@ -1,7 +1,9 @@
 package com.example.goodgun
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.goodgun.camera.CameraActivity
 import com.example.goodgun.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -26,6 +28,9 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             selectedItemId = R.id.nav_home
+        }
+        binding.ivAdd.setOnClickListener {
+            startActivity(Intent(this, CameraActivity::class.java))
         }
     }
 }
