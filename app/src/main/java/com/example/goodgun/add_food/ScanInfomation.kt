@@ -6,18 +6,17 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
 import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.goodgun.Food
 import com.example.goodgun.MainActivity
 import com.example.goodgun.R
-import com.example.goodgun.User
 import com.example.goodgun.databinding.ActivityScanInfomationBinding
 import com.example.goodgun.roomDB.DatabaseManager
 import com.example.goodgun.roomDB.FoodDatabase
 import com.example.goodgun.roomDB.FoodEntity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
@@ -33,13 +32,24 @@ class ScanInfomation : AppCompatActivity() {
     lateinit var roomdb: FoodDatabase
     lateinit var database: DatabaseReference
 
-    // 임시 유저 아이디 - 유저 토큰이나 아이디 사용
-    var userid = "2"
+    private lateinit var auth: FirebaseAuth
+    var currentUser: FirebaseUser? = null
+    var userid:String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityScanInfomationBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        auth = Firebase.auth
+        currentUser = auth.currentUser
+        if(currentUser==null){
+            Toast.makeText(this@ScanInfomation, "유효하지 않은 유저입니다.", Toast.LENGTH_SHORT).show()
+        }else{
+            userid=currentUser!!.uid
+        }
+
+        Toast.makeText(this@ScanInfomation, userid, Toast.LENGTH_SHORT).show()
 
         // db 연결
         roomdb = DatabaseManager.getDatabaseInstance(userid, applicationContext)
@@ -94,31 +104,35 @@ class ScanInfomation : AppCompatActivity() {
     }
 
     private fun updateSumFoodEntity(addFood: FoodEntity){
-        GlobalScope.launch(Dispatchers.IO) {
-            val sumfood = roomdb.foodDao().getSumFood()
-            withContext(Dispatchers.Main) {
-                binding.apply {
-                    sumfood.calory += addFood.calory
-                    sumfood.carbohydrates += addFood.carbohydrates
-                    sumfood.sugar += addFood.sugar
-                    sumfood.protein += addFood.protein
-                    sumfood.fat += addFood.fat
-                    sumfood.trans_fat += addFood.trans_fat
-                    sumfood.saturated_fat += addFood.saturated_fat
-                    sumfood.cholesterol += addFood.cholesterol
+        if (addFood != null){
+            GlobalScope.launch(Dispatchers.IO) {
+                val sumfood = roomdb.foodDao().getSumFood()
+                withContext(Dispatchers.Main) {
+                    binding.apply {
+                        sumfood.calory += addFood.calory
+                        sumfood.carbohydrates += addFood.carbohydrates
+                        sumfood.sugar += addFood.sugar
+                        sumfood.protein += addFood.protein
+                        sumfood.fat += addFood.fat
+                        sumfood.trans_fat += addFood.trans_fat
+                        sumfood.saturated_fat += addFood.saturated_fat
+                        sumfood.cholesterol += addFood.cholesterol
+                    }
                 }
+                roomdb.foodDao().saveFood(sumfood)
+                updateSum()
             }
-            roomdb.foodDao().saveFood(sumfood)
-            updateSum()
         }
+
     }
 
     private fun initBtn() {
         binding.registerFoods.setOnClickListener {
             GlobalScope.launch(Dispatchers.IO) {
+                roomdb.foodDao().deleteSumFood()
                 val foods: List<FoodEntity> = roomdb.foodDao().getAll()
                 for (food in foods) {
-                    database.child("user_list").child(userid).child("food")
+                    database.child("user_list").child(userid).child(food.registerDate).child(food.name)
                         .setValue(food)
                 }
                 roomdb.foodDao().deleteAll()
