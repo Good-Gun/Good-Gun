@@ -21,4 +21,7 @@ interface FoodDAO {
 
     @Query("DELETE FROM table_food")
     fun deleteAll()
+
+    @Query("DELETE FROM table_food WHERE name = 'is_sum_entity'")
+    fun deleteSumFood()
 }

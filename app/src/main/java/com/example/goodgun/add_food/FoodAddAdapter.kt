@@ -3,7 +3,6 @@ package com.example.goodgun.add_food
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.goodgun.Food
 import com.example.goodgun.databinding.AddFoodRowBinding
 import com.example.goodgun.roomDB.FoodEntity
 
