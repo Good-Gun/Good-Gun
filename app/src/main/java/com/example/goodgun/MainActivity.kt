@@ -2,7 +2,16 @@ package com.example.goodgun
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.example.goodgun.databinding.ActivityMainBinding
+import com.example.goodgun.firebase.FirebaseManager
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding:ActivityMainBinding
@@ -28,4 +37,7 @@ class MainActivity : AppCompatActivity() {
             selectedItemId = R.id.nav_home
         }
     }
+
+
+
 }
