@@ -9,9 +9,9 @@ data class Nutrition(
     var trans_fat: Int,
     var saturated_fat: Int,
     var cholesterol: Int,
-    var sodium: Int
-){
-    constructor():this(
-        0,0,0,0,0,0,0,0,0
+    var sodium: Int,
+) {
+    constructor() : this(
+        0, 0, 0, 0, 0, 0, 0, 0, 0,
     )
 }

@@ -80,7 +80,6 @@ class ScanInfomation : AppCompatActivity() {
     }
 
     private fun init() {
-
         updateSum()
     }
 

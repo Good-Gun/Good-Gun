@@ -25,21 +25,19 @@ object FirebaseManager {
                 val argDate = LocalDate.parse(date.trim())
                 Log.d(
                     "Firebase Communication",
-                    "checking fb data ${food.registerDate.trim()} & ${date.trim()}"
+                    "checking fb data ${food.registerDate.trim()} & ${date.trim()}",
                 )
                 if (argDate <= snapshotDate) {
                     Log.d(
                         "Firebase Communication",
-                        "Adding food: ${food.name}, regDate: ${food.registerDate}"
+                        "Adding food: ${food.name}, regDate: ${food.registerDate}",
                     )
                     foodList.add(food)
                 }
             }
-
         }
         foodList
     }
-
 
     fun getit(date: String): List<Food> {
         val foodList: MutableList<Food> = mutableListOf<Food>()
@@ -49,7 +47,7 @@ object FirebaseManager {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 Log.d(
                     "Firebase Communication",
-                    "data count: ${dataSnapshot.childrenCount}"
+                    "data count: ${dataSnapshot.childrenCount}",
                 )
                 // 사용자 데이터 가져오기
                 for (snapshot in dataSnapshot.children) {
@@ -59,12 +57,12 @@ object FirebaseManager {
                         val argDate = LocalDate.parse(date.trim())
                         Log.d(
                             "Firebase Communication",
-                            "checking fb data ${food.registerDate.trim()} & ${date.trim()}"
+                            "checking fb data ${food.registerDate.trim()} & ${date.trim()}",
                         )
                         if (argDate <= snapshotDate) {
                             Log.d(
                                 "Firebase Communication",
-                                "Adding food: ${food.name}, regDate: ${food.registerDate}"
+                                "Adding food: ${food.name}, regDate: ${food.registerDate}",
                             )
                             foodList.add(food)
                         }
@@ -81,17 +79,16 @@ object FirebaseManager {
         return foodList
     }
 
-
     fun postFoodData(date: String, food: Food) {
         val foodRef =
             FirebaseDatabase.getInstance().getReference("user_list").child("lee").child("food")
         foodRef.child(date).setValue(food)
             .addOnSuccessListener {
                 // 성공적으로 데이터가 저장된 경우 실행될 코드
-                Log.d("Firebase Communication", "Data Added Successfully: ${date}, ${food.name}")
+                Log.d("Firebase Communication", "Data Added Successfully: $date, ${food.name}")
             }
             .addOnFailureListener {
-                Log.d("Firebase Communication", "Data Add Failed: ${date}, ${food.name}")
+                Log.d("Firebase Communication", "Data Add Failed: $date, ${food.name}")
             }
     }
 }

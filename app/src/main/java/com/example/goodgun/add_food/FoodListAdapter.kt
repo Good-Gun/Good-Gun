@@ -1,5 +1,6 @@
 package com.example.goodgun.add_food
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -25,6 +26,7 @@ class FoodListAdapter(val items: ArrayList<FoodEntity>) : RecyclerView.Adapter<F
     }
 
     override fun getItemCount(): Int {
+        Log.i("FoodLens", items.size.toString())
         return items.size
     }
 
