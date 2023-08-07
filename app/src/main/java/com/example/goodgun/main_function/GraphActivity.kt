@@ -1,10 +1,10 @@
 package com.example.goodgun.main_function
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.appcompat.app.AppCompatActivity
 import com.example.goodgun.R
 import com.example.goodgun.databinding.ActivityGraphBinding
 
@@ -35,26 +35,21 @@ class GraphActivity : AppCompatActivity() {
                     dateSelect(position)
                 }
                 override fun onNothingSelected(parent: AdapterView<*>) {
-
                 }
             }
         }
     }
 
-    private fun dateSelect(position:Int){
-        //아이템이 클릭 되면 맨 위부터 position 0번부터 순서대로 동작하게 됩니다.
+    private fun dateSelect(position: Int) {
+        // 아이템이 클릭 되면 맨 위부터 position 0번부터 순서대로 동작하게 됩니다.
         when (position) {
             0 -> {
-
             }
             1 -> {
-
             }
-            //...
+            // ...
             else -> {
-
             }
         }
     }
 }
-

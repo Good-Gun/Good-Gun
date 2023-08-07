@@ -4,7 +4,7 @@ plugins {
     id 'com.google.gms.google-services'
     id 'kotlin-kapt'
 }
-
+tasks.register("prepareKotlinBuildScriptModel"){}
 android {
     namespace 'com.example.goodgun'
     compileSdk 33
@@ -51,7 +51,6 @@ android {
 
 
 dependencies {
-
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.google.firebase:firebase-auth:19.0.0'
     implementation 'com.google.android.gms:play-services-auth:17.0.0'

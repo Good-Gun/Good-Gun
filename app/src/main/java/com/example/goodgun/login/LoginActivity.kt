@@ -23,16 +23,14 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
-
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
-    private var googleSignInClient : GoogleSignInClient ?= null
+    private var googleSignInClient: GoogleSignInClient ? = null
     var GOOGLE_LOGIN_CODE = 9001
-    val database:DatabaseReference = Firebase.database("https://goodgun-4740f-default-rtdb.firebaseio.com/").reference
+    val database: DatabaseReference = Firebase.database("https://goodgun-4740f-default-rtdb.firebaseio.com/").reference
 
-
-    lateinit var binding:LoginLayoutBinding
+    lateinit var binding: LoginLayoutBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = LoginLayoutBinding.inflate(layoutInflater)
@@ -43,15 +41,14 @@ class LoginActivity : AppCompatActivity() {
 
         auth = Firebase.auth
         val currentUser = auth.currentUser
-        //자동 로그인
+        // 자동 로그인
 
-        if(currentUser!=null){
-            Toast.makeText(this,  currentUser.email+" 로 로그인", Toast.LENGTH_LONG).show()
+        if (currentUser != null) {
+            Toast.makeText(this, currentUser.email + " 로 로그인", Toast.LENGTH_LONG).show()
             database.child("user_list").child(currentUser.uid).setValue(User(currentUser.email.toString(), currentUser.displayName.toString()))
-            startActivity(Intent (this, MainActivity::class.java))
-            finish()//로그인 엑티비티는 종료
+            startActivity(Intent(this, MainActivity::class.java))
+            finish() // 로그인 엑티비티는 종료
         }
-
 
         setContentView(binding.root)
 
@@ -63,7 +60,7 @@ class LoginActivity : AppCompatActivity() {
             googleLogin()
         }
 
-        //구글 로그인을 위해 구성되어야 하는 코드 (Id, Email request)
+        // 구글 로그인을 위해 구성되어야 하는 코드 (Id, Email request)
         val default_web_client_id = "757404398715-jm0ar4ksakrsdo1jqqe4i7s8f62hoq79.apps.googleusercontent.com"
         var gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(default_web_client_id)
@@ -71,20 +68,18 @@ class LoginActivity : AppCompatActivity() {
             .build()
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
-
-
-        //회원가입으로 이동
+        // 회원가입으로 이동
         binding.regiBtn.setOnClickListener {
             startActivity(Intent(this, RegistrationActivity::class.java))
         }
         binding.loginBtn.setOnClickListener {
-            signIn(binding.idInput.text.toString(),binding.pwInput.text.toString())
+            signIn(binding.idInput.text.toString(), binding.pwInput.text.toString())
         }
     }
 
-    private fun setGoogleButtonText(loginButton: SignInButton, buttonText: String){
+    private fun setGoogleButtonText(loginButton: SignInButton, buttonText: String) {
         var i = 0
-        while (i < loginButton.childCount){
+        while (i < loginButton.childCount) {
             var v = loginButton.getChildAt(i)
             if (v is TextView) {
                 var tv = v
@@ -93,7 +88,6 @@ class LoginActivity : AppCompatActivity() {
                 return
             }
             i++
-
         }
     }
 
@@ -106,37 +100,36 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == GOOGLE_LOGIN_CODE) {
+        if (requestCode == GOOGLE_LOGIN_CODE) {
             var result = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
             if (result != null) {
-                if(result.isSuccess) {
+                if (result.isSuccess) {
                     var account = result.signInAccount
                     firebaseAuthWithGoogle(account)
                 }
             }
-        } //if
+        } // if
     } // onActivityResult
 
     fun firebaseAuthWithGoogle(account: GoogleSignInAccount?) {
         var credential = GoogleAuthProvider.getCredential(account?.idToken, null)
         auth?.signInWithCredential(credential)
             ?.addOnCompleteListener {
-                    task ->
-                if(task.isSuccessful) {
+                task ->
+                if (task.isSuccessful) {
                     // 로그인 성공 시
-                    Toast.makeText(this,  "success", Toast.LENGTH_LONG).show()
-                    //구글 로그인 시 데이터 베이스에 회원 정보제공
-                    //구글 로그인의 경우 비밀번호를 제공하지 않으므로 ID토큰으로 대체함
-                    database.child("user_list").child(auth.uid.toString()).setValue(User(account?.email.toString(), account?.familyName.toString()+account?.givenName.toString()))
-                    startActivity(Intent (this, MainActivity::class.java))
-                    finish()//로그인 엑티비티는 종료
+                    Toast.makeText(this, "success", Toast.LENGTH_LONG).show()
+                    // 구글 로그인 시 데이터 베이스에 회원 정보제공
+                    // 구글 로그인의 경우 비밀번호를 제공하지 않으므로 ID토큰으로 대체함
+                    database.child("user_list").child(auth.uid.toString()).setValue(User(account?.email.toString(), account?.familyName.toString() + account?.givenName.toString()))
+                    startActivity(Intent(this, MainActivity::class.java))
+                    finish() // 로그인 엑티비티는 종료
                 } else {
                     // 로그인 실패 시
-                    Toast.makeText(this,  task.exception?.message, Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, task.exception?.message, Toast.LENGTH_LONG).show()
                 }
             }
-    } //firebaseAuthWithGoogle
-
+    } // firebaseAuthWithGoogle
 
     private fun signIn(ID: String, password: String) {
 
@@ -159,10 +152,10 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    fun moveMainPage(user: FirebaseUser?){
-        if( user!= null){
+    fun moveMainPage(user: FirebaseUser?) {
+        if (user != null) {
             startActivity(Intent(this, MainActivity::class.java))
-            finish()    //로그인 페이지는 종료
+            finish() // 로그인 페이지는 종료
         }
     }
 }
