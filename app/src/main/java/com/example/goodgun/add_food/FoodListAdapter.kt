@@ -6,14 +6,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.goodgun.databinding.FoodlistItemBinding
 import com.example.goodgun.roomDB.FoodEntity
 
-class FoodListAdapter(val items: ArrayList<FoodEntity>): RecyclerView.Adapter<FoodListAdapter.ViewHolder>() {
+class FoodListAdapter(val items: ArrayList<FoodEntity>) : RecyclerView.Adapter<FoodListAdapter.ViewHolder>() {
 
     val itemClickListener: OnItemClickListener? = null
-    interface OnItemClickListener{
+    interface OnItemClickListener {
         fun onItemClick(holder: ViewHolder, position: Int)
     }
-    inner class ViewHolder(val binding: FoodlistItemBinding): RecyclerView.ViewHolder(binding.root){
-        init{
+    inner class ViewHolder(val binding: FoodlistItemBinding) : RecyclerView.ViewHolder(binding.root) {
+        init {
             binding.checkBox.setOnClickListener {
                 itemClickListener?.onItemClick(this, adapterPosition)
             }

@@ -1,30 +1,24 @@
 package com.example.goodgun.camera
 
-import android.content.Context
 import android.content.pm.PackageManager
-import android.hardware.camera2.CameraManager
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.Camera
-import androidx.camera.core.CameraProvider
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.core.TorchState
-import androidx.camera.core.UseCase
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.LifecycleOwner
 import com.example.goodgun.R
 import com.example.goodgun.databinding.ActivityCameraBinding
 import java.io.File
@@ -33,7 +27,7 @@ import java.util.Locale
 import java.util.concurrent.ExecutorService
 
 class CameraActivity : AppCompatActivity() {
-    val binding: ActivityCameraBinding by lazy{
+    val binding: ActivityCameraBinding by lazy {
         ActivityCameraBinding.inflate(layoutInflater)
     }
     var image: ImageCapture? = null
@@ -92,9 +86,8 @@ class CameraActivity : AppCompatActivity() {
                     exception.printStackTrace()
                     onBackPressed()
                 }
-
-            })
-
+            }
+        )
     }
 
     private fun setListener() {
@@ -122,7 +115,6 @@ class CameraActivity : AppCompatActivity() {
             try {
                 cameraProvider.unbindAll()
                 camera = cameraProvider.bindToLifecycle(this, cameraSelector, preview, image)
-
             } catch (e: Exception) {
                 Log.e("camera", e.toString())
             }
@@ -157,7 +149,6 @@ class CameraActivity : AppCompatActivity() {
             }
 
             override fun onAnimationRepeat(animation: Animation?) {
-
             }
         }
     }
@@ -165,30 +156,45 @@ class CameraActivity : AppCompatActivity() {
     val permissions = arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.CAMERA)
 
     val multiplePermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()){
-            val resultPermission = it.all{map ->
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
+            val resultPermission = it.all { map ->
                 map.value
             }
-            if(!resultPermission){
-                //finish()
+            if (!resultPermission) {
+                // finish()
                 Toast.makeText(this, "모든 권한 승인되어야 함", Toast.LENGTH_SHORT).show()
             }
         }
 
-    fun checkPermissions(){
-        when{
-            (ActivityCompat.checkSelfPermission(this,
-                android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) &&
-                    (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)
-                            == PackageManager.PERMISSION_GRANTED) && (ActivityCompat.checkSelfPermission(this,
-                android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) -> {
+    fun checkPermissions() {
+        when {
+            (
+                ActivityCompat.checkSelfPermission(
+                    this,
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE
+                ) == PackageManager.PERMISSION_GRANTED
+                ) &&
+                (
+                    ActivityCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)
+                        == PackageManager.PERMISSION_GRANTED
+                    ) && (
+                ActivityCompat.checkSelfPermission(
+                    this,
+                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ) == PackageManager.PERMISSION_GRANTED
+                ) -> {
                 Toast.makeText(this, "모든 권한 승인됨", Toast.LENGTH_SHORT).show()
-
             }
-            ActivityCompat.shouldShowRequestPermissionRationale(this,
-                android.Manifest.permission.READ_EXTERNAL_STORAGE) || ActivityCompat.shouldShowRequestPermissionRationale(this,
-                android.Manifest.permission.CAMERA) || ActivityCompat.shouldShowRequestPermissionRationale(this,
-                android.Manifest.permission.WRITE_EXTERNAL_STORAGE)-> {
+            ActivityCompat.shouldShowRequestPermissionRationale(
+                this,
+                android.Manifest.permission.READ_EXTERNAL_STORAGE
+            ) || ActivityCompat.shouldShowRequestPermissionRationale(
+                this,
+                android.Manifest.permission.CAMERA
+            ) || ActivityCompat.shouldShowRequestPermissionRationale(
+                this,
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) -> {
                 permissionCheckAlertDialog()
             }
             else -> {
@@ -197,26 +203,30 @@ class CameraActivity : AppCompatActivity() {
         }
     }
 
-    fun permissionCheckAlertDialog(){
+    fun permissionCheckAlertDialog() {
         val builder = AlertDialog.Builder(this)
-        builder.setMessage("반드시 READ_EXTERNAL_STORAGE과 CAMERA 권한이 모두 허용되어야 합니다.").setTitle("권한 체크").setPositiveButton("OK"){
-                _, _ ->
+        builder.setMessage("반드시 READ_EXTERNAL_STORAGE과 CAMERA 권한이 모두 허용되어야 합니다.").setTitle("권한 체크").setPositiveButton("OK") {
+            _, _ ->
             multiplePermissionLauncher.launch(permissions)
-        }.setNegativeButton("Cancel"){
-                dlg, _ -> dlg.dismiss()
+        }.setNegativeButton("Cancel") {
+            dlg, _ ->
+            dlg.dismiss()
         }
         val dialog = builder.create()
         dialog.show()
     }
 
-    fun allPermissionGranted() = permissions.all{
+    fun allPermissionGranted() = permissions.all {
         ActivityCompat.checkSelfPermission(this, it) == PackageManager.PERMISSION_GRANTED
     }
 
-    fun readPermissionGranted() = ActivityCompat.checkSelfPermission(this,
-        android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+    fun readPermissionGranted() = ActivityCompat.checkSelfPermission(
+        this,
+        android.Manifest.permission.READ_EXTERNAL_STORAGE
+    ) == PackageManager.PERMISSION_GRANTED
 
-    fun cameraPermissionGranted() = ActivityCompat.checkSelfPermission(this,
-        android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
-
+    fun cameraPermissionGranted() = ActivityCompat.checkSelfPermission(
+        this,
+        android.Manifest.permission.CAMERA
+    ) == PackageManager.PERMISSION_GRANTED
 }

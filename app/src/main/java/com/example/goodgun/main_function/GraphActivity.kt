@@ -1,17 +1,18 @@
 package com.example.goodgun.main_function
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+
 import com.aallam.openai.api.BetaOpenAI
 import com.aallam.openai.api.chat.*
 import com.aallam.openai.api.http.Timeout
 import com.aallam.openai.api.model.ModelId
 import com.aallam.openai.client.OpenAI
 import com.example.goodgun.Food
+
 import com.example.goodgun.R
 import com.example.goodgun.User
 import com.example.goodgun.databinding.ActivityGraphBinding
@@ -107,11 +108,11 @@ class GraphActivity : AppCompatActivity() {
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>) {
-
                 }
             }
         }
     }
+
 
 
     private fun initChart() {
@@ -175,6 +176,7 @@ class GraphActivity : AppCompatActivity() {
 
             override fun onCancelled(error: DatabaseError) {
                 println("Database error occurred: ${error.message}")
+
             }
         }
 
@@ -205,4 +207,3 @@ class GraphActivity : AppCompatActivity() {
         }
     }
 }
-

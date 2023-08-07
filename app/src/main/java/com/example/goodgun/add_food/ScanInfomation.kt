@@ -1,11 +1,11 @@
 package com.example.goodgun.add_food
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.goodgun.MainActivity
 import com.example.goodgun.R
@@ -27,14 +27,14 @@ import kotlinx.coroutines.withContext
 class ScanInfomation : AppCompatActivity() {
 
     lateinit var binding: ActivityScanInfomationBinding
-    var tmpdata:ArrayList<FoodEntity> = ArrayList()
+    var tmpdata: ArrayList<FoodEntity> = ArrayList()
     lateinit var adapter: FoodAddAdapter
     lateinit var roomdb: FoodDatabase
     lateinit var database: DatabaseReference
 
     private lateinit var auth: FirebaseAuth
     var currentUser: FirebaseUser? = null
-    var userid:String = ""
+    var userid: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,10 +43,10 @@ class ScanInfomation : AppCompatActivity() {
 
         auth = Firebase.auth
         currentUser = auth.currentUser
-        if(currentUser==null){
+        if (currentUser == null) {
             Toast.makeText(this@ScanInfomation, "유효하지 않은 유저입니다.", Toast.LENGTH_SHORT).show()
-        }else{
-            userid=currentUser!!.uid
+        } else {
+            userid = currentUser!!.uid
         }
 
         Toast.makeText(this@ScanInfomation, userid, Toast.LENGTH_SHORT).show()
@@ -79,7 +79,7 @@ class ScanInfomation : AppCompatActivity() {
         init()
     }
 
-    private fun init(){
+    private fun init() {
 
         updateSum()
     }
@@ -89,22 +89,21 @@ class ScanInfomation : AppCompatActivity() {
             val sumfood = roomdb.foodDao().getSumFood()
             withContext(Dispatchers.Main) {
                 binding.apply {
-                    calory.text=sumfood.calory.toString()
-                    carbohydrates.text=sumfood.carbohydrates.toString()
-                    sugar.text=sumfood.sugar.toString()
-                    protein.text=sumfood.protein.toString()
-                    fat.text=sumfood.fat.toString()
-                    transFat.text=sumfood.trans_fat.toString()
-                    saturatedFat.text=sumfood.saturated_fat.toString()
-                    cholesterol.text=sumfood.cholesterol.toString()
+                    calory.text = sumfood.calory.toString()
+                    carbohydrates.text = sumfood.carbohydrates.toString()
+                    sugar.text = sumfood.sugar.toString()
+                    protein.text = sumfood.protein.toString()
+                    fat.text = sumfood.fat.toString()
+                    transFat.text = sumfood.trans_fat.toString()
+                    saturatedFat.text = sumfood.saturated_fat.toString()
+                    cholesterol.text = sumfood.cholesterol.toString()
                 }
             }
-
         }
     }
 
-    private fun updateSumFoodEntity(addFood: FoodEntity){
-        if (addFood != null){
+    private fun updateSumFoodEntity(addFood: FoodEntity) {
+        if (addFood != null) {
             GlobalScope.launch(Dispatchers.IO) {
                 val sumfood = roomdb.foodDao().getSumFood()
                 withContext(Dispatchers.Main) {
@@ -123,7 +122,6 @@ class ScanInfomation : AppCompatActivity() {
                 updateSum()
             }
         }
-
     }
 
     private fun initBtn() {
@@ -139,7 +137,7 @@ class ScanInfomation : AppCompatActivity() {
                 roomdb.foodDao().saveFood(FoodEntity())
                 // 영양소 합계 저장할 foodentity 생성
             }
-            startActivity(Intent (this, MainActivity::class.java))
+            startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
     }
@@ -157,7 +155,7 @@ class ScanInfomation : AppCompatActivity() {
         }
 
         adapter = FoodAddAdapter(tmpdata)
-        adapter.itemadd = object :FoodAddAdapter.OnItemClickListener{
+        adapter.itemadd = object : FoodAddAdapter.OnItemClickListener {
             override fun onItemClick(data: FoodEntity, position: Int) {
                 GlobalScope.launch(Dispatchers.IO) {
                     roomdb.foodDao().saveFood(data)
@@ -166,7 +164,7 @@ class ScanInfomation : AppCompatActivity() {
                 binding.recyclerView.findViewHolderForAdapterPosition(position)?.itemView?.findViewById<ImageButton>(R.id.food_add)?.visibility = View.GONE
             }
         }
-        adapter.itemdelete=object :FoodAddAdapter.OnItemClickListener{
+        adapter.itemdelete = object : FoodAddAdapter.OnItemClickListener {
             // 2번째 onclick 이벤트리스너
             override fun onItemClick(data: FoodEntity, position: Int) {
                 tmpdata.removeAt(position)

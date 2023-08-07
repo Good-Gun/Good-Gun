@@ -1,10 +1,8 @@
 package com.example.goodgun.add_food
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.goodgun.R
 import com.example.goodgun.databinding.ActivityFoodPhotoCheckBinding
 import com.example.goodgun.roomDB.FoodEntity
 
