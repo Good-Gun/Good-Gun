@@ -28,7 +28,4 @@ class MainActivity : AppCompatActivity() {
             selectedItemId = R.id.nav_home
         }
     }
-
-
-
 }
