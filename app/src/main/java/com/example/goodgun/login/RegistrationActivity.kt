@@ -2,9 +2,6 @@ package com.example.goodgun.login
 
 import android.graphics.Color
 import android.os.Bundle
-import android.provider.CalendarContract
-import android.text.Editable
-import android.text.TextWatcher
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
@@ -15,11 +12,10 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import org.w3c.dom.Text
 
 class RegistrationActivity : AppCompatActivity() {
-    private var auth : FirebaseAuth? = null
-    lateinit var binding : RegistrationLayoutBinding
+    private var auth: FirebaseAuth? = null
+    lateinit var binding: RegistrationLayoutBinding
     private var PWValid = false
     private var PWChecked = false
     val database: DatabaseReference = Firebase.database("https://goodgun-4740f-default-rtdb.firebaseio.com/").reference
@@ -29,38 +25,35 @@ class RegistrationActivity : AppCompatActivity() {
         binding = RegistrationLayoutBinding.inflate(layoutInflater)
         auth = Firebase.auth
 
-
         binding.registrationPasswordInput.doAfterTextChanged {
-            if(isValidPassword(binding.registrationPasswordInput.text.toString())){
+            if (isValidPassword(binding.registrationPasswordInput.text.toString())) {
                 binding.pwRuleTextView.setTextColor(Color.GREEN)
                 PWValid = true
-            }else{
+            } else {
                 binding.pwRuleTextView.setTextColor(Color.BLACK)
                 PWValid = true
             }
         }
         binding.registrationPWCheckInput.doAfterTextChanged {
-            if(binding.registrationPasswordInput.text.toString() == binding.registrationPWCheckInput.text.toString()){
+            if (binding.registrationPasswordInput.text.toString() == binding.registrationPWCheckInput.text.toString()) {
                 binding.pwCheckTextView2.setTextColor(Color.GREEN)
                 PWChecked = true
-            }else{
+            } else {
                 binding.pwCheckTextView2.setTextColor(Color.BLACK)
                 PWChecked = false
             }
         }
 
-
-
-
         setContentView(binding.root)
         // 계정 생성 버튼
         binding.registrationButton
             .setOnClickListener {
-                createAccount(binding.registrationIdInput
-                    .text.toString(),binding.registrationPasswordInput.text.toString(),binding.nameInput.text.toString())
-
-        }
-
+                createAccount(
+                    binding.registrationIdInput
+                        .text.toString(),
+                    binding.registrationPasswordInput.text.toString(), binding.nameInput.text.toString()
+                )
+            }
     }
 
     fun isValidPassword(password: String): Boolean {
@@ -73,7 +66,7 @@ class RegistrationActivity : AppCompatActivity() {
         return regex.matches(password)
     }
 
-    private fun createAccount(ID: String, password: String, name:String) {
+    private fun createAccount(ID: String, password: String, name: String) {
         if (ID.isNotEmpty() && password.isNotEmpty() && PWChecked && PWValid) {
             auth?.createUserWithEmailAndPassword(ID, password)
                 ?.addOnCompleteListener(this) { task ->

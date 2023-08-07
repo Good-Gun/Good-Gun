@@ -25,6 +25,4 @@ object DatabaseManager {
     fun removeDatabaseInstance(userId: String) {
         databaseMap.remove(userId)
     }
-
-
 }

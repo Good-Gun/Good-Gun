@@ -4,7 +4,7 @@ plugins {
     id 'com.google.gms.google-services'
     id 'kotlin-kapt'
 }
-
+tasks.register("prepareKotlinBuildScriptModel"){}
 android {
     namespace 'com.example.goodgun'
     compileSdk 33
@@ -48,7 +48,6 @@ android {
 
 
 dependencies {
-
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.google.firebase:firebase-auth:19.0.0'
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
@@ -88,4 +87,13 @@ dependencies {
     implementation 'androidx.camera:camera-view:1.2.3'
     implementation 'androidx.camera:camera-camera2:1.2.3'
     implementation 'androidx.camera:camera-lifecycle:1.2.3'
+    /*for http communication*/
+    implementation "com.squareup.okhttp3:okhttp:4.9.1"
+
+    // import Kotlin API client BOM
+    implementation platform('com.aallam.openai:openai-client-bom:3.3.0')
+
+    // define dependencies without versions
+    implementation 'com.aallam.openai:openai-client'
+    runtimeOnly 'io.ktor:ktor-client-okhttp'
 }

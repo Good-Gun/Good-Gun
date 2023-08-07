@@ -6,17 +6,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.goodgun.databinding.AddFoodRowBinding
 import com.example.goodgun.roomDB.FoodEntity
 
-class FoodAddAdapter(var items:ArrayList<FoodEntity>):RecyclerView.Adapter<FoodAddAdapter.ViewHolder>() {
-    interface OnItemClickListener{
+class FoodAddAdapter(var items: ArrayList<FoodEntity>) : RecyclerView.Adapter<FoodAddAdapter.ViewHolder>() {
+    interface OnItemClickListener {
         fun onItemClick(data: FoodEntity, position: Int)
     }
     // 하나의 data 에 대해 서로다른 이벤트리스너 등록가능
-    var itemadd:OnItemClickListener?=null
-    var itemdelete:OnItemClickListener?=null
+    var itemadd: OnItemClickListener? = null
+    var itemdelete: OnItemClickListener? = null
 
-    inner class ViewHolder(val binding: AddFoodRowBinding) : RecyclerView.ViewHolder(binding.root){
+    inner class ViewHolder(val binding: AddFoodRowBinding) : RecyclerView.ViewHolder(binding.root) {
         init {
-            binding.foodAdd.setOnClickListener{
+            binding.foodAdd.setOnClickListener {
                 itemadd?.onItemClick(items[adapterPosition], adapterPosition)
             }
             binding.foodDelete.setOnClickListener {
@@ -35,6 +35,6 @@ class FoodAddAdapter(var items:ArrayList<FoodEntity>):RecyclerView.Adapter<FoodA
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.foodName.text=items[position].name
+        holder.binding.foodName.text = items[position].name
     }
 }

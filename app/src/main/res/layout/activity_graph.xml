@@ -55,7 +55,7 @@
             android:backgroundTint="@color/theme2">
 
             <com.skydoves.progressview.ProgressView
-                android:id="@+id/progressView1"
+                android:id="@+id/pv_calorie"
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
                 app:progressView_autoAnimate="true"
@@ -66,14 +66,14 @@
                 app:progressView_labelSpace="10dp"
                 app:progressView_labelTypeface="bold"
                 app:progressView_labelText="@string/calorie"
-                app:progressView_max="100"
-                app:progressView_min="15"
+                app:progressView_max="300"
+                app:progressView_min="0"
                 app:progressView_padding="1dp"
                 app:progressView_progress="40"
                 app:progressView_radius="12dp" />
 
             <com.skydoves.progressview.ProgressView
-                android:id="@+id/progressView2"
+                android:id="@+id/pv_carbohydrates"
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
                 android:layout_marginTop="10dp"
@@ -85,14 +85,14 @@
                 app:progressView_labelSpace="10dp"
                 app:progressView_labelTypeface="bold"
                 app:progressView_labelText="@string/carbohydrate"
-                app:progressView_max="100"
-                app:progressView_min="15"
+                app:progressView_max="300"
+                app:progressView_min="0"
                 app:progressView_padding="1dp"
-                app:progressView_progress="40"
+                app:progressView_progress="5"
                 app:progressView_radius="12dp" />
 
             <com.skydoves.progressview.ProgressView
-                android:id="@+id/progressView3"
+                android:id="@+id/pv_proteins"
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
                 android:layout_marginTop="10dp"
@@ -104,14 +104,14 @@
                 app:progressView_labelSpace="10dp"
                 app:progressView_labelTypeface="bold"
                 app:progressView_labelText="@string/protein"
-                app:progressView_max="100"
-                app:progressView_min="15"
+                app:progressView_max="300"
+                app:progressView_min="0"
                 app:progressView_padding="1dp"
                 app:progressView_progress="40"
                 app:progressView_radius="12dp" />
 
             <com.skydoves.progressview.ProgressView
-                android:id="@+id/progressView4"
+                android:id="@+id/pv_fat"
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
                 android:layout_marginTop="10dp"
@@ -123,14 +123,14 @@
                 app:progressView_labelSpace="10dp"
                 app:progressView_labelTypeface="bold"
                 app:progressView_labelText="@string/fat"
-                app:progressView_max="100"
-                app:progressView_min="15"
+                app:progressView_max="300"
+                app:progressView_min="0"
                 app:progressView_padding="1dp"
                 app:progressView_progress="40"
                 app:progressView_radius="12dp" />
 
             <com.skydoves.progressview.ProgressView
-                android:id="@+id/progressView5"
+                android:id="@+id/pv_trans_fat"
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
                 android:layout_marginTop="10dp"
@@ -142,14 +142,14 @@
                 app:progressView_labelSpace="10dp"
                 app:progressView_labelTypeface="bold"
                 app:progressView_labelText="@string/trans_fat"
-                app:progressView_max="100"
-                app:progressView_min="15"
+                app:progressView_max="300"
+                app:progressView_min="0"
                 app:progressView_padding="1dp"
                 app:progressView_progress="40"
                 app:progressView_radius="12dp" />
 
             <com.skydoves.progressview.ProgressView
-                android:id="@+id/progressView6"
+                android:id="@+id/pv_saturated_fat"
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
                 android:layout_marginTop="10dp"
@@ -161,14 +161,14 @@
                 app:progressView_labelSpace="10dp"
                 app:progressView_labelTypeface="bold"
                 app:progressView_labelText="@string/saturated_fat"
-                app:progressView_max="100"
-                app:progressView_min="15"
+                app:progressView_max="300"
+                app:progressView_min="0"
                 app:progressView_padding="1dp"
                 app:progressView_progress="40"
                 app:progressView_radius="12dp" />
 
             <com.skydoves.progressview.ProgressView
-                android:id="@+id/progressView7"
+                android:id="@+id/pv_cholesterol"
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
                 android:layout_marginTop="10dp"
@@ -180,14 +180,14 @@
                 app:progressView_labelSpace="10dp"
                 app:progressView_labelTypeface="bold"
                 app:progressView_labelText="@string/cholesterol"
-                app:progressView_max="100"
-                app:progressView_min="15"
+                app:progressView_max="300"
+                app:progressView_min="0"
                 app:progressView_padding="1dp"
                 app:progressView_progress="40"
                 app:progressView_radius="12dp" />
 
             <com.skydoves.progressview.ProgressView
-                android:id="@+id/progressView8"
+                android:id="@+id/pv_sugar"
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
                 android:layout_marginTop="10dp"
@@ -199,14 +199,14 @@
                 app:progressView_labelSpace="10dp"
                 app:progressView_labelTypeface="bold"
                 app:progressView_labelText="@string/sugar"
-                app:progressView_max="100"
-                app:progressView_min="15"
+                app:progressView_max="300"
+                app:progressView_min="0"
                 app:progressView_padding="1dp"
                 app:progressView_progress="40"
                 app:progressView_radius="12dp" />
 
             <com.skydoves.progressview.ProgressView
-                android:id="@+id/progressView9"
+                android:id="@+id/pv_sodium"
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
                 android:layout_marginTop="10dp"
@@ -218,8 +218,8 @@
                 app:progressView_labelSpace="10dp"
                 app:progressView_labelTypeface="bold"
                 app:progressView_labelText="@string/sodium"
-                app:progressView_max="100"
-                app:progressView_min="15"
+                app:progressView_max="300"
+                app:progressView_min="0"
                 app:progressView_padding="1dp"
                 app:progressView_progress="40"
                 app:progressView_radius="12dp" />
