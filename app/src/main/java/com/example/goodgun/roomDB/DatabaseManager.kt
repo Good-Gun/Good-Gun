@@ -14,7 +14,9 @@ object DatabaseManager {
                 context.applicationContext,
                 FoodDatabase::class.java,
                 "food.db"
-            ).build()
+            )
+                .addMigrations(FoodDatabase.migration_1_to_2)
+                .build()
             databaseMap[userId] = newDatabase
             newDatabase
         }
@@ -23,4 +25,6 @@ object DatabaseManager {
     fun removeDatabaseInstance(userId: String) {
         databaseMap.remove(userId)
     }
+
+
 }
