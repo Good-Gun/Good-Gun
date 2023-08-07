@@ -1,7 +1,9 @@
 package com.example.goodgun.camera
 
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.animation.Animation
@@ -20,6 +22,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.goodgun.R
+import com.example.goodgun.add_food.FoodPhotoCheck
 import com.example.goodgun.databinding.ActivityCameraBinding
 import java.io.File
 import java.text.SimpleDateFormat
@@ -31,6 +34,7 @@ class CameraActivity : AppCompatActivity() {
         ActivityCameraBinding.inflate(layoutInflater)
     }
     var image: ImageCapture? = null
+    var mode = false // false = 바코드 촬영 모드, true = 음식 촬영 모드
     private lateinit var outputDirectory: File
     private lateinit var cameraProvider: ProcessCameraProvider
     private lateinit var camera: Camera
@@ -38,7 +42,6 @@ class CameraActivity : AppCompatActivity() {
     private lateinit var preview: Preview
     private lateinit var cameraExecutor: ExecutorService
     private lateinit var cameraAnimationListener: Animation.AnimationListener
-
     private var savedUri: Uri? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +49,7 @@ class CameraActivity : AppCompatActivity() {
         setCameraAnimationListener()
         initLayout()
         checkPermissions()
+//        permissionCheck()
     }
 
     private fun initLayout() {
@@ -56,6 +60,19 @@ class CameraActivity : AppCompatActivity() {
             phoneLight.setOnClickListener {
                 toggleTorch()
             }
+            cameraMode.setOnClickListener {
+                if (mode == false) { // 바코드 촬영 모드
+                    cameraMode.setImageResource(R.drawable.food_mode)
+                    cameraModeText.text = "제품 바코드 촬영"
+                    cameraFrame.setImageResource(R.drawable.barcode_layout)
+                } else {
+                    cameraMode.setImageResource(R.drawable.ic_barcode_20dp)
+                    cameraModeText.text = "음식 사진 촬영"
+                    cameraFrame.setImageResource(R.drawable.food_camera)
+                }
+                mode = !mode
+            }
+            cameraShutter.isEnabled = false
         }
     }
 
@@ -67,9 +84,11 @@ class CameraActivity : AppCompatActivity() {
         binding.frameLayoutShutter.animation = animation
         binding.frameLayoutShutter.startAnimation(animation)
 
+        val child = SimpleDateFormat("yy-mm-dd", Locale.US).format(System.currentTimeMillis()) + ".png"
+
         val photoFile = File(
             outputDirectory,
-            SimpleDateFormat("yy-mm-dd", Locale.US).format(System.currentTimeMillis()) + ".png"
+            child,
         )
         val outputOption = ImageCapture.OutputFileOptions.Builder(photoFile).build()
 
@@ -79,14 +98,17 @@ class CameraActivity : AppCompatActivity() {
             object : ImageCapture.OnImageSavedCallback {
                 override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
                     savedUri = Uri.fromFile(photoFile)
+                    val i = Intent(this@CameraActivity, FoodPhotoCheck::class.java)
+                    i.putExtra("food", savedUri.toString())
                     Log.i("camera", "saved")
+                    startActivity(i)
                 }
 
                 override fun onError(exception: ImageCaptureException) {
                     exception.printStackTrace()
                     onBackPressed()
                 }
-            }
+            },
         )
     }
 
@@ -115,6 +137,7 @@ class CameraActivity : AppCompatActivity() {
             try {
                 cameraProvider.unbindAll()
                 camera = cameraProvider.bindToLifecycle(this, cameraSelector, preview, image)
+                binding.cameraShutter.isEnabled = true
             } catch (e: Exception) {
                 Log.e("camera", e.toString())
             }
@@ -136,8 +159,11 @@ class CameraActivity : AppCompatActivity() {
         val mediaDir = externalMediaDirs.firstOrNull()?.let {
             File(it, resources.getString(R.string.app_name)).apply { mkdirs() }
         }
-        return if (mediaDir != null && mediaDir.exists())
-            mediaDir else filesDir
+        return if (mediaDir != null && mediaDir.exists()) {
+            mediaDir
+        } else {
+            filesDir
+        }
     }
 
     private fun setCameraAnimationListener() {
@@ -166,34 +192,43 @@ class CameraActivity : AppCompatActivity() {
             }
         }
 
+    fun permissionCheck() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            return
+        }
+        for (permission: String in permissions) {
+            var chk = checkCallingOrSelfPermission(permission)
+            if (chk == PackageManager.PERMISSION_DENIED) {
+                requestPermissions(permissions, 0)
+                break
+            }
+        }
+    }
+
     fun checkPermissions() {
         when {
-            (
+            ActivityCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.READ_EXTERNAL_STORAGE,
+            ) == PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)
+                == PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(
                     this,
-                    android.Manifest.permission.READ_EXTERNAL_STORAGE
+                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 ) == PackageManager.PERMISSION_GRANTED
-                ) &&
-                (
-                    ActivityCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)
-                        == PackageManager.PERMISSION_GRANTED
-                    ) && (
-                ActivityCompat.checkSelfPermission(
-                    this,
-                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-                ) == PackageManager.PERMISSION_GRANTED
-                ) -> {
+            -> {
                 Toast.makeText(this, "모든 권한 승인됨", Toast.LENGTH_SHORT).show()
             }
             ActivityCompat.shouldShowRequestPermissionRationale(
                 this,
-                android.Manifest.permission.READ_EXTERNAL_STORAGE
+                android.Manifest.permission.READ_EXTERNAL_STORAGE,
             ) || ActivityCompat.shouldShowRequestPermissionRationale(
                 this,
-                android.Manifest.permission.CAMERA
+                android.Manifest.permission.CAMERA,
             ) || ActivityCompat.shouldShowRequestPermissionRationale(
                 this,
-                android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
             ) -> {
                 permissionCheckAlertDialog()
             }
@@ -206,10 +241,10 @@ class CameraActivity : AppCompatActivity() {
     fun permissionCheckAlertDialog() {
         val builder = AlertDialog.Builder(this)
         builder.setMessage("반드시 READ_EXTERNAL_STORAGE과 CAMERA 권한이 모두 허용되어야 합니다.").setTitle("권한 체크").setPositiveButton("OK") {
-            _, _ ->
+                _, _ ->
             multiplePermissionLauncher.launch(permissions)
         }.setNegativeButton("Cancel") {
-            dlg, _ ->
+                dlg, _ ->
             dlg.dismiss()
         }
         val dialog = builder.create()
@@ -222,11 +257,11 @@ class CameraActivity : AppCompatActivity() {
 
     fun readPermissionGranted() = ActivityCompat.checkSelfPermission(
         this,
-        android.Manifest.permission.READ_EXTERNAL_STORAGE
+        android.Manifest.permission.READ_EXTERNAL_STORAGE,
     ) == PackageManager.PERMISSION_GRANTED
 
     fun cameraPermissionGranted() = ActivityCompat.checkSelfPermission(
         this,
-        android.Manifest.permission.CAMERA
+        android.Manifest.permission.CAMERA,
     ) == PackageManager.PERMISSION_GRANTED
 }

@@ -8,10 +8,9 @@ class User(
     var u_weight: Int,
     var u_allergy: String,
     var u_exercise_freq: Int,
-    var u_physical_goals: String
+    var u_physical_goals: String,
 ) {
 
     constructor(email: String, password: String, name: String) : this(email, password, name, 0, 0, "", 0, "")
     constructor(email: String, name: String) : this(email, "google_account", name, 0, 0, "", 0, "")
 }
-

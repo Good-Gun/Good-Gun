@@ -18,6 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
         <ImageView
+            android:id="@+id/cameraFrame"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="40dp"
@@ -31,6 +32,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/cameraModeText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
@@ -45,11 +47,11 @@
             android:gravity="center">
 
             <ImageView
-                android:id="@+id/barcodeImage"
-                android:layout_width="wrap_content"
+                android:id="@+id/cameraMode"
+                android:layout_width="30dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
-                android:src="@drawable/ic_barcode_20dp"
+                android:src="@drawable/food_mode"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -58,15 +60,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:src="@mipmap/ic_good_gun" />
 
             <ImageView
                 android:id="@+id/phoneLight"
-                android:layout_width="wrap_content"
+                android:layout_width="30dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
                 android:src="@drawable/phone_light"/>
         </LinearLayout>
+
         <View
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -29,7 +29,7 @@ abstract class FoodDatabase : RoomDatabase() {
                         "`saturated_fat` INTEGER NOT NULL, " +
                         "`cholesterol` INTEGER NOT NULL, " +
                         "`registerDate` TEXT NOT NULL, " +
-                        "`registerTime` TEXT NOT NULL)"
+                        "`registerTime` TEXT NOT NULL)",
                 )
             }
         }

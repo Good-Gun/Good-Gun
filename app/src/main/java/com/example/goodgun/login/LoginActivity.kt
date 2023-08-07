@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.goodgun.MainActivity
 import com.example.goodgun.User
-import com.example.goodgun.camera.CameraActivity
 import com.example.goodgun.databinding.LoginLayoutBinding
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -116,7 +115,7 @@ class LoginActivity : AppCompatActivity() {
         var credential = GoogleAuthProvider.getCredential(account?.idToken, null)
         auth?.signInWithCredential(credential)
             ?.addOnCompleteListener {
-                task ->
+                    task ->
                 if (task.isSuccessful) {
                     // 로그인 성공 시
                     Toast.makeText(this, "success", Toast.LENGTH_LONG).show()
@@ -133,20 +132,21 @@ class LoginActivity : AppCompatActivity() {
     } // firebaseAuthWithGoogle
 
     private fun signIn(ID: String, password: String) {
-
         if (ID.isNotEmpty() && password.isNotEmpty()) {
             auth?.signInWithEmailAndPassword(ID, password)
                 ?.addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         Toast.makeText(
-                            baseContext, "로그인에 성공 하였습니다.",
-                            Toast.LENGTH_SHORT
+                            baseContext,
+                            "로그인에 성공 하였습니다.",
+                            Toast.LENGTH_SHORT,
                         ).show()
                         moveMainPage(auth?.currentUser)
                     } else {
                         Toast.makeText(
-                            baseContext, "로그인에 실패 하였습니다.",
-                            Toast.LENGTH_SHORT
+                            baseContext,
+                            "로그인에 실패 하였습니다.",
+                            Toast.LENGTH_SHORT,
                         ).show()
                     }
                 }

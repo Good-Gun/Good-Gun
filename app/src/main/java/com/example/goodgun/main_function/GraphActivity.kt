@@ -6,14 +6,8 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
-
-import com.aallam.openai.api.BetaOpenAI
 import com.aallam.openai.api.chat.*
-import com.aallam.openai.api.http.Timeout
-import com.aallam.openai.api.model.ModelId
-import com.aallam.openai.client.OpenAI
 import com.example.goodgun.Food
-
 import com.example.goodgun.R
 import com.example.goodgun.User
 import com.example.goodgun.databinding.ActivityGraphBinding
@@ -21,21 +15,18 @@ import com.example.goodgun.firebase.FirebaseManager
 import com.example.goodgun.main_function.model.Nutrition
 import com.google.firebase.database.*
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.Flow
 import java.time.LocalDateTime
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 import kotlin.time.Duration.Companion.days
-import kotlin.time.Duration.Companion.seconds
 
 class GraphActivity : AppCompatActivity() {
     lateinit var binding: ActivityGraphBinding
     lateinit var foodList: List<Food>
     var days = 0
 
-    val api_key = "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" //not valid
+    val api_key = "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" // not valid
     val userId = "CCZLvkLE6GfhwlhL4XTyk1vnKrp2"
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,9 +34,7 @@ class GraphActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initLayout()
-        //initAI()
-
-
+        // initAI()
     }
 
     private fun initLayout() {
@@ -54,7 +43,7 @@ class GraphActivity : AppCompatActivity() {
             val myAdapter = ArrayAdapter(
                 this@GraphActivity,
                 android.R.layout.simple_spinner_dropdown_item,
-                items
+                items,
             )
             spinner1.adapter = myAdapter
             spinner1.setSelection(0)
@@ -63,9 +52,9 @@ class GraphActivity : AppCompatActivity() {
                     parent: AdapterView<*>,
                     view: View,
                     position: Int,
-                    id: Long
+                    id: Long,
                 ) {
-                    //dateSelect(position)
+                    // dateSelect(position)
                     var time = LocalDateTime.now()
                     when (position) {
                         0 -> {
@@ -84,7 +73,6 @@ class GraphActivity : AppCompatActivity() {
                                 days += YearMonth.now().minusMonths(i.toLong()).lengthOfMonth()
                             }
                             time = time.minusMonths(3)
-
                         }
                         4 -> {
                             for (i in 1..6) {
@@ -100,12 +88,11 @@ class GraphActivity : AppCompatActivity() {
                         withContext(Dispatchers.IO) {
                             foodList = FirebaseManager.getFoodData(formatted)
                         }
-                        //addData(formatted)
+                        // addData(formatted)
                         delay(1000)
                         Log.e("Firebase Communication", "Check After foodList initialization")
                         initChart()
                     }
-
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>) {
@@ -113,8 +100,6 @@ class GraphActivity : AppCompatActivity() {
             }
         }
     }
-
-
 
     private fun initChart() {
         binding.apply {
@@ -146,7 +131,6 @@ class GraphActivity : AppCompatActivity() {
                 sugar /= days
             }
 
-
             pvCalorie.progress = nutrition.calorie.toFloat()
             pvCarbohydrates.progress = nutrition.carbohydrates.toFloat()
             pvProteins.progress = nutrition.protein.toFloat()
@@ -156,8 +140,6 @@ class GraphActivity : AppCompatActivity() {
             pvCholesterol.progress = nutrition.cholesterol.toFloat()
             pvSugar.progress = nutrition.sugar.toFloat()
             pvSodium.progress = nutrition.sodium.toFloat()
-
-
         }
     }
 
@@ -177,7 +159,6 @@ class GraphActivity : AppCompatActivity() {
 
             override fun onCancelled(error: DatabaseError) {
                 println("Database error occurred: ${error.message}")
-
             }
         }
 
@@ -188,7 +169,6 @@ class GraphActivity : AppCompatActivity() {
 
     /*temporary Addition of Data*/
     private fun addData(date: String) {
-
         for (i in 1..10) {
             val food = Food(
                 0 + i,
@@ -202,7 +182,7 @@ class GraphActivity : AppCompatActivity() {
                 106 + i,
                 107 + i,
                 108 + i,
-                date
+                date,
             )
             FirebaseManager.postFoodData(date, food)
         }
