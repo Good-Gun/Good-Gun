@@ -14,3 +14,4 @@ class User(
     constructor(email: String, password: String, name: String) : this(email, password, name, 0, 0, "", 0, "")
     constructor(email: String, name: String) : this(email, "google_account", name, 0, 0, "", 0, "")
 }
+
