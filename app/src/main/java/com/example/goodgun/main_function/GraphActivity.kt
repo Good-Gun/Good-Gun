@@ -1,5 +1,7 @@
 package com.example.goodgun.main_function
 
+import android.app.AlertDialog
+import android.app.Dialog
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -9,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.aallam.openai.api.BetaOpenAI
 import com.aallam.openai.api.chat.*
 import com.example.goodgun.Food
+import com.example.goodgun.LoadingDialog
 import com.example.goodgun.R
 import com.example.goodgun.User
 import com.example.goodgun.databinding.ActivityGraphBinding
@@ -19,12 +22,12 @@ import kotlinx.coroutines.*
 import java.time.LocalDateTime
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
-import kotlin.time.Duration.Companion.days
 
 class GraphActivity : AppCompatActivity() {
-    lateinit var binding: ActivityGraphBinding
-    lateinit var nutrition: Nutrition
-    var days = 0
+    private lateinit var loadingDialog: Dialog
+    private lateinit var binding: ActivityGraphBinding
+    private lateinit var nutrition: Nutrition
+    private var days = 0
 
     val api_key = "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" //not valid
 
@@ -33,16 +36,15 @@ class GraphActivity : AppCompatActivity() {
         binding = ActivityGraphBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //addData(LocalDateTime.now().format(DateTimeFormatter.ofPattern(" yyyy-MM-dd")))
+
+        loadingDialog = LoadingDialog(this)
+
         initLayout()
         //initAI()
-
-
-
-
     }
 
     private fun initLayout() {
+        loadingDialog.show()
         val items = resources.getStringArray(R.array.my_array)
         binding.apply {
             val myAdapter = ArrayAdapter(
@@ -69,6 +71,7 @@ class GraphActivity : AppCompatActivity() {
             pvSugar.progress = nutrition.sugar.toFloat() / 2000 * 100
             pvSodium.progress = nutrition.sodium.toFloat() / 2000 * 100
         }
+        loadingDialog.dismiss()
     }
 
     inner class SpinnerItemSelectListener: AdapterView.OnItemSelectedListener {

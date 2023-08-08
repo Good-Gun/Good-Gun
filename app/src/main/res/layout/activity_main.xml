@@ -16,8 +16,8 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_main"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        app:itemIconSize="30dp"
+        android:layout_height="50dp"
+        app:itemIconSize="25dp"
         android:background="@drawable/box_radius_top_10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:labelVisibilityMode="unlabeled"
@@ -27,11 +27,12 @@
 
     <ImageView
         android:id="@+id/iv_add"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginBottom="20dp"
-        android:padding="15dp"
-        android:elevation="10dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="10dp"
+        android:padding="10dp"
+        android:elevation="5dp"
+        android:outlineSpotShadowColor="@null"
         android:src="@drawable/ic_barcode_20dp"
         android:background="@drawable/circle_outline"
         app:layout_constraintStart_toStartOf="parent"

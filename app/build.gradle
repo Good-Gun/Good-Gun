@@ -31,13 +31,13 @@ android {
     }
     //11 -> 17로 변경
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 
     //11 -> 17로 변경
     kotlinOptions {
-        jvmTarget = '17'
+        jvmTarget = '11'
     }
 
     viewBinding{
@@ -79,9 +79,10 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0'
 
-    /*ProgressBar related GITHUB address*/
+    /*OpenSource View Design related GITHUB address*/
     implementation 'com.github.appersiano:imageprogressview:-SNAPSHOT'
     implementation "com.github.skydoves:progressview:1.1.3"
+    implementation 'com.github.ybq:Android-SpinKit:1.4.0'
 
     //카메라
     implementation 'androidx.camera:camera-view:1.2.3'
@@ -96,4 +97,6 @@ dependencies {
     // define dependencies without versions
     implementation 'com.aallam.openai:openai-client'
     runtimeOnly 'io.ktor:ktor-client-okhttp'
+
+
 }

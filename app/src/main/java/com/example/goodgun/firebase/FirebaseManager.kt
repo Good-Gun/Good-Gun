@@ -110,6 +110,31 @@ object FirebaseManager {
         nutrition
     }
 
+    suspend fun getDayNutrition(date: String): Nutrition = withContext(Dispatchers.IO) {
+        val nutrition = Nutrition()
+
+        val datesRef: DatabaseReference =
+            database.getReference("user_list").child(userId).child("food").child(date.trim())
+
+        val dataSnapshot: DataSnapshot = datesRef.get().await()
+        for (snapshot in dataSnapshot.children) {
+            Log.d("Firebase Communication", "in day Nutrition, ${snapshot.key}")
+            val food = snapshot.getValue(Food::class.java)!!
+            nutrition.apply {
+                calorie += food.calorie
+                carbohydrates += food.carbohydrates
+                fat += food.fat
+                saturated_fat += food.saturated_fat
+                trans_fat += food.trans_fat
+                cholesterol += food.cholesterol
+                protein += food.protein
+                sodium += food.sodium
+                sugar += food.sugar
+            }
+        }
+        nutrition
+    }
+
     fun postFoodData(date: String, food: Food) {
         val foodRef =
             FirebaseDatabase.getInstance().getReference("user_list").child(userId).child("food").child(date.trim()).push()
