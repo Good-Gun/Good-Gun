@@ -45,7 +45,7 @@ class LoginActivity : AppCompatActivity() {
 
         if (currentUser != null) {
             Toast.makeText(this, currentUser.email + " 로 로그인", Toast.LENGTH_LONG).show()
-            database.child("user_list").child(currentUser.uid).setValue(User(currentUser.email.toString(), currentUser.displayName.toString()))
+            //database.child("user_list").child(currentUser.uid).setValue(User(currentUser.email.toString(), currentUser.displayName.toString()))
             startActivity(Intent(this, MainActivity::class.java))
             finish() // 로그인 엑티비티는 종료
         }
