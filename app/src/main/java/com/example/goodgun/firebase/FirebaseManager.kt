@@ -15,7 +15,7 @@ object FirebaseManager {
     private val userId = "MhAk3L1JdrcV2bnoCkvKq2vCnD02"
     private val database = FirebaseDatabase.getInstance()
 
-    /*파이어베이스로부터 데이터 가져오기*/
+    /*firebase에서 date부터 오늘까지의 음식 정보들 가져오기*/
     suspend fun getFoodData(date: String): List<Food> = withContext(Dispatchers.IO) {
         val foodList: MutableList<Food> = mutableListOf<Food>()
         val datesRef: DatabaseReference =
@@ -51,6 +51,7 @@ object FirebaseManager {
     }
 
 
+    /*firebase에서 date부터 오늘까지의 음식들의 영양정보 총합 가져오기*/
     suspend fun getNutritionData(date: String): Nutrition = withContext(Dispatchers.IO) {
         val nutrition = Nutrition()
         var days = 0
@@ -110,6 +111,8 @@ object FirebaseManager {
         nutrition
     }
 
+
+    /*firebase에서 date에 등록된 음식들의 영양정보 총합 가져오기*/
     suspend fun getDayNutrition(date: String): Nutrition = withContext(Dispatchers.IO) {
         val nutrition = Nutrition()
 
@@ -135,6 +138,7 @@ object FirebaseManager {
         nutrition
     }
 
+    /*임시로 만들어둔 음식 등록용 함수*/
     fun postFoodData(date: String, food: Food) {
         val foodRef =
             FirebaseDatabase.getInstance().getReference("user_list").child(userId).child("food").child(date.trim()).push()

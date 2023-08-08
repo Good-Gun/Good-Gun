@@ -27,12 +27,12 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class HomeFragment : Fragment() {
-    private lateinit var loadingDialog: Dialog
-    lateinit var todayAdapter: TodayRVAdapter
-    lateinit var  nutrition: Nutrition
-    val food_list: ArrayList<Food> = arrayListOf()
-    lateinit var today:String
-    lateinit var date:String
+    private lateinit var loadingDialog: Dialog  //로딩창 클래스
+    lateinit var todayAdapter: TodayRVAdapter   //오늘 섭취한 음식정보 recyclerView
+    lateinit var  nutrition: Nutrition          //영양 정보 저장을 위한 클래스
+    val food_list: ArrayList<Food> = arrayListOf()  //음식 리스트
+    lateinit var today:String       //오늘 날짜 저장
+    lateinit var date:String        //다른 날짜의 영양정보 탐색을 위한 변수
 
     var binding: FragmentHomeBinding? = null
     override fun onCreateView(
@@ -53,21 +53,21 @@ class HomeFragment : Fragment() {
         return binding!!.root
     }
 
-    override fun onResume() {
-        super.onResume()
-    }
-
+    /*일반 레이아웃 초기화*/
     fun initLayout() {
         binding!!.apply {
             tvHomeName.text = "이석준"
             tvHomeDate.text = today
 
+            /*날짜 탐색 (이전 날짜)*/
             ivHomeLeft.setOnClickListener {
                 loadingDialog.show()
                 date = LocalDate.parse(date.trim()).minusDays(1).toString()
                 tvHomeDate.text = date
                 getNutrition(date)
             }
+
+            /*날짜 탐색 (다음 날짜)*/
             ivHomeRight.setOnClickListener {
                 loadingDialog.show()
                 if(LocalDate.parse(today.trim()) > LocalDate.parse(date.trim())) {
@@ -77,17 +77,20 @@ class HomeFragment : Fragment() {
                 }
             }
 
+            /*식단 추천 창으로 이동*/
             homeBtn2.setOnClickListener {
                 val intent = Intent(activity, FoodActivity::class.java)
                 startActivity(intent)
             }
+
+            /*통계 창으로 이동*/
             homeBtn3.setOnClickListener {
                 val intent = Intent(activity, GraphActivity::class.java)
                 startActivity(intent)
             }
 
+            /*임시 저장된 스캔내역 출력 액티비티로 이동*/
             ivScanNum.setOnClickListener {
-                /*임시 저장된 스캔내역 출력 액티비티로 이동*/
                 val intent = Intent(requireContext(), ScanInfomation::class.java)
                 startActivity(intent)
             }
@@ -103,6 +106,7 @@ class HomeFragment : Fragment() {
         val spaceDecoration = this.VerticalSpaceItemDecoration(20)
         binding?.rvHomeToday?.addItemDecoration(spaceDecoration)
 
+        /*파이어베이스 요청*/
         CoroutineScope(Dispatchers.Main).launch {
             withContext(Dispatchers.IO) {
                 nutrition = FirebaseManager.getDayNutrition(today)
@@ -115,6 +119,7 @@ class HomeFragment : Fragment() {
         }
     }
 
+    /*날짜를 바꿀 시 파이어베이스 요청*/
     private fun getNutrition(date:String) {
         CoroutineScope(Dispatchers.Main).launch {
             withContext(Dispatchers.IO) {
@@ -125,6 +130,7 @@ class HomeFragment : Fragment() {
         }
     }
 
+    /*프로그래스 및 기타 정보 수정*/
     private fun setProgress() {
         binding!!.apply {
             pbHomeCalorie.setProgress((nutrition.calorie/2000.0 * 100.0).toInt())
@@ -136,6 +142,7 @@ class HomeFragment : Fragment() {
         loadingDialog.dismiss()
     }
 
+    /*리사이클러뷰에서 아이템 간격 조정*/
     inner class VerticalSpaceItemDecoration(private val verticalSpaceHeight: Int) :
         RecyclerView.ItemDecoration() {
 

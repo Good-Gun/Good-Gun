@@ -20,6 +20,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Collections.addAll
 
+/*오늘의 정보만 다루는 액티비티*/
 class FoodActivity : AppCompatActivity() {
     private lateinit var loadingDialog: Dialog
     lateinit var binding: ActivityFoodBinding
