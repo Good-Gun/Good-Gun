@@ -118,7 +118,7 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 app:imageShadowColor="@color/bright_grey"
-                app:srcImage="@drawable/baseline_cloud_24" />
+                app:srcImage="@drawable/baseline_cloud_24"/>
 
             <TextView
                 android:id="@+id/tv_home_calorie"
@@ -156,6 +156,7 @@
 
 
             <TextView
+                android:id="@+id/tv_home_carbohydrates"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1000 / 2000 kcal"
@@ -190,6 +191,7 @@
 
 
             <TextView
+                android:id="@+id/tv_home_fat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1000 / 2000 kcal"
@@ -223,6 +225,7 @@
 
 
             <TextView
+                android:id="@+id/tv_home_proteins"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1000 / 2000 kcal"
@@ -297,6 +300,7 @@
             android:paddingVertical="15dp"
             android:paddingHorizontal="10dp"
             android:layout_marginEnd="10dp"
+            android:layout_marginBottom="20dp"
             android:elevation="10dp"
             android:background="@drawable/box_radius_10dp"
             android:backgroundTint="@color/red"

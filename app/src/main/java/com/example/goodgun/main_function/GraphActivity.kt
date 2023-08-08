@@ -5,6 +5,8 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.appcompat.app.AppCompatActivity
+
 
 import com.aallam.openai.api.BetaOpenAI
 import com.aallam.openai.api.chat.*
@@ -29,11 +31,10 @@ import kotlin.time.Duration.Companion.seconds
 
 class GraphActivity : AppCompatActivity() {
     lateinit var binding: ActivityGraphBinding
-    lateinit var foodList: List<Food>
+    lateinit var nutrition: Nutrition
     var days = 0
 
     val api_key = "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" //not valid
-    val userId = "CCZLvkLE6GfhwlhL4XTyk1vnKrp2"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,8 +42,10 @@ class GraphActivity : AppCompatActivity() {
         binding = ActivityGraphBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //addData(LocalDateTime.now().format(DateTimeFormatter.ofPattern(" yyyy-MM-dd")))
         initLayout()
         //initAI()
+
 
 
     }
@@ -57,132 +60,72 @@ class GraphActivity : AppCompatActivity() {
             )
             spinner1.adapter = myAdapter
             spinner1.setSelection(0)
-            spinner1.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>,
-                    view: View,
-                    position: Int,
-                    id: Long
-                ) {
-                    //dateSelect(position)
-                    var time = LocalDateTime.now()
-                    when (position) {
-                        0 -> {
-                            days = 1
-                        }
-                        1 -> {
-                            days = 7
-                            time = time.minusWeeks(1)
-                        }
-                        2 -> {
-                            time = time.minusMonths(1)
-                            days = YearMonth.now().minusMonths(1).lengthOfMonth()
-                        }
-                        3 -> {
-                            for (i in 1..3) {
-                                days += YearMonth.now().minusMonths(i.toLong()).lengthOfMonth()
-                            }
-                            time = time.minusMonths(3)
-
-                        }
-                        4 -> {
-                            for (i in 1..6) {
-                                days += YearMonth.now().minusMonths(i.toLong()).lengthOfMonth()
-                                time = time.minusMonths(6)
-                            }
-                        }
-                    }
-                    val formatter = DateTimeFormatter.ofPattern(" yyyy-MM-dd")
-                    val formatted = time.format(formatter)
-
-                    CoroutineScope(Dispatchers.Main).launch {
-                        withContext(Dispatchers.IO) {
-                            foodList = FirebaseManager.getFoodData(formatted)
-                        }
-                        //addData(formatted)
-                        delay(1000)
-                        Log.e("Firebase Communication", "Check After foodList initialization")
-                        initChart()
-                    }
-
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>) {
-                }
-            }
+            spinner1.onItemSelectedListener = SpinnerItemSelectListener()
         }
     }
-
-
 
     private fun initChart() {
         binding.apply {
-            var nutrition = Nutrition()
-            for (item in foodList) {
-                Log.d("Firebase Communication", "${item.name}, ${item.registerDate}")
-                nutrition.apply {
-                    calorie += item.calorie
-                    carbohydrates += item.carbohydrates
-                    fat += item.fat
-                    saturated_fat += item.saturated_fat
-                    trans_fat += item.trans_fat
-                    cholesterol += item.cholesterol
-                    protein += item.protein
-                    sodium += item.sodium
-                    sugar += item.sugar
-                }
-            }
-
-            nutrition.apply {
-                calorie /= days
-                carbohydrates /= days
-                fat /= days
-                saturated_fat /= days
-                trans_fat /= days
-                cholesterol /= days
-                protein /= days
-                sodium /= days
-                sugar /= days
-            }
-
-
-            pvCalorie.progress = nutrition.calorie.toFloat()
-            pvCarbohydrates.progress = nutrition.carbohydrates.toFloat()
-            pvProteins.progress = nutrition.protein.toFloat()
-            pvFat.progress = nutrition.fat.toFloat()
-            pvTransFat.progress = nutrition.trans_fat.toFloat()
-            pvSaturatedFat.progress = nutrition.saturated_fat.toFloat()
-            pvCholesterol.progress = nutrition.cholesterol.toFloat()
-            pvSugar.progress = nutrition.sugar.toFloat()
-            pvSodium.progress = nutrition.sodium.toFloat()
-
-
+            pvCalorie.progress = nutrition.calorie.toFloat() / 2000 * 100
+            pvCarbohydrates.progress = nutrition.carbohydrates.toFloat() / 2000 * 100
+            pvProteins.progress = nutrition.protein.toFloat() / 2000 * 100
+            pvFat.progress = nutrition.fat.toFloat() / 2000 * 100
+            pvTransFat.progress = nutrition.trans_fat.toFloat() / 2000 * 100
+            pvSaturatedFat.progress = nutrition.saturated_fat.toFloat() / 2000 * 100
+            pvCholesterol.progress = nutrition.cholesterol.toFloat() / 2000 * 100
+            pvSugar.progress = nutrition.sugar.toFloat() / 2000 * 100
+            pvSodium.progress = nutrition.sodium.toFloat() / 2000 * 100
         }
     }
 
-    fun readUserData(usersRef: DatabaseReference, userId: String) {
-        // 단일 사용자에 대한 ValueEventListener를 추가합니다.
-        val valueEventListener = object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                // 사용자 데이터 가져오기
-                val user = snapshot.getValue(User::class.java)
-                if (user != null) {
-                    Log.d("Firebase Communication", "User Name: ${user.u_name}")
-                    Log.d("Firebase Communication", "User Name: ${user.u_email}")
-                } else {
-                    println("User not found.")
+    inner class SpinnerItemSelectListener: AdapterView.OnItemSelectedListener {
+        override fun onItemSelected(
+            parent: AdapterView<*>,
+            view: View,
+            position: Int,
+            id: Long
+        ) {
+            //dateSelect(position)
+            var time = LocalDateTime.now()
+            when (position) {
+                0 -> {
+                    days = 1
+                }
+                1 -> {
+                    days = 7
+                    time = time.minusWeeks(1)
+                }
+                2 -> {
+                    time = time.minusMonths(1)
+                    days = YearMonth.now().minusMonths(1).lengthOfMonth()
+                }
+                3 -> {
+                    for (i in 1..3) {
+                        days += YearMonth.now().minusMonths(i.toLong()).lengthOfMonth()
+                    }
+                    time = time.minusMonths(3)
+
+                }
+                4 -> {
+                    for (i in 1..6) {
+                        days += YearMonth.now().minusMonths(i.toLong()).lengthOfMonth()
+                        time = time.minusMonths(6)
+                    }
                 }
             }
+            val formatter = DateTimeFormatter.ofPattern(" yyyy-MM-dd")
+            val formatted = time.format(formatter)
 
-            override fun onCancelled(error: DatabaseError) {
-                println("Database error occurred: ${error.message}")
-
+            CoroutineScope(Dispatchers.Main).launch {
+                withContext(Dispatchers.IO) {
+                    nutrition = FirebaseManager.getNutritionData(formatted)
+                }
+                initChart()
             }
         }
 
-        // ValueEventListener를 등록하고 해당 사용자 데이터를 읽습니다.
-        val userRef = usersRef.child(userId)
-        userRef.addListenerForSingleValueEvent(valueEventListener)
+        override fun onNothingSelected(parent: AdapterView<*>) {
+        }
     }
 
     /*temporary Addition of Data*/

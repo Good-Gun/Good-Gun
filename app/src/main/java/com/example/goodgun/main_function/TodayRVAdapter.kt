@@ -4,11 +4,13 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.goodgun.Food
 import com.example.goodgun.databinding.ItemFoodListTodayBinding
 
 class TodayRVAdapter(
     val context: Context,
-    private val dataList: ArrayList<Pair<String, String>>,
+    private val dataList: List<Food>,
+    private val maxItemCount: Int
 ) : RecyclerView.Adapter<TodayRVAdapter.ItemViewHolder>() {
 
     /*interface OnItemClickListener{
@@ -35,17 +37,24 @@ class TodayRVAdapter(
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val listposition = dataList[position]
-        holder.binding.apply {
-            tvDate.text = listposition.first
-            tvName.text = listposition.second
-            /*Log.d("ColorCode", "color = ${listposition.label}, ${R.color.color_gr4}")
-            tagColor.backgroundTintList = context.resources.getColorStateList(listposition.label)*/
+        if (position < maxItemCount) {val listposition = dataList[position]
+            holder.binding.apply {
+                tvDate.text = listposition.registerDate
+                tvName.text = listposition.name
+                /*Log.d("ColorCode", "color = ${listposition.label}, ${R.color.color_gr4}")
+                tagColor.backgroundTintList = context.resources.getColorStateList(listposition.label)*/
+            }
         }
+
     }
 
-    override fun getItemCount(): Int = dataList.size
-
+    override fun getItemCount(): Int {
+        return if (dataList.size <= maxItemCount) {
+            dataList.size
+        } else {
+            maxItemCount
+        }
+    }
     override fun getItemViewType(position: Int): Int {
         return position
     }

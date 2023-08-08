@@ -10,12 +10,22 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.goodgun.databinding.FragmentHomeBinding
+import com.example.goodgun.firebase.FirebaseManager
 import com.example.goodgun.main_function.FoodActivity
 import com.example.goodgun.main_function.GraphActivity
 import com.example.goodgun.main_function.TodayRVAdapter
+import com.example.goodgun.main_function.model.Nutrition
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class HomeFragment : Fragment() {
     lateinit var todayAdapter: TodayRVAdapter
+    lateinit var  nutrition: Nutrition
+    val food_list: ArrayList<Food> = arrayListOf()
 
     val todayArray: ArrayList<Pair<String, String>> = arrayListOf()
     var binding: FragmentHomeBinding? = null
@@ -29,7 +39,8 @@ class HomeFragment : Fragment() {
 
         temporaryFillArr()
         initLayout()
-        setProgress()
+        initRV()
+        getDataFromFirebase()
 
         return binding!!.root
     }
@@ -47,18 +58,42 @@ class HomeFragment : Fragment() {
             val intent = Intent(activity, GraphActivity::class.java)
             startActivity(intent)
         }
+    }
 
-        todayAdapter = TodayRVAdapter(requireContext(), todayArray)
+    private fun initRV() {
+        todayAdapter = TodayRVAdapter(requireContext(), food_list, 5)
         binding?.rvHomeToday?.adapter = todayAdapter
         binding?.rvHomeToday?.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
         // 간격 20으로
-        val spaceDecoration = VerticalSpaceItemDecoration(20)
+        val spaceDecoration = this.VerticalSpaceItemDecoration(20)
         binding?.rvHomeToday?.addItemDecoration(spaceDecoration)
+
+    }
+
+    private fun getDataFromFirebase() {
+        CoroutineScope(Dispatchers.Main).launch {
+            withContext(Dispatchers.IO) {
+                nutrition = FirebaseManager.getNutritionData(
+                    LocalDateTime.now().format(DateTimeFormatter.ofPattern(" yyyy-MM-dd"))
+                )
+                food_list.apply {
+                    addAll(FirebaseManager.getFoodData(
+                        LocalDateTime.now().format(DateTimeFormatter.ofPattern(" yyyy-MM-dd"))
+                    ))
+                }
+            }
+            todayAdapter.notifyItemRangeInserted(0, food_list.size)
+            setProgress()
+        }
     }
 
     private fun setProgress() {
-        binding!!.pbHomeCalorie.setProgress(40)
+        binding!!.pbHomeCalorie.setProgress((nutrition.calorie/2000.0 * 100.0).toInt())
+        binding!!.tvHomeCalorie.text = nutrition.calorie.toString()+"/2000"
+        binding!!.tvHomeCarbohydrates.text = nutrition.carbohydrates.toString()+"/1000"
+        binding!!.tvHomeProteins.text = nutrition.protein.toString()+"/600"
+        binding!!.tvHomeFat.text = nutrition.fat.toString()+"/400"
     }
 
     inner class VerticalSpaceItemDecoration(private val verticalSpaceHeight: Int) :
