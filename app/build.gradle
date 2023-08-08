@@ -31,16 +31,13 @@ android {
     }
     //11 -> 17로 변경
     compileOptions {
-//        sourceCompatibility JavaVersion.VERSION_17
-//        targetCompatibility JavaVersion.VERSION_17
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     //11 -> 17로 변경
     kotlinOptions {
-//        jvmTarget = '17'
-        jvmTarget = '11'
+        jvmTarget = '17'
     }
 
     viewBinding{
@@ -54,12 +51,15 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.google.firebase:firebase-auth:19.0.0'
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
+
     implementation(platform("com.google.firebase:firebase-bom:32.2.0"))
+
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation "com.doinglab.foodlens:FoodLens:2.5.1"
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.9.0'
     implementation 'com.google.firebase:firebase-auth-ktx'
+
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'com.google.firebase:firebase-database-ktx:20.1.0'
     implementation 'com.google.code.gson:gson:2.10.1'

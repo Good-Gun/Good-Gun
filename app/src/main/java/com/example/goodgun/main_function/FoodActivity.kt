@@ -52,7 +52,7 @@ class FoodActivity : AppCompatActivity() {
             outRect: Rect,
             view: View,
             parent: RecyclerView,
-            state: RecyclerView.State
+            state: RecyclerView.State,
         ) {
             outRect.bottom = verticalSpaceHeight
         }

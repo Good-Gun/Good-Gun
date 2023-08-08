@@ -10,6 +10,7 @@ class FoodAddAdapter(var items: ArrayList<FoodEntity>) : RecyclerView.Adapter<Fo
     interface OnItemClickListener {
         fun onItemClick(data: FoodEntity, position: Int)
     }
+
     // 하나의 data 에 대해 서로다른 이벤트리스너 등록가능
     var itemadd: OnItemClickListener? = null
     var itemdelete: OnItemClickListener? = null

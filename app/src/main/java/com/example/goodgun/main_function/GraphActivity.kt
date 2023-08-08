@@ -6,15 +6,9 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
-
-
 import com.aallam.openai.api.BetaOpenAI
 import com.aallam.openai.api.chat.*
-import com.aallam.openai.api.http.Timeout
-import com.aallam.openai.api.model.ModelId
-import com.aallam.openai.client.OpenAI
 import com.example.goodgun.Food
-
 import com.example.goodgun.R
 import com.example.goodgun.User
 import com.example.goodgun.databinding.ActivityGraphBinding
@@ -22,12 +16,10 @@ import com.example.goodgun.firebase.FirebaseManager
 import com.example.goodgun.main_function.model.Nutrition
 import com.google.firebase.database.*
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.Flow
 import java.time.LocalDateTime
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 import kotlin.time.Duration.Companion.days
-import kotlin.time.Duration.Companion.seconds
 
 class GraphActivity : AppCompatActivity() {
     lateinit var binding: ActivityGraphBinding
@@ -35,7 +27,6 @@ class GraphActivity : AppCompatActivity() {
     var days = 0
 
     val api_key = "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" //not valid
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +39,7 @@ class GraphActivity : AppCompatActivity() {
 
 
 
+
     }
 
     private fun initLayout() {
@@ -56,10 +48,11 @@ class GraphActivity : AppCompatActivity() {
             val myAdapter = ArrayAdapter(
                 this@GraphActivity,
                 android.R.layout.simple_spinner_dropdown_item,
-                items
+                items,
             )
             spinner1.adapter = myAdapter
             spinner1.setSelection(0)
+
             spinner1.onItemSelectedListener = SpinnerItemSelectListener()
         }
     }
@@ -121,6 +114,7 @@ class GraphActivity : AppCompatActivity() {
                     nutrition = FirebaseManager.getNutritionData(formatted)
                 }
                 initChart()
+
             }
         }
 
@@ -130,7 +124,6 @@ class GraphActivity : AppCompatActivity() {
 
     /*temporary Addition of Data*/
     private fun addData(date: String) {
-
         for (i in 1..10) {
             val food = Food(
                 0 + i,
@@ -144,7 +137,7 @@ class GraphActivity : AppCompatActivity() {
                 106 + i,
                 107 + i,
                 108 + i,
-                date
+                date,
             )
             FirebaseManager.postFoodData(date, food)
         }

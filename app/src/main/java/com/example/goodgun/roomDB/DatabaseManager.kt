@@ -13,7 +13,7 @@ object DatabaseManager {
             val newDatabase = Room.databaseBuilder(
                 context.applicationContext,
                 FoodDatabase::class.java,
-                "food.db"
+                "food.db",
             )
                 .addMigrations(FoodDatabase.migration_1_to_2)
                 .build()

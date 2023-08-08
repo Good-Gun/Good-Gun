@@ -51,7 +51,8 @@ class RegistrationActivity : AppCompatActivity() {
                 createAccount(
                     binding.registrationIdInput
                         .text.toString(),
-                    binding.registrationPasswordInput.text.toString(), binding.nameInput.text.toString()
+                    binding.registrationPasswordInput.text.toString(),
+                    binding.nameInput.text.toString(),
                 )
             }
     }
@@ -72,15 +73,17 @@ class RegistrationActivity : AppCompatActivity() {
                 ?.addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         Toast.makeText(
-                            this, "계정 생성 완료.",
-                            Toast.LENGTH_SHORT
+                            this,
+                            "계정 생성 완료.",
+                            Toast.LENGTH_SHORT,
                         ).show()
                         database.child("user_list").child(ID).setValue(User(ID, password, name))
                         finish() // 가입창 종료
                     } else {
                         Toast.makeText(
-                            this, "계정 생성 실패",
-                            Toast.LENGTH_SHORT
+                            this,
+                            "계정 생성 실패",
+                            Toast.LENGTH_SHORT,
                         ).show()
                     }
                 }

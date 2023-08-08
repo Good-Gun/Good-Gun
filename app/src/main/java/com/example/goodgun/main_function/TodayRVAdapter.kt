@@ -30,7 +30,7 @@ class TodayRVAdapter(
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
+        viewType: Int,
     ): ItemViewHolder {
         val binding = ItemFoodListTodayBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ItemViewHolder(binding)

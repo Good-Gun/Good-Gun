@@ -26,6 +26,7 @@ object FirebaseManager {
             if (dateSnapshot.value != null) {
                 Log.d(
                     "Firebase Communication",
+
                     "key ${dateSnapshot.key!!}"
                 )
 
@@ -42,12 +43,13 @@ object FirebaseManager {
                         )
                         foodList.add(food)
                     }
+
                 }
             }
-
         }
         foodList
     }
+
 
     suspend fun getNutritionData(date: String): Nutrition = withContext(Dispatchers.IO) {
         val nutrition = Nutrition()
@@ -62,6 +64,7 @@ object FirebaseManager {
                 Log.d(
                     "Firebase Communication",
                     "key ${dateSnapshot.key!!}"
+
                 )
 
                 val date1 = LocalDate.parse(dateSnapshot.key.toString().trim())
@@ -74,6 +77,7 @@ object FirebaseManager {
                         val food = foodSnapshot.getValue(Food::class.java)!!
                         Log.d(
                             "Firebase Communication",
+
                             "Adding food: ${food.name}, regDate: ${food.registerDate}"
                         )
                         nutrition.apply {
@@ -112,10 +116,10 @@ object FirebaseManager {
         foodRef.setValue(food)
             .addOnSuccessListener {
                 // 성공적으로 데이터가 저장된 경우 실행될 코드
-                Log.d("Firebase Communication", "Data Added Successfully: ${date}, ${food.name}")
+                Log.d("Firebase Communication", "Data Added Successfully: $date, ${food.name}")
             }
             .addOnFailureListener {
-                Log.d("Firebase Communication", "Data Add Failed: ${date}, ${food.name}")
+                Log.d("Firebase Communication", "Data Add Failed: $date, ${food.name}")
             }
     }
 }
