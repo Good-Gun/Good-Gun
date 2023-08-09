@@ -28,12 +28,14 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class HomeFragment : Fragment() {
+
     private lateinit var loadingDialog: Dialog  //로딩창 클래스
     lateinit var todayAdapter: TodayRVAdapter   //오늘 섭취한 음식정보 recyclerView
     lateinit var  nutrition: Nutrition          //영양 정보 저장을 위한 클래스
     val food_list: ArrayList<Food> = arrayListOf()  //음식 리스트
     lateinit var today:String       //오늘 날짜 저장
     lateinit var date:String        //다른 날짜의 영양정보 탐색을 위한 변수
+
 
     var binding: FragmentHomeBinding? = null
     override fun onCreateView(
@@ -107,12 +109,16 @@ class HomeFragment : Fragment() {
         val spaceDecoration = this.VerticalSpaceItemDecoration(20)
         binding?.rvHomeToday?.addItemDecoration(spaceDecoration)
 
+
         /*파이어베이스 요청*/
+
         CoroutineScope(Dispatchers.Main).launch {
             withContext(Dispatchers.IO) {
                 nutrition = FirebaseManager.getDayNutrition(today)
                 food_list.apply {
+
                     addAll(FirebaseManager.getFoodData(today))
+
                 }
             }
             todayAdapter.notifyItemRangeInserted(0, food_list.size)
@@ -142,6 +148,7 @@ class HomeFragment : Fragment() {
             tvHomeFat.text = nutrition.fat.toString()+"/"+ max.fat.toString()
         }
         loadingDialog.dismiss()
+
     }
 
     /*리사이클러뷰에서 아이템 간격 조정*/

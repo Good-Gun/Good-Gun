@@ -55,19 +55,21 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="13dp"
-        android:text="키"
+        android:text="키 (cm)"
         android:textSize="14sp"
         android:textStyle="bold"
         />
 
     <EditText
-        android:id="@+id/heighInput"
+        android:id="@+id/heightInput"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="13dp"
         android:layout_marginRight="13dp"
         android:ems="10"
-        android:inputType="text"
+        android:inputType="number"
+        android:text="134"
+        android:textSize="10sp"
         android:singleLine="false" />
     <TextView
         android:id="@+id/weightTextView"
@@ -75,7 +77,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="13dp"
-        android:text="몸무게"
+        android:text="몸무게 (kg)"
         android:textSize="14sp"
         android:textStyle="bold"
         />
@@ -83,11 +85,12 @@
     <EditText
         android:id="@+id/weightInput"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="13dp"
         android:layout_marginRight="13dp"
+        android:textSize="10sp"
         android:ems="10"
-        android:inputType="text"
+        android:inputType="number"
         android:singleLine="false" />
     <TextView
         android:id="@+id/ageTextView"
@@ -95,7 +98,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="13dp"
-        android:text="나이"
+        android:text="나이 (만)"
         android:textSize="14sp"
         android:textStyle="bold"
         />
@@ -103,11 +106,12 @@
     <EditText
         android:id="@+id/ageInput"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="13dp"
         android:layout_marginRight="13dp"
         android:ems="10"
-        android:inputType="text"
+        android:textSize="10sp"
+        android:inputType="number"
         android:singleLine="false" />
     <TextView
         android:id="@+id/allergyTextView"
@@ -123,9 +127,10 @@
     <EditText
         android:id="@+id/allergyInput"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="13dp"
         android:layout_marginRight="13dp"
+        android:textSize="10sp"
         android:ems="10"
         android:inputType="text"
         android:singleLine="false" />

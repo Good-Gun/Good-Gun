@@ -74,7 +74,7 @@ class FoodActivity : AppCompatActivity() {
     }
 
     private fun getDataFromFirebase(date: String) {
-        var nutrition:Nutrition ?= null
+        var nutrition: Nutrition ? = null
         CoroutineScope(Dispatchers.Main).launch {
             withContext(Dispatchers.IO) {
                 nutrition = FirebaseManager.getNutritionData(date)
@@ -89,6 +89,7 @@ class FoodActivity : AppCompatActivity() {
 
     private fun setNutrition(nutrition: Nutrition) {
         binding.apply {
+
             tvFoodCalorie.text = nutrition.calorie.toString() +"/"+"2000"
             tvFoodCarbo.text = nutrition.carbohydrates.toString() +"/"+"100"
             tvFoodSugar.text = nutrition.sugar.toString() +"/"+"100"
@@ -99,13 +100,13 @@ class FoodActivity : AppCompatActivity() {
             tvFoodCholesterol.text = nutrition.cholesterol.toString() +"/"+"100"
             tvFoodProtein.text = nutrition.protein.toString() +"/"+"100"
             tvFoodSodium.text = nutrition.sodium.toString() +"/"+"100"
+
         }
 
         loadingDialog.dismiss()
     }
 
     private fun generateQuestion() {
-        
     }
 
     /*테스트용 배열 생성을 위한 임시 함수*/

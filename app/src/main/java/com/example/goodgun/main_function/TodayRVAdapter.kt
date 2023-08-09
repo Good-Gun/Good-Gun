@@ -37,7 +37,8 @@ class TodayRVAdapter(
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        if (position < maxItemCount) {val listposition = dataList[position]
+        if (position < maxItemCount) {
+            val listposition = dataList[position]
             holder.binding.apply {
                 tvDate.text = listposition.registerDate
                 tvName.text = listposition.name
@@ -45,7 +46,6 @@ class TodayRVAdapter(
                 tagColor.backgroundTintList = context.resources.getColorStateList(listposition.label)*/
             }
         }
-
     }
 
     override fun getItemCount(): Int {
