@@ -24,7 +24,7 @@ import java.time.format.DateTimeFormatter
 
 class HomeFragment : Fragment() {
     lateinit var todayAdapter: TodayRVAdapter
-    lateinit var  nutrition: Nutrition
+    lateinit var nutrition: Nutrition
     val food_list: ArrayList<Food> = arrayListOf()
 
     val todayArray: ArrayList<Pair<String, String>> = arrayListOf()
@@ -68,7 +68,6 @@ class HomeFragment : Fragment() {
         // 간격 20으로
         val spaceDecoration = this.VerticalSpaceItemDecoration(20)
         binding?.rvHomeToday?.addItemDecoration(spaceDecoration)
-
     }
 
     private fun getDataFromFirebase() {
@@ -78,9 +77,11 @@ class HomeFragment : Fragment() {
                     LocalDateTime.now().format(DateTimeFormatter.ofPattern(" yyyy-MM-dd"))
                 )
                 food_list.apply {
-                    addAll(FirebaseManager.getFoodData(
-                        LocalDateTime.now().format(DateTimeFormatter.ofPattern(" yyyy-MM-dd"))
-                    ))
+                    addAll(
+                        FirebaseManager.getFoodData(
+                            LocalDateTime.now().format(DateTimeFormatter.ofPattern(" yyyy-MM-dd"))
+                        )
+                    )
                 }
             }
             todayAdapter.notifyItemRangeInserted(0, food_list.size)
@@ -89,11 +90,11 @@ class HomeFragment : Fragment() {
     }
 
     private fun setProgress() {
-        binding!!.pbHomeCalorie.setProgress((nutrition.calorie/2000.0 * 100.0).toInt())
-        binding!!.tvHomeCalorie.text = nutrition.calorie.toString()+"/2000"
-        binding!!.tvHomeCarbohydrates.text = nutrition.carbohydrates.toString()+"/1000"
-        binding!!.tvHomeProteins.text = nutrition.protein.toString()+"/600"
-        binding!!.tvHomeFat.text = nutrition.fat.toString()+"/400"
+        binding!!.pbHomeCalorie.setProgress((nutrition.calorie / 2000.0 * 100.0).toInt())
+        binding!!.tvHomeCalorie.text = nutrition.calorie.toString() + "/2000"
+        binding!!.tvHomeCarbohydrates.text = nutrition.carbohydrates.toString() + "/1000"
+        binding!!.tvHomeProteins.text = nutrition.protein.toString() + "/600"
+        binding!!.tvHomeFat.text = nutrition.fat.toString() + "/400"
     }
 
     inner class VerticalSpaceItemDecoration(private val verticalSpaceHeight: Int) :

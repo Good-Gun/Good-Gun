@@ -214,9 +214,9 @@ class CameraActivity : AppCompatActivity() {
                 ActivityCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)
                 == PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(
-                    this,
-                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                ) == PackageManager.PERMISSION_GRANTED
+                this,
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            ) == PackageManager.PERMISSION_GRANTED
             -> {
                 Toast.makeText(this, "모든 권한 승인됨", Toast.LENGTH_SHORT).show()
             }
@@ -241,10 +241,10 @@ class CameraActivity : AppCompatActivity() {
     fun permissionCheckAlertDialog() {
         val builder = AlertDialog.Builder(this)
         builder.setMessage("반드시 READ_EXTERNAL_STORAGE과 CAMERA 권한이 모두 허용되어야 합니다.").setTitle("권한 체크").setPositiveButton("OK") {
-                _, _ ->
+            _, _ ->
             multiplePermissionLauncher.launch(permissions)
         }.setNegativeButton("Cancel") {
-                dlg, _ ->
+            dlg, _ ->
             dlg.dismiss()
         }
         val dialog = builder.create()

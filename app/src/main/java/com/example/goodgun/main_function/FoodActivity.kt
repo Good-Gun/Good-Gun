@@ -59,7 +59,7 @@ class FoodActivity : AppCompatActivity() {
     }
 
     private fun getDataFromFirebase(date: String) {
-        var nutrition:Nutrition ?= null
+        var nutrition: Nutrition ? = null
         CoroutineScope(Dispatchers.Main).launch {
             withContext(Dispatchers.IO) {
                 nutrition = FirebaseManager.getNutritionData(date)
@@ -74,20 +74,19 @@ class FoodActivity : AppCompatActivity() {
 
     private fun setNutrition(nutrition: Nutrition) {
         binding.apply {
-            tvFoodCalorie.text = nutrition.calorie.toString() +"/"+"2000"+" kcal"
-            tvFoodCarbo.text = nutrition.carbohydrates.toString() +"/"+"100"+" kcal"
-            tvFoodSugar.text = nutrition.sugar.toString() +"/"+"100"+" kcal"
-            tvFoodFat.text = nutrition.fat.toString() +"/"+"100"+" kcal"
-            tvFoodTrans.text = nutrition.trans_fat.toString() +"/"+"100"+" kcal"
-            tvFoodSaturated.text = nutrition.saturated_fat.toString() +"/"+"100"+" kcal"
-            tvFoodProtein.text = nutrition.protein.toString() +"/"+"100"+" kcal"
-            tvFoodCholesterol.text = nutrition.cholesterol.toString() +"/"+"100"+" kcal"
-            tvFoodProtein.text = nutrition.protein.toString() +"/"+"100"+" kcal"
+            tvFoodCalorie.text = nutrition.calorie.toString() + "/" + "2000" + " kcal"
+            tvFoodCarbo.text = nutrition.carbohydrates.toString() + "/" + "100" + " kcal"
+            tvFoodSugar.text = nutrition.sugar.toString() + "/" + "100" + " kcal"
+            tvFoodFat.text = nutrition.fat.toString() + "/" + "100" + " kcal"
+            tvFoodTrans.text = nutrition.trans_fat.toString() + "/" + "100" + " kcal"
+            tvFoodSaturated.text = nutrition.saturated_fat.toString() + "/" + "100" + " kcal"
+            tvFoodProtein.text = nutrition.protein.toString() + "/" + "100" + " kcal"
+            tvFoodCholesterol.text = nutrition.cholesterol.toString() + "/" + "100" + " kcal"
+            tvFoodProtein.text = nutrition.protein.toString() + "/" + "100" + " kcal"
         }
     }
 
     private fun generateQuestion() {
-        
     }
 
     /*테스트용 배열 생성을 위한 임시 함수*/

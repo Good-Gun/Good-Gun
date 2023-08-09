@@ -8,8 +8,6 @@ import com.google.firebase.database.ktx.getValue
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
 import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 object FirebaseManager {
     private val userId = "MhAk3L1JdrcV2bnoCkvKq2vCnD02"
@@ -33,9 +31,9 @@ object FirebaseManager {
                 val date1 = LocalDate.parse(dateSnapshot.key.toString().trim())
                 val date2 = LocalDate.parse(date.trim())
 
-                if(date1 >= date2){
+                if (date1 >= date2) {
                     val innerSnapshot = datesRef.child(dateSnapshot.key!!).get().await()
-                    for(foodSnapshot in innerSnapshot.children){
+                    for (foodSnapshot in innerSnapshot.children) {
                         val food = foodSnapshot.getValue(Food::class.java)!!
                         Log.d(
                             "Firebase Communication",
@@ -43,13 +41,11 @@ object FirebaseManager {
                         )
                         foodList.add(food)
                     }
-
                 }
             }
         }
         foodList
     }
-
 
     suspend fun getNutritionData(date: String): Nutrition = withContext(Dispatchers.IO) {
         val nutrition = Nutrition()
@@ -70,10 +66,10 @@ object FirebaseManager {
                 val date1 = LocalDate.parse(dateSnapshot.key.toString().trim())
                 val date2 = LocalDate.parse(date.trim())
 
-                if(date1 >= date2){
+                if (date1 >= date2) {
                     days++
                     val innerSnapshot = datesRef.child(dateSnapshot.key!!).get().await()
-                    for(foodSnapshot in innerSnapshot.children){
+                    for (foodSnapshot in innerSnapshot.children) {
                         val food = foodSnapshot.getValue(Food::class.java)!!
                         Log.d(
                             "Firebase Communication",
@@ -94,7 +90,6 @@ object FirebaseManager {
                     }
                 }
             }
-
         }
         nutrition.apply {
             calorie /= days

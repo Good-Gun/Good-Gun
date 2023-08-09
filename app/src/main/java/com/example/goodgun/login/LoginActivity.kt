@@ -45,7 +45,7 @@ class LoginActivity : AppCompatActivity() {
 
         if (currentUser != null) {
             Toast.makeText(this, currentUser.email + " 로 로그인", Toast.LENGTH_LONG).show()
-            //database.child("user_list").child(currentUser.uid).setValue(User(currentUser.email.toString(), currentUser.displayName.toString()))
+            // database.child("user_list").child(currentUser.uid).setValue(User(currentUser.email.toString(), currentUser.displayName.toString()))
             startActivity(Intent(this, MainActivity::class.java))
             finish() // 로그인 엑티비티는 종료
         }
@@ -115,14 +115,27 @@ class LoginActivity : AppCompatActivity() {
         var credential = GoogleAuthProvider.getCredential(account?.idToken, null)
         auth?.signInWithCredential(credential)
             ?.addOnCompleteListener {
-                    task ->
+                task ->
                 if (task.isSuccessful) {
                     // 로그인 성공 시
-                    Toast.makeText(this, "success", Toast.LENGTH_LONG).show()
-                    // 구글 로그인 시 데이터 베이스에 회원 정보제공
-                    // 구글 로그인의 경우 비밀번호를 제공하지 않으므로 ID토큰으로 대체함
-                    database.child("user_list").child(auth.uid.toString()).setValue(User(account?.email.toString(), account?.familyName.toString() + account?.givenName.toString()))
-                    startActivity(Intent(this, MainActivity::class.java))
+                    // 이미 회원인 경우의 action
+                    val userId = auth.currentUser?.uid.toString()
+                    val userRef = database.child("user_list")
+                    userRef.child(userId).get().addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            val dataSnapshot = task.result
+                            if (dataSnapshot.exists()) {
+                                println("uid가 user_list에 포함되어 있습니다.")
+                            } else {
+                                userRef.child(userId).setValue(User(account?.email.toString(), account?.familyName.toString() + account?.givenName.toString()))
+                                println("uid가 user_list에 포함되어 있지 않습니다.")
+                            }
+                        } else {
+                            println("데이터 가져오기 실패: ${task.exception}")
+                        }
+                    }
+                    startActivity(Intent(this, AdditionalInfoActivity::class.java))
+
                     finish() // 로그인 엑티비티는 종료
                 } else {
                     // 로그인 실패 시
@@ -155,7 +168,7 @@ class LoginActivity : AppCompatActivity() {
 
     fun moveMainPage(user: FirebaseUser?) {
         if (user != null) {
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this, AdditionalInfoActivity::class.java))
             finish() // 로그인 페이지는 종료
         }
     }

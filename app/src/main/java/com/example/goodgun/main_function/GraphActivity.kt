@@ -1,45 +1,35 @@
 package com.example.goodgun.main_function
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
-import com.aallam.openai.api.BetaOpenAI
-import com.aallam.openai.api.chat.*
 import com.example.goodgun.Food
 import com.example.goodgun.R
-import com.example.goodgun.User
 import com.example.goodgun.databinding.ActivityGraphBinding
 import com.example.goodgun.firebase.FirebaseManager
 import com.example.goodgun.main_function.model.Nutrition
-import com.google.firebase.database.*
 import kotlinx.coroutines.*
 import java.time.LocalDateTime
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
-import kotlin.time.Duration.Companion.days
 
 class GraphActivity : AppCompatActivity() {
     lateinit var binding: ActivityGraphBinding
     lateinit var nutrition: Nutrition
     var days = 0
 
-    val api_key = "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" //not valid
+    val api_key = "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" // not valid
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityGraphBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //addData(LocalDateTime.now().format(DateTimeFormatter.ofPattern(" yyyy-MM-dd")))
+        // addData(LocalDateTime.now().format(DateTimeFormatter.ofPattern(" yyyy-MM-dd")))
         initLayout()
-        //initAI()
-
-
-
-
+        // initAI()
     }
 
     private fun initLayout() {
@@ -71,14 +61,14 @@ class GraphActivity : AppCompatActivity() {
         }
     }
 
-    inner class SpinnerItemSelectListener: AdapterView.OnItemSelectedListener {
+    inner class SpinnerItemSelectListener : AdapterView.OnItemSelectedListener {
         override fun onItemSelected(
             parent: AdapterView<*>,
             view: View,
             position: Int,
             id: Long
         ) {
-            //dateSelect(position)
+            // dateSelect(position)
             var time = LocalDateTime.now()
             when (position) {
                 0 -> {
@@ -97,7 +87,6 @@ class GraphActivity : AppCompatActivity() {
                         days += YearMonth.now().minusMonths(i.toLong()).lengthOfMonth()
                     }
                     time = time.minusMonths(3)
-
                 }
                 4 -> {
                     for (i in 1..6) {
@@ -114,7 +103,6 @@ class GraphActivity : AppCompatActivity() {
                     nutrition = FirebaseManager.getNutritionData(formatted)
                 }
                 initChart()
-
             }
         }
 
