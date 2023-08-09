@@ -59,7 +59,9 @@
         <activity
             android:name=".login.RegistrationActivity"
             android:exported="false"></activity>
-
+        <activity
+            android:name=".login.AdditionalInfoActivity"
+            android:exported="false"></activity>
         <activity
             android:name=".login.ProfileActivity"
             android:exported="false" />
