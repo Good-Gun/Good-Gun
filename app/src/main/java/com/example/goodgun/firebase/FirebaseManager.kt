@@ -1,7 +1,9 @@
 package com.example.goodgun.firebase
 
 import android.util.Log
+import com.example.goodgun.ApplicationClass
 import com.example.goodgun.Food
+import com.example.goodgun.User
 import com.example.goodgun.main_function.model.Nutrition
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.getValue
@@ -95,16 +97,18 @@ object FirebaseManager {
                 }
             }
         }
-        nutrition.apply {
-            calorie /= days
-            carbohydrates /= days
-            fat /= days
-            saturated_fat /= days
-            trans_fat /= days
-            cholesterol /= days
-            protein /= days
-            sodium /= days
-            sugar /= days
+        if(days != 0) {
+            nutrition.apply {
+                calorie /= days
+                carbohydrates /= days
+                fat /= days
+                saturated_fat /= days
+                trans_fat /= days
+                cholesterol /= days
+                protein /= days
+                sodium /= days
+                sugar /= days
+            }
         }
         nutrition
     }
@@ -134,6 +138,15 @@ object FirebaseManager {
             }
         }
         nutrition
+    }
+
+    suspend fun getUserData():User= withContext(Dispatchers.IO) {
+        val dataRef: DatabaseReference =
+            database.getReference("user_list").child(ApplicationClass.uid)
+        val dataSnapshot: DataSnapshot = dataRef.get().await()
+        val user = dataSnapshot.getValue(User::class.java)!!
+
+        user
     }
 
     /*임시로 만들어둔 음식 등록용 함수*/

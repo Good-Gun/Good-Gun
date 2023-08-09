@@ -1,6 +1,5 @@
 package com.example.goodgun.main_function
 
-import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
 import android.view.View
@@ -119,6 +118,8 @@ class GraphActivity : AppCompatActivity() {
         override fun onNothingSelected(parent: AdapterView<*>) {
         }
     }
+
+
 
     /*temporary Addition of Data*/
     private fun addData(date: String) {
