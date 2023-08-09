@@ -26,5 +26,9 @@
     <color name="theme3">#FFB04BFF</color>
     <color name="theme4">#FFffffff</color>
 
+
+    <color name="icon_checked">#404040</color>
+    <color name="icon_unchecked">#BFBFBF</color>
+
     <color name="C1_2">#F0E6C4</color>
 </resources>

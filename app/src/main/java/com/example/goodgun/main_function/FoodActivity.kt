@@ -1,5 +1,6 @@
 package com.example.goodgun.main_function
 
+import android.app.Dialog
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
@@ -7,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.goodgun.Food
+import com.example.goodgun.LoadingDialog
 import com.example.goodgun.databinding.ActivityFoodBinding
 import com.example.goodgun.firebase.FirebaseManager
 import com.example.goodgun.main_function.model.Nutrition
@@ -18,7 +20,9 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Collections.addAll
 
+/*오늘의 정보만 다루는 액티비티*/
 class FoodActivity : AppCompatActivity() {
+    private lateinit var loadingDialog: Dialog
     lateinit var binding: ActivityFoodBinding
     lateinit var todayAdapter: TodayRVAdapter
     private var food_list: ArrayList<Food> = arrayListOf()
@@ -27,12 +31,23 @@ class FoodActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityFoodBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        loadingDialog = LoadingDialog(this)
+        loadingDialog.show()
         val todayDate =
             LocalDateTime.now().format(DateTimeFormatter.ofPattern(" yyyy-MM-dd"))
 
 //        temporaryFillArr()
+        initLayout()
         initTodayRV()
         getDataFromFirebase(todayDate)
+    }
+
+    private fun initLayout() {
+        binding.apply {
+            backBtn.setOnClickListener {
+                finish()
+            }
+        }
     }
 
     private fun initTodayRV() {
@@ -74,16 +89,21 @@ class FoodActivity : AppCompatActivity() {
 
     private fun setNutrition(nutrition: Nutrition) {
         binding.apply {
-            tvFoodCalorie.text = nutrition.calorie.toString() + "/" + "2000" + " kcal"
-            tvFoodCarbo.text = nutrition.carbohydrates.toString() + "/" + "100" + " kcal"
-            tvFoodSugar.text = nutrition.sugar.toString() + "/" + "100" + " kcal"
-            tvFoodFat.text = nutrition.fat.toString() + "/" + "100" + " kcal"
-            tvFoodTrans.text = nutrition.trans_fat.toString() + "/" + "100" + " kcal"
-            tvFoodSaturated.text = nutrition.saturated_fat.toString() + "/" + "100" + " kcal"
-            tvFoodProtein.text = nutrition.protein.toString() + "/" + "100" + " kcal"
-            tvFoodCholesterol.text = nutrition.cholesterol.toString() + "/" + "100" + " kcal"
-            tvFoodProtein.text = nutrition.protein.toString() + "/" + "100" + " kcal"
+
+            tvFoodCalorie.text = nutrition.calorie.toString() +"/"+"2000"
+            tvFoodCarbo.text = nutrition.carbohydrates.toString() +"/"+"100"
+            tvFoodSugar.text = nutrition.sugar.toString() +"/"+"100"
+            tvFoodFat.text = nutrition.fat.toString() +"/"+"100"
+            tvFoodTrans.text = nutrition.trans_fat.toString() +"/"+"100"
+            tvFoodSaturated.text = nutrition.saturated_fat.toString() +"/"+"100"
+            tvFoodProtein.text = nutrition.protein.toString() +"/"+"100"
+            tvFoodCholesterol.text = nutrition.cholesterol.toString() +"/"+"100"
+            tvFoodProtein.text = nutrition.protein.toString() +"/"+"100"
+            tvFoodSodium.text = nutrition.sodium.toString() +"/"+"100"
+
         }
+
+        loadingDialog.dismiss()
     }
 
     private fun generateQuestion() {
