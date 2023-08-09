@@ -2,9 +2,9 @@
 <resources>
     <string-array name="nut_array">
         <item>전체</item>
-        <item>열량</item>
-        <item>탄수화물</item>
-        <item>지방</item>
-        <item>단백질</item>
+        <item>열량(kcal)</item>
+        <item>탄수화물(g)</item>
+        <item>지방(g)</item>
+        <item>단백질(g)</item>
     </string-array>
 </resources>

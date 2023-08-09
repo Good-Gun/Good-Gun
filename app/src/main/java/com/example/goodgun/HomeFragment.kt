@@ -18,6 +18,7 @@ import com.example.goodgun.main_function.FoodActivity
 import com.example.goodgun.main_function.GraphActivity
 import com.example.goodgun.main_function.TodayRVAdapter
 import com.example.goodgun.main_function.model.Nutrition
+import com.google.android.play.integrity.internal.m
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -56,7 +57,7 @@ class HomeFragment : Fragment() {
     /*일반 레이아웃 초기화*/
     fun initLayout() {
         binding!!.apply {
-            tvHomeName.text = "이석준"
+            tvHomeName.text = ApplicationClass.uname
             tvHomeDate.text = today
 
             /*날짜 탐색 (이전 날짜)*/
@@ -132,12 +133,13 @@ class HomeFragment : Fragment() {
 
     /*프로그래스 및 기타 정보 수정*/
     private fun setProgress() {
+        val max = ApplicationClass.maxNutrition
         binding!!.apply {
             pbHomeCalorie.setProgress((nutrition.calorie/2000.0 * 100.0).toInt())
-            tvHomeCalorie.text = nutrition.calorie.toString()+"/2000"
-            tvHomeCarbohydrates.text = nutrition.carbohydrates.toString()+"/1000"
-            tvHomeProteins.text = nutrition.protein.toString()+"/600"
-            tvHomeFat.text = nutrition.fat.toString()+"/400"
+            tvHomeCalorie.text = nutrition.calorie.toString()+"/"+max.calorie.toString()
+            tvHomeCarbohydrates.text = nutrition.carbohydrates.toString()+"/"+max.carbohydrates.toString()
+            tvHomeProteins.text = nutrition.protein.toString()+"/"+max.protein.toString()
+            tvHomeFat.text = nutrition.fat.toString()+"/"+ max.fat.toString()
         }
         loadingDialog.dismiss()
     }
