@@ -77,6 +77,8 @@ class HomeFragment : Fragment() {
                     date = LocalDate.parse(date.trim()).plusDays(1).toString()
                     tvHomeDate.text = date
                     getNutrition(date)
+                } else {
+                    loadingDialog.dismiss()
                 }
             }
 
