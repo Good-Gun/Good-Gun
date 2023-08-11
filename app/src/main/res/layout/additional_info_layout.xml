@@ -124,11 +124,12 @@
         android:textStyle="bold"
         />
 
-    <EditText
+    <MultiAutoCompleteTextView
         android:id="@+id/allergyInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="13dp"
+        android:completionThreshold="1"
         android:layout_marginRight="13dp"
         android:textSize="10sp"
         android:ems="10"

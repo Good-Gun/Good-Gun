@@ -90,17 +90,16 @@ class FoodActivity : AppCompatActivity() {
     private fun setNutrition(nutrition: Nutrition) {
         binding.apply {
 
-            tvFoodCalorie.text = nutrition.calorie.toString() +"/"+"2000"
-            tvFoodCarbo.text = nutrition.carbohydrates.toString() +"/"+"100"
-            tvFoodSugar.text = nutrition.sugar.toString() +"/"+"100"
-            tvFoodFat.text = nutrition.fat.toString() +"/"+"100"
-            tvFoodTrans.text = nutrition.trans_fat.toString() +"/"+"100"
-            tvFoodSaturated.text = nutrition.saturated_fat.toString() +"/"+"100"
-            tvFoodProtein.text = nutrition.protein.toString() +"/"+"100"
-            tvFoodCholesterol.text = nutrition.cholesterol.toString() +"/"+"100"
-            tvFoodProtein.text = nutrition.protein.toString() +"/"+"100"
-            tvFoodSodium.text = nutrition.sodium.toString() +"/"+"100"
-
+            tvFoodCalorie.text = nutrition.calorie.toString() + "/" + "2000"
+            tvFoodCarbo.text = nutrition.carbohydrates.toString() + "/" + "100"
+            tvFoodSugar.text = nutrition.sugar.toString() + "/" + "100"
+            tvFoodFat.text = nutrition.fat.toString() + "/" + "100"
+            tvFoodTrans.text = nutrition.trans_fat.toString() + "/" + "100"
+            tvFoodSaturated.text = nutrition.saturated_fat.toString() + "/" + "100"
+            tvFoodProtein.text = nutrition.protein.toString() + "/" + "100"
+            tvFoodCholesterol.text = nutrition.cholesterol.toString() + "/" + "100"
+            tvFoodProtein.text = nutrition.protein.toString() + "/" + "100"
+            tvFoodSodium.text = nutrition.sodium.toString() + "/" + "100"
         }
 
         loadingDialog.dismiss()

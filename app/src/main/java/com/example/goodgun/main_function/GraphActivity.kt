@@ -30,13 +30,10 @@ class GraphActivity : AppCompatActivity() {
         binding = ActivityGraphBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-
         loadingDialog = LoadingDialog(this)
 
         initLayout()
-        //initAI()
-
+        // initAI()
     }
 
     private fun initLayout() {
@@ -118,8 +115,6 @@ class GraphActivity : AppCompatActivity() {
         override fun onNothingSelected(parent: AdapterView<*>) {
         }
     }
-
-
 
     /*temporary Addition of Data*/
     private fun addData(date: String) {
