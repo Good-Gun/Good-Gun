@@ -3,8 +3,11 @@ package com.example.goodgun.login
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.MultiAutoCompleteTextView.CommaTokenizer
+import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import com.example.goodgun.MainActivity
 import com.example.goodgun.databinding.AdditionalInfoLayoutBinding
@@ -21,8 +24,18 @@ import java.io.InputStreamReader
 class AdditionalInfoActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     val database: DatabaseReference = Firebase.database("https://goodgun-4740f-default-rtdb.firebaseio.com/").reference
-    lateinit var binding: AdditionalInfoLayoutBinding
+    private lateinit var binding: AdditionalInfoLayoutBinding
 
+    private lateinit var exTypeSpinner: Spinner
+    private lateinit var exFreqSpinner: Spinner
+    private lateinit var exTypeSpinnerAdapter: CustomSpinnerAdapter
+    private lateinit var exFreqSpinnerAdapter: CustomSpinnerAdapter
+
+    private var exTypeList: List<String> = ArrayList()
+    private var exFreqList: List<String> = ArrayList()
+
+    private lateinit var selectedType: String
+    private lateinit var selectedFreq: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = AdditionalInfoLayoutBinding.inflate(layoutInflater)
@@ -37,13 +50,55 @@ class AdditionalInfoActivity : AppCompatActivity() {
         multiAutoCompleteTextView.setOnClickListener {
             multiAutoCompleteTextView.showDropDown()
         }
-
+        // 운동 스피너 초기화
+        initSpinners()
         // 유저의 기존 데이터 불러오기
         loadAdditionalInfo(currentUser)
         // DB에 현재값 업로드
         uploadData(currentUser)
+
         setContentView(binding.root)
     }
+
+    private fun initSpinners() {
+        exTypeList = arrayListOf("무산소 운동", "유산소 운동")
+        exTypeSpinnerAdapter = CustomSpinnerAdapter(this, exTypeList)
+        exTypeSpinner = binding.exTypeSpinner
+        exTypeSpinner.adapter = exTypeSpinnerAdapter
+        exTypeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
+                selectedType = exTypeSpinner.getItemAtPosition(position) as String
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+        }
+        exFreqList = arrayListOf("1회 이하", "2 ~ 3회", "4 ~ 5 회", "6회 이상")
+        exFreqSpinnerAdapter = CustomSpinnerAdapter(this, exFreqList)
+        exFreqSpinner = binding.exFreqSpinner
+        exFreqSpinner.adapter = exFreqSpinnerAdapter
+        exFreqSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
+                selectedFreq = exFreqSpinner.getItemAtPosition(position) as String
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+        }
+    }
+
     fun getAssetsTextArray(mContext: Context, fileName: String): Array<String> {
         val lines = mutableListOf<String>()
         val reader: BufferedReader

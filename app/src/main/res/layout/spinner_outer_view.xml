@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:weightSum="1"
+    android:orientation="horizontal"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:background="@drawable/purple_button"
+    android:padding="16dp"
+    >
+
+    <!-- 액티비티에서 사용자에게 보여지는 스피너 안의 텍스트뷰. 선택된 상태로 취급받음 -->
+    <TextView
+        android:id="@+id/spinner_outer_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textColor="@color/colorWhite"
+        android:textSize="14sp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_weight=".15"
+        android:src="@drawable/baseline_arrow_drop_down_24_white" />
+
+</LinearLayout>
