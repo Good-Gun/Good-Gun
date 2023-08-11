@@ -5,11 +5,9 @@ import com.example.goodgun.ApplicationClass
 import com.example.goodgun.Food
 import com.example.goodgun.User
 import com.example.goodgun.main_function.model.Nutrition
-
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
 import java.time.LocalDate

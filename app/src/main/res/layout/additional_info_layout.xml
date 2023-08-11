@@ -142,7 +142,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="13dp"
-        android:text="운동횟수"
+        android:text="운동횟수 (일주일)"
         android:textSize="14sp"
         android:textStyle="bold"
         />
@@ -155,30 +155,24 @@
         android:layout_marginTop="10dp"
         android:layout_marginLeft="13dp"
         android:layout_marginRight="13dp"
+        android:padding="10dp"
         >
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/exerciseTypeBtn"
-
-            android:layout_margin="24dp"
+        <Spinner
+            android:id="@+id/exTypeSpinner"
+            android:background="@drawable/spinner_border_layout"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/purple_button"
-            android:textStyle="bold"
-            android:textColor="@color/colorWhite"
+            android:layout_marginRight="10dp"
+            />
 
-            android:text="운동종류 ▼" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/exerciseFrequencyBtn"
-            android:layout_margin="24dp"
+        <Spinner
+            android:id="@+id/exFreqSpinner"
+            android:background="@drawable/spinner_border_layout"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/purple_button"
-            android:textStyle="bold"
-            android:textColor="@color/colorWhite"
-
-            android:text="운동횟수 ▼" />
+            android:layout_marginLeft="10dp"
+            />
     </LinearLayout>
 
     <TextView
