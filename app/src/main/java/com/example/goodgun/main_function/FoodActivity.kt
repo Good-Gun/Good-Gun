@@ -34,22 +34,21 @@ import java.time.format.DateTimeFormatter
 import java.util.concurrent.TimeUnit
 import kotlin.time.Duration.Companion.seconds
 
-
 /*오늘의 정보만 다루는 액티비티*/
 class FoodActivity : AppCompatActivity() {
-    private lateinit var client:OkHttpClient
+    private lateinit var client: OkHttpClient
     private lateinit var loadingDialog: Dialog
     lateinit var binding: ActivityFoodBinding
     lateinit var todayAdapter: TodayRVAdapter
     lateinit var foodAdapter: FoodRVAdapter
 
     private var food_list: ArrayList<Food> = arrayListOf()
-    private var recommend_list:ArrayList<String> = arrayListOf()
+    private var recommend_list: ArrayList<String> = arrayListOf()
 
     @OptIn(BetaOpenAI::class)
-    var completion:ChatCompletion ?= null
+    var completion: ChatCompletion ? = null
     @OptIn(BetaOpenAI::class)
-    var completions: Flow<ChatCompletionChunk> ?= null
+    var completions: Flow<ChatCompletionChunk> ? = null
 
     @OptIn(BetaOpenAI::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -136,23 +135,22 @@ class FoodActivity : AppCompatActivity() {
     private fun setNutrition(nutrition: Nutrition) {
         val max = ApplicationClass.maxNutrition
         binding.apply {
-            tvFoodCalorie.text = nutrition.calorie.toString() +"/"+ max.calorie
-            tvFoodCarbo.text = nutrition.carbohydrates.toString() +"/"+ max.carbohydrates
-            tvFoodSugar.text = nutrition.sugar.toString() +"/"+max.sugar
-            tvFoodFat.text = nutrition.fat.toString() +"/"+max.fat
-            tvFoodTrans.text = nutrition.trans_fat.toString() +"/"+max.trans_fat
-            tvFoodSaturated.text = nutrition.saturated_fat.toString() +"/"+max.saturated_fat
-            tvFoodProtein.text = nutrition.protein.toString() +"/"+max.protein
-            tvFoodCholesterol.text = nutrition.cholesterol.toString() +"/"+max.cholesterol
-            tvFoodProtein.text = nutrition.protein.toString() +"/"+max.protein
-            tvFoodSodium.text = nutrition.sodium.toString() +"/"+max.sodium
-
+            tvFoodCalorie.text = nutrition.calorie.toString() + "/" + max.calorie
+            tvFoodCarbo.text = nutrition.carbohydrates.toString() + "/" + max.carbohydrates
+            tvFoodSugar.text = nutrition.sugar.toString() + "/" + max.sugar
+            tvFoodFat.text = nutrition.fat.toString() + "/" + max.fat
+            tvFoodTrans.text = nutrition.trans_fat.toString() + "/" + max.trans_fat
+            tvFoodSaturated.text = nutrition.saturated_fat.toString() + "/" + max.saturated_fat
+            tvFoodProtein.text = nutrition.protein.toString() + "/" + max.protein
+            tvFoodCholesterol.text = nutrition.cholesterol.toString() + "/" + max.cholesterol
+            tvFoodProtein.text = nutrition.protein.toString() + "/" + max.protein
+            tvFoodSodium.text = nutrition.sodium.toString() + "/" + max.sodium
         }
         loadingDialog.dismiss()
     }
 
     @OptIn(BetaOpenAI::class)
-    private suspend fun callAI(question:String) = withContext(Dispatchers.IO){
+    private suspend fun callAI(question: String) = withContext(Dispatchers.IO) {
         val openAI = OpenAI(
             token = BuildConfig.SAMPLE_API_KEY,
             timeout = Timeout(socket = 120.seconds),
@@ -173,22 +171,20 @@ class FoodActivity : AppCompatActivity() {
 // or, as flow
         completions = openAI.chatCompletions(chatCompletionRequest)
 
-
-        if(completion != null) {
+        if (completion != null) {
             val str = completion!!.choices[0].message?.content.toString()
             Log.d("Checking OPENAI", str)
             tokenizeString(str)
-        }
-        else
+        } else
             Log.d("Checking OPENAI", "completion null")
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun tokenizeString(str:String){
-        str.split("1.","2.","3.","4.","5.","6.","7.").toCollection(recommend_list)
+    fun tokenizeString(str: String) {
+        str.split("1.", "2.", "3.", "4.", "5.", "6.", "7.").toCollection(recommend_list)
         recommend_list.removeAt(0)
         Log.d("Checking OPENAI", "${recommend_list[0]}, ${recommend_list[1]}")
-        Handler(Looper.getMainLooper()).post{
+        Handler(Looper.getMainLooper()).post {
             foodAdapter.notifyDataSetChanged()
         }
         /*for(i in recommend_list){
