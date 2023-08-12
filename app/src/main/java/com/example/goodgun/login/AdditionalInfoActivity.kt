@@ -9,6 +9,8 @@ import android.widget.ArrayAdapter
 import android.widget.MultiAutoCompleteTextView.CommaTokenizer
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.startActivity
+import androidx.core.view.get
 import com.example.goodgun.MainActivity
 import com.example.goodgun.databinding.AdditionalInfoLayoutBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -61,7 +63,7 @@ class AdditionalInfoActivity : AppCompatActivity() {
     }
 
     private fun initSpinners() {
-        exTypeList = arrayListOf("무산소 운동", "유산소 운동")
+        exTypeList = arrayListOf("무산소 운동", "유산소 운동", "둘 다")
         exTypeSpinnerAdapter = CustomSpinnerAdapter(this, exTypeList)
         exTypeSpinner = binding.exTypeSpinner
         exTypeSpinner.adapter = exTypeSpinnerAdapter
@@ -145,9 +147,9 @@ class AdditionalInfoActivity : AppCompatActivity() {
             userRef.child("u_age").setValue(binding.ageInput.text.toString())
             var allergies = binding.allergyInput.text.toString().split(", ")
             allergies = allergies.dropLast(1)
-
             userRef.child("u_allergy").setValue(allergies)
-
+            userRef.child("u_exercise_freq").setValue(binding.exFreqSpinner.selectedItem.toString())
+            userRef.child("u_exercise_type").setValue(binding.exTypeSpinner.selectedItem.toString())
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }

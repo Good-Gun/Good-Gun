@@ -68,7 +68,7 @@
         android:layout_marginRight="13dp"
         android:ems="10"
         android:inputType="number"
-        android:text="134"
+        android:text="ex) 170"
         android:textSize="10sp"
         android:singleLine="false" />
     <TextView
@@ -90,6 +90,7 @@
         android:layout_marginRight="13dp"
         android:textSize="10sp"
         android:ems="10"
+        android:text="ex) 70"
         android:inputType="number"
         android:singleLine="false" />
     <TextView
@@ -111,6 +112,7 @@
         android:layout_marginRight="13dp"
         android:ems="10"
         android:textSize="10sp"
+        android:text="ex) 20"
         android:inputType="number"
         android:singleLine="false" />
     <TextView
