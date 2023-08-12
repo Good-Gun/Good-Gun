@@ -1,371 +1,385 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="15dp"
-    android:orientation="vertical"
     tools:context=".main_function.FoodActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:orientation="horizontal"
-        android:elevation="10dp"
-        >
-
-        <ImageButton
-            android:id="@+id/backBtn"
-            android:layout_gravity="center_vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            app:srcCompat="@drawable/baseline_arrow_back_24" />
-
-        <TextView
-            android:id="@+id/registrationTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingStart="10dp"
-            android:layout_weight="1"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:text="식사 추천" />
-
-        <ImageButton
-            android:id="@+id/addBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:layout_gravity="right"
-            android:visibility="invisible"
-            app:srcCompat="@drawable/baseline_arrow_back_24" />
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layout_food_today"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding = "10dp"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/box_radius_10dp"
-        android:backgroundTint="@color/deep_purple">
+        android:padding="15dp">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="오늘 먹은 음식 리스트"
-            android:textAlignment="center"
-            android:textStyle = "bold"
-            android:textColor = "@color/white"
-            android:textSize = "16sp"/>
+            android:layout_margin="10dp"
+            android:elevation="10dp"
+            android:orientation="horizontal">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_food_today"
+            <ImageButton
+                android:id="@+id/backBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@color/white"
+                app:srcCompat="@drawable/baseline_arrow_back_24" />
+
+            <TextView
+                android:id="@+id/registrationTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingStart="10dp"
+                android:text="식사 추천"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/addBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:background="@color/white"
+                android:visibility="invisible"
+                app:srcCompat="@drawable/baseline_arrow_back_24" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_food_today"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp"
+            android:background="@drawable/box_radius_10dp"
+            android:backgroundTint="@color/deep_purple"
+            android:orientation="vertical"
+            android:padding="10dp">
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="오늘 먹은 음식 리스트"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
-    <LinearLayout
-        android:id="@+id/layout_food_nutrients"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding = "10dp"
-        android:orientation="vertical"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/box_radius_10dp"
-        android:backgroundTint="@color/bright_grey">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_food_today"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp" />
 
-        <TextView
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_food_nutrients"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="오늘 섭취한 영양 정보"
-            android:textAlignment="center"
-            android:textStyle = "bold"
-            android:textColor = "@color/black"
-            android:textSize = "16sp"/>
+            android:layout_marginTop="15dp"
+            android:background="@drawable/box_radius_10dp"
+            android:backgroundTint="@color/bright_grey"
+            android:orientation="vertical"
+            android:padding="10dp">
 
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="오늘 섭취한 영양 정보"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
-            <TableRow>
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginHorizontal="5dp"
-                    android:background="@drawable/box_radius_10dp"
-                    android:backgroundTint="@color/white"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:padding="10dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/calorie"
-                        style="@style/foodTitle" />
-
-                    <TextView
-                        android:id="@+id/tv_food_calorie"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        style="@style/foodText" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginHorizontal="5dp"
-                    android:background="@drawable/box_radius_10dp"
-                    android:backgroundTint="@color/white"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:padding="10dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/carbohydrate"
-                        style="@style/foodTitle" />
-
-                    <TextView
-                        android:id="@+id/tv_food_carbo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        style="@style/foodText" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginHorizontal="5dp"
-                    android:background="@drawable/box_radius_10dp"
-                    android:backgroundTint="@color/white"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:padding="10dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/sugar"
-                        style="@style/foodTitle" />
-
-                    <TextView
-                        android:id="@+id/tv_food_sugar"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        style="@style/foodText" />
-                </LinearLayout>
-
-            </TableRow>
-
-            <TableRow
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp">
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginHorizontal="5dp"
-                    android:background="@drawable/box_radius_10dp"
-                    android:backgroundTint="@color/white"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:padding="10dp">
-                    <TextView
-                        android:layout_width="wrap_content"
+
+                <TableRow>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/fat"
-                        style="@style/foodTitle" />
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/box_radius_10dp"
+                        android:backgroundTint="@color/white"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="10dp">
 
-                    <TextView
-                        android:id="@+id/tv_food_fat"
-                        android:layout_width="wrap_content"
+                        <TextView
+                            style="@style/foodTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/calorie" />
+
+                        <TextView
+                            android:id="@+id/tv_food_calorie"
+                            style="@style/foodText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        style="@style/foodText" />
-                </LinearLayout>
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/box_radius_10dp"
+                        android:backgroundTint="@color/white"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="10dp">
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginHorizontal="5dp"
-                    android:background="@drawable/box_radius_10dp"
-                    android:backgroundTint="@color/white"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:padding="10dp">
-                    <TextView
-                        android:layout_width="wrap_content"
+                        <TextView
+                            style="@style/foodTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/carbohydrate" />
+
+                        <TextView
+                            android:id="@+id/tv_food_carbo"
+                            style="@style/foodText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/trans_fat"
-                        style="@style/foodTitle" />
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/box_radius_10dp"
+                        android:backgroundTint="@color/white"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="10dp">
 
-                    <TextView
-                        android:id="@+id/tv_food_trans"
-                        android:layout_width="wrap_content"
+                        <TextView
+                            style="@style/foodTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/sugar" />
+
+                        <TextView
+                            android:id="@+id/tv_food_sugar"
+                            style="@style/foodText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp" />
+                    </LinearLayout>
+
+                </TableRow>
+
+                <TableRow android:layout_marginTop="10dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        style="@style/foodText" />
-                </LinearLayout>
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/box_radius_10dp"
+                        android:backgroundTint="@color/white"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="10dp">
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginHorizontal="5dp"
-                    android:background="@drawable/box_radius_10dp"
-                    android:backgroundTint="@color/white"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:padding="10dp">
-                    <TextView
-                        android:layout_width="wrap_content"
+                        <TextView
+                            style="@style/foodTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/fat" />
+
+                        <TextView
+                            android:id="@+id/tv_food_fat"
+                            style="@style/foodText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/saturated_fat"
-                        style="@style/foodTitle" />
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/box_radius_10dp"
+                        android:backgroundTint="@color/white"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="10dp">
 
-                    <TextView
-                        android:id="@+id/tv_food_saturated"
-                        android:layout_width="wrap_content"
+                        <TextView
+                            style="@style/foodTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/trans_fat" />
+
+                        <TextView
+                            android:id="@+id/tv_food_trans"
+                            style="@style/foodText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        style="@style/foodText" />
-                </LinearLayout>
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/box_radius_10dp"
+                        android:backgroundTint="@color/white"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="10dp">
 
-            </TableRow>
+                        <TextView
+                            style="@style/foodTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/saturated_fat" />
 
-            <TableRow
-                android:layout_marginTop="10dp">
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginHorizontal="5dp"
-                    android:background="@drawable/box_radius_10dp"
-                    android:backgroundTint="@color/white"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:padding="10dp">
-                    <TextView
-                        android:layout_width="wrap_content"
+                        <TextView
+                            android:id="@+id/tv_food_saturated"
+                            style="@style/foodText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp" />
+                    </LinearLayout>
+
+                </TableRow>
+
+                <TableRow android:layout_marginTop="10dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/protein"
-                        style="@style/foodTitle" />
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/box_radius_10dp"
+                        android:backgroundTint="@color/white"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="10dp">
 
-                    <TextView
-                        android:id="@+id/tv_food_protein"
-                        android:layout_width="wrap_content"
+                        <TextView
+                            style="@style/foodTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/protein" />
+
+                        <TextView
+                            android:id="@+id/tv_food_protein"
+                            style="@style/foodText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        style="@style/foodText" />
-                </LinearLayout>
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/box_radius_10dp"
+                        android:backgroundTint="@color/white"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="10dp">
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginHorizontal="5dp"
-                    android:background="@drawable/box_radius_10dp"
-                    android:backgroundTint="@color/white"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:padding="10dp">
-                    <TextView
-                        android:layout_width="wrap_content"
+                        <TextView
+                            style="@style/foodTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/sodium" />
+
+                        <TextView
+                            android:id="@+id/tv_food_sodium"
+                            style="@style/foodText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/sodium"
-                        style="@style/foodTitle" />
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/box_radius_10dp"
+                        android:backgroundTint="@color/white"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="10dp">
 
-                    <TextView
-                        android:id="@+id/tv_food_sodium"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        style="@style/foodText" />
-                </LinearLayout>
+                        <TextView
+                            style="@style/foodTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/cholesterol" />
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginHorizontal="5dp"
-                    android:background="@drawable/box_radius_10dp"
-                    android:backgroundTint="@color/white"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:padding="10dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/cholesterol"
-                        style="@style/foodTitle" />
+                        <TextView
+                            android:id="@+id/tv_food_cholesterol"
+                            style="@style/foodText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp" />
+                    </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/tv_food_cholesterol"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        style="@style/foodText" />
-                </LinearLayout>
+                </TableRow>
 
-            </TableRow>
+            </TableLayout>
 
-        </TableLayout>
+        </LinearLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layout_food_recommend"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding = "10dp"
-        android:orientation="vertical"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/box_radius_10dp"
-        android:backgroundTint="@color/light_purple">
-
-        <TextView
+        <LinearLayout
+            android:id="@+id/layout_food_recommend"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="국건이의 식사 추천!"
-            android:textAlignment="center"
-            android:textStyle = "bold"
-            android:textColor = "@color/white"
-            android:textSize = "16sp"/>
+            android:layout_marginTop="10dp"
+            android:background="@drawable/box_radius_10dp"
+            android:backgroundTint="@color/light_purple"
+            android:orientation="vertical"
+            android:padding="10dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_gravity="end"
-            android:text="AI가 최적의 식사를 추천합니다!"
-            android:paddingHorizontal="20dp"
-            android:paddingTop="14dp"
-            android:textStyle = "bold"
-            android:textColor = "@color/black"
-            android:background="@drawable/rectangle_125"
-            android:textSize = "8sp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="국건이의 식사 추천!"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_gravity="end"
+                android:background="@drawable/rectangle_125"
+                android:paddingHorizontal="20dp"
+                android:paddingTop="14dp"
+                android:text="AI가 최적의 식사를 추천합니다!"
+                android:textColor="@color/black"
+                android:textSize="8sp"
+                android:textStyle="bold" />
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_food_recommend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp" />
 
+        </LinearLayout>
     </LinearLayout>
-
-</LinearLayout>
+</ScrollView>
