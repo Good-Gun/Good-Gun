@@ -23,11 +23,6 @@ class ApplicationClass : Application() {
         var calorie: Double = 0.0
         var maxNutrition: Nutrition = Nutrition()
         var workout_level: List<Double> = listOf(1.2, 1.375, 1.55, 1.725, 1.9)
-
-        var BMR: Double = 0.0
-        var calorie: Double = 0.0
-        var maxNutrition: Nutrition = Nutrition()
-        var workout_level: List<Double> = listOf(1.2, 1.375, 1.55, 1.725, 1.9)
     }
 
     override fun onCreate() {
@@ -62,7 +57,7 @@ class ApplicationClass : Application() {
         } else if (user.u_exercise_freq.toInt() > 5) {
             BMR * 1.9
         } else {
-            BMR * workout_level[user.u_exercise_freq-1]
+            BMR * workout_level[user.u_exercise_freq.toInt()-1]
         }
 
         Log.d("Calorie Check", "$calorie")
