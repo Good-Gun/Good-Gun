@@ -148,8 +148,8 @@ class AdditionalInfoActivity : AppCompatActivity() {
             var allergies = binding.allergyInput.text.toString().split(", ")
             allergies = allergies.dropLast(1)
             userRef.child("u_allergy").setValue(allergies)
-            userRef.child("u_exercise_freq").setValue(binding.exFreqSpinner.selectedItem.toString())
-            userRef.child("u_exercise_type").setValue(binding.exTypeSpinner.selectedItem.toString())
+            userRef.child("u_exercise_freq").setValue(selectedFreq)
+            userRef.child("u_exercise_type").setValue(selectedType)
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
