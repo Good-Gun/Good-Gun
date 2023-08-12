@@ -15,9 +15,14 @@ class ApplicationClass : Application() {
     companion object {
         lateinit var uid: String
         lateinit var email: String
-        lateinit var uname: String
+        var uname: String = ""
 
         lateinit var user: User
+
+        var BMR: Double = 0.0
+        var calorie: Double = 0.0
+        var maxNutrition: Nutrition = Nutrition()
+        var workout_level: List<Double> = listOf(1.2, 1.375, 1.55, 1.725, 1.9)
 
         var BMR: Double = 0.0
         var calorie: Double = 0.0
@@ -30,7 +35,7 @@ class ApplicationClass : Application() {
         updateUserInfo()
     }
 
-    public fun updateUserInfo() {
+    fun updateUserInfo() {
         val auth = Firebase.auth
         val currentUser = auth.currentUser
 
@@ -57,8 +62,10 @@ class ApplicationClass : Application() {
         } else if (user.u_exercise_freq.toInt() > 5) {
             BMR * 1.9
         } else {
-            BMR * workout_level[user.u_exercise_freq.toInt()]
+            BMR * workout_level[user.u_exercise_freq-1]
         }
+
+        Log.d("Calorie Check", "$calorie")
 
         maxNutrition.calorie = calorie.toInt()
         maxNutrition.carbohydrates = (calorie * 0.65).toInt()
