@@ -37,7 +37,9 @@ class AdditionalInfoActivity : AppCompatActivity() {
     private var exFreqList: List<String> = ArrayList()
 
     private lateinit var selectedType: String
+
     private lateinit var selectedFreq: String
+    private lateinit var selectedFreqPosition: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = AdditionalInfoLayoutBinding.inflate(layoutInflater)
@@ -81,7 +83,7 @@ class AdditionalInfoActivity : AppCompatActivity() {
                 TODO("Not yet implemented")
             }
         }
-        exFreqList = arrayListOf("1회 이하", "2 ~ 3회", "4 ~ 5 회", "6회 이상")
+        exFreqList = arrayListOf("거의 안함", "1회 이하", "2 ~ 3회", "4 ~ 5 회", "6회 이상")
         exFreqSpinnerAdapter = CustomSpinnerAdapter(this, exFreqList)
         exFreqSpinner = binding.exFreqSpinner
         exFreqSpinner.adapter = exFreqSpinnerAdapter
@@ -93,6 +95,7 @@ class AdditionalInfoActivity : AppCompatActivity() {
                 id: Long
             ) {
                 selectedFreq = exFreqSpinner.getItemAtPosition(position) as String
+                selectedFreqPosition = position.toString()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -148,8 +151,8 @@ class AdditionalInfoActivity : AppCompatActivity() {
             var allergies = binding.allergyInput.text.toString().split(", ")
             allergies = allergies.dropLast(1)
             userRef.child("u_allergy").setValue(allergies)
-            userRef.child("u_exercise_freq").setValue(binding.exFreqSpinner.selectedItem.toString())
-            userRef.child("u_exercise_type").setValue(binding.exTypeSpinner.selectedItem.toString())
+            userRef.child("u_exercise_freq").setValue(selectedFreqPosition + 1)
+            userRef.child("u_exercise_type").setValue(selectedType)
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }

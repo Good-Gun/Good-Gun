@@ -57,7 +57,7 @@ class ApplicationClass : Application() {
         } else if (user.u_exercise_freq.toInt() > 5) {
             BMR * 1.9
         } else {
-            BMR * workout_level[user.u_exercise_freq.toInt()-1]
+            BMR * workout_level[user.u_exercise_freq.toInt() - 1]
         }
 
         Log.d("Calorie Check", "$calorie")
