@@ -19,6 +19,7 @@
     <color name="light_purple">#FFB04BFF</color>
     <color name="red">#FFFE0000</color>
     <color name="bright_grey">#FFEEEEEE</color>
+    <color name="dark_grey">#FFa1a1a1</color>
     <color name="green">#FF006710</color>
 
     <color name="theme1">#FF6E179A</color>

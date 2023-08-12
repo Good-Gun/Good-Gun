@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
+import com.example.goodgun.ApplicationClass
 import com.example.goodgun.Food
 import com.example.goodgun.LoadingDialog
 import com.example.goodgun.R
@@ -53,16 +54,17 @@ class GraphActivity : AppCompatActivity() {
     }
 
     private fun initChart() {
+        val max = ApplicationClass.maxNutrition
         binding.apply {
-            pvCalorie.progress = nutrition.calorie.toFloat() / 2000 * 100
-            pvCarbohydrates.progress = nutrition.carbohydrates.toFloat() / 2000 * 100
-            pvProteins.progress = nutrition.protein.toFloat() / 2000 * 100
-            pvFat.progress = nutrition.fat.toFloat() / 2000 * 100
-            pvTransFat.progress = nutrition.trans_fat.toFloat() / 2000 * 100
-            pvSaturatedFat.progress = nutrition.saturated_fat.toFloat() / 2000 * 100
-            pvCholesterol.progress = nutrition.cholesterol.toFloat() / 2000 * 100
-            pvSugar.progress = nutrition.sugar.toFloat() / 2000 * 100
-            pvSodium.progress = nutrition.sodium.toFloat() / 2000 * 100
+            pvCalorie.progress = nutrition.calorie.toFloat() / max.calorie * 100
+            pvCarbohydrates.progress = nutrition.carbohydrates.toFloat() / max.carbohydrates * 100
+            pvProteins.progress = nutrition.protein.toFloat() / max.protein * 100
+            pvFat.progress = nutrition.fat.toFloat() / max.fat * 100
+            pvTransFat.progress = nutrition.trans_fat.toFloat() / max.trans_fat * 100
+            pvSaturatedFat.progress = nutrition.saturated_fat.toFloat() / max.saturated_fat * 100
+            pvCholesterol.progress = nutrition.cholesterol.toFloat() / max.cholesterol * 100
+            pvSugar.progress = nutrition.sugar.toFloat() / max.sugar * 100
+            pvSodium.progress = nutrition.sodium.toFloat() / max.sodium * 100
         }
         loadingDialog.dismiss()
     }
