@@ -5,8 +5,9 @@ import com.example.goodgun.ApplicationClass
 import com.example.goodgun.Food
 import com.example.goodgun.User
 import com.example.goodgun.main_function.model.Nutrition
-import com.google.firebase.database.*
-import com.google.firebase.database.ktx.getValue
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
 import java.time.LocalDate
@@ -48,8 +49,6 @@ object FirebaseManager {
         }
         foodList
     }
-
-
 
     /*firebase에서 date부터 오늘까지의 음식들의 영양정보 총합 가져오기*/
 
@@ -97,7 +96,7 @@ object FirebaseManager {
                 }
             }
         }
-        if(days != 0) {
+        if (days != 0) {
             nutrition.apply {
                 calorie /= days
                 carbohydrates /= days
@@ -112,7 +111,6 @@ object FirebaseManager {
         }
         nutrition
     }
-
 
     /*firebase에서 date에 등록된 음식들의 영양정보 총합 가져오기*/
     suspend fun getDayNutrition(date: String): Nutrition = withContext(Dispatchers.IO) {
@@ -140,7 +138,7 @@ object FirebaseManager {
         nutrition
     }
 
-    suspend fun getUserData():User= withContext(Dispatchers.IO) {
+    suspend fun getUserData(): User = withContext(Dispatchers.IO) {
         val dataRef: DatabaseReference =
             database.getReference("user_list").child(ApplicationClass.uid)
         val dataSnapshot: DataSnapshot = dataRef.get().await()

@@ -146,6 +146,7 @@ class FoodActivity : AppCompatActivity() {
             tvFoodCholesterol.text = nutrition.cholesterol.toString() +"/"+max.cholesterol
             tvFoodProtein.text = nutrition.protein.toString() +"/"+max.protein
             tvFoodSodium.text = nutrition.sodium.toString() +"/"+max.sodium
+
         }
         loadingDialog.dismiss()
     }

@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity() {
                             .replace(R.id.frame_main, HomeFragment())
                             .commitAllowingStateLoss()
                     }
-
                     R.id.nav_option -> {
                     }
                 }
