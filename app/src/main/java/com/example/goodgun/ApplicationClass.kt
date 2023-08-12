@@ -52,12 +52,12 @@ class ApplicationClass : Application() {
     fun calculateMaxNut() {
         BMR = 88.362 + (13.397 * user.u_weight.toInt()) + (4.799 * user.u_height.toInt()) - (5.677 * user.u_age.toInt()) // user.u_age도 등록해야함
 
-        calorie = if (user.u_exercise_freq < 1) {
+        calorie = if (user.u_exercise_freq.toInt() < 1) {
             BMR * 1.2 // * 평소 운동 강도
-        } else if (user.u_exercise_freq > 5) {
+        } else if (user.u_exercise_freq.toInt() > 5) {
             BMR * 1.9
         } else {
-            BMR * workout_level[user.u_exercise_freq]
+            BMR * workout_level[user.u_exercise_freq.toInt()]
         }
 
         maxNutrition.calorie = calorie.toInt()
