@@ -2,7 +2,6 @@ package com.example.goodgun
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.CornerPathEffect
 import android.graphics.DashPathEffect
 import android.graphics.Paint
 import android.graphics.Path
@@ -27,8 +26,8 @@ class DottedLineView(context: Context, attrs: AttributeSet) : View(context, attr
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        path.moveTo( width / 2f, 0f)
-        path.lineTo(width / 2f, height.toFloat() )
+        path.moveTo(width / 2f, 0f)
+        path.lineTo(width / 2f, height.toFloat())
         canvas?.drawPath(path, paint)
     }
 }

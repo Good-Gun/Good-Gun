@@ -2,7 +2,7 @@ package com.example.goodgun
 
 import android.app.Application
 import android.util.Log
-import com.example.goodgun.firebase.FirebaseManager
+import com.example.goodgun.firebase.NetworkManager
 import com.example.goodgun.main_function.model.Nutrition
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -34,7 +34,7 @@ class ApplicationClass : Application() {
 
                 CoroutineScope(Dispatchers.Main).launch {
                     withContext(Dispatchers.IO) {
-                        user = FirebaseManager.getUserData()
+                        user = NetworkManager.getUserData()
                     }
                     uname = user.u_name
                     Log.d("Login Check", "userSnapshot key = ${user.u_name}")
@@ -66,13 +66,10 @@ class ApplicationClass : Application() {
             maxNutrition.sodium = 2000
             maxNutrition.cholesterol = 300
         }
-
     }
 
     override fun onCreate() {
         super.onCreate()
         updateUserInfo()
     }
-
-
 }
