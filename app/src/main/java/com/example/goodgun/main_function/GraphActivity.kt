@@ -1,16 +1,11 @@
 package com.example.goodgun.main_function
 
 import android.app.Dialog
-import android.content.Context
 import android.graphics.Color
-import android.graphics.Paint.Style
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -22,15 +17,13 @@ import com.example.goodgun.Food
 import com.example.goodgun.LoadingDialog
 import com.example.goodgun.R
 import com.example.goodgun.databinding.ActivityGraphBinding
-import com.example.goodgun.firebase.FirebaseManager
+import com.example.goodgun.firebase.NetworkManager
 import com.example.goodgun.main_function.model.Nutrition
 import com.skydoves.progressview.ProgressView
-import com.skydoves.progressview.progressView
 import kotlinx.coroutines.*
 import java.time.LocalDateTime
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
-import java.util.Collections.addAll
 
 class GraphActivity : AppCompatActivity() {
     private lateinit var loadingDialog: Dialog
@@ -38,10 +31,7 @@ class GraphActivity : AppCompatActivity() {
     private lateinit var nutrition: Nutrition
     private var days = 0
 
-
-
     val today = LocalDateTime.now().format(DateTimeFormatter.ofPattern(" yyyy-MM-dd"))
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +40,7 @@ class GraphActivity : AppCompatActivity() {
 
         loadingDialog = LoadingDialog(this)
 
-        //addData(today)
+        // addData(today)
 
         initLayout()
         // initAI()
@@ -125,13 +115,12 @@ class GraphActivity : AppCompatActivity() {
             val formatter = DateTimeFormatter.ofPattern(" yyyy-MM-dd")
             val formatted = time.format(formatter)
 
-
             val strFormatter = DateTimeFormatter.ofPattern(" yyyy.MM.dd")
-            binding.tvDate.text = (time.format(strFormatter) +"~"+ LocalDateTime.now().format(strFormatter)).trim()
+            binding.tvDate.text = (time.format(strFormatter) + "~" + LocalDateTime.now().format(strFormatter)).trim()
 
             CoroutineScope(Dispatchers.Main).launch {
                 withContext(Dispatchers.IO) {
-                    nutrition = FirebaseManager.getNutritionData(formatted)
+                    nutrition = NetworkManager.getNutritionData(formatted)
                 }
                 initChart()
                 setNutrition(nutrition)
@@ -160,9 +149,8 @@ class GraphActivity : AppCompatActivity() {
         setViewColor()
     }
 
-
     private fun setViewColor() {
-        var str:String = ""
+        var str: String = ""
         val arr1: List<String> = listOf("탄수화물", "당류", "지방", "트랜스지방", "포화지방", "단백질", "나트륨", "콜레스테롤")
         val arr2: List<String> = listOf(
             "carbohydrates",
@@ -201,63 +189,64 @@ class GraphActivity : AppCompatActivity() {
             when (nutrition.calculateNutrientIntake(arr2[i])) {
                 2 -> {
                     arr3[i].highlightView.color = ResourcesCompat.getColor(resources, R.color.red, null)
-                    str += arr1[i] +" 섭취량이 적정량보다 매우 높습니다!!\n"
+                    str += arr1[i] + " 섭취량이 적정량보다 매우 높습니다!!\n"
                     spannableString.setSpan(
                         ForegroundColorSpan(Color.RED),
                         0,
                         text.indexOf("/"),
-                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
                     arr4[i].text = spannableString
                 }
                 1 -> {
                     arr3[i].highlightView.color = ResourcesCompat.getColor(resources, R.color.yellow, null)
-                    str += arr1[i] +" 섭취량이 적정량보다 약간 높습니다!\n"
+                    str += arr1[i] + " 섭취량이 적정량보다 약간 높습니다!\n"
                     spannableString.setSpan(
                         ForegroundColorSpan(Color.YELLOW),
                         0,
                         text.indexOf("/"),
-                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
                     arr4[i].text = spannableString
                 }
                 -1 -> {
                     arr3[i].highlightView.color = ResourcesCompat.getColor(resources, R.color.yellow, null)
-                    str += arr1[i] +" 섭취량이 적정량보다 약간 부족합니다!\n"
+                    str += arr1[i] + " 섭취량이 적정량보다 약간 부족합니다!\n"
                     spannableString.setSpan(
                         ForegroundColorSpan(Color.YELLOW),
                         0,
                         text.indexOf("/"),
-                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
                     arr4[i].text = spannableString
-
                 }
                 -2 -> {
                     arr3[i].highlightView.color = ResourcesCompat.getColor(resources, R.color.red, null)
-                    str += arr1[i] +" 섭취량이 적정량보다 매우 부족합니다!!\n"
+                    str += arr1[i] + " 섭취량이 적정량보다 매우 부족합니다!!\n"
                     spannableString.setSpan(
                         ForegroundColorSpan(Color.RED),
                         0,
                         text.indexOf("/"),
-                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
                     arr4[i].text = spannableString
                 }
             }
         }
-        if(str == "") str = "아무 이상 없습니다 :)"
+        if (str == "") str = "아무 이상 없습니다 :)"
         else {
             str = str.removeSuffix("\n")
         }
 
-
         val keyword = listOf<String>("약간 부족합니다!", "약간 높습니다!", "매우 부족합니다!", "매우 높습니다!!")
         val spannableString = SpannableString(str)
 
-        for(i in 0.. keyword.size-1) {
+        for (i in 0..keyword.size - 1) {
             var startIndex = str.indexOf(keyword[i])
             while (startIndex != -1) {
                 val endIndex = startIndex + keyword[i].length
                 val colorSpan =
-                    if(i<2){ ForegroundColorSpan(Color.YELLOW)}
-                    else {
+                    if (i <2) { ForegroundColorSpan(Color.YELLOW) } else {
                         ForegroundColorSpan(Color.RED)
                     }
 
@@ -285,9 +274,7 @@ class GraphActivity : AppCompatActivity() {
                 100 + i,
                 date,
             )
-            FirebaseManager.postFoodData(date, food)
+            NetworkManager.postFoodData(date, food)
         }
     }
-
-
 }

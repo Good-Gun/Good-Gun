@@ -53,7 +53,7 @@ class AdditionalInfoActivity : AppCompatActivity() {
         multiAutoCompleteTextView.setAdapter(adapter)
         multiAutoCompleteTextView.setTokenizer(CommaTokenizer())
         multiAutoCompleteTextView.setOnFocusChangeListener { v, hasFocus ->
-            if(hasFocus)
+            if (hasFocus)
                 multiAutoCompleteTextView.showDropDown()
         }
 

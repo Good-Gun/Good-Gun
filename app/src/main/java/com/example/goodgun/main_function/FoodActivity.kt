@@ -13,30 +13,21 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.aallam.openai.api.BetaOpenAI
 import com.aallam.openai.api.chat.*
-import com.aallam.openai.api.http.Timeout
-import com.aallam.openai.api.model.ModelId
-import com.aallam.openai.client.OpenAI
 import com.example.goodgun.ApplicationClass
-import com.example.goodgun.BuildConfig
 import com.example.goodgun.Food
 import com.example.goodgun.LoadingDialog
 import com.example.goodgun.databinding.ActivityFoodBinding
-import com.example.goodgun.firebase.FirebaseManager
+import com.example.goodgun.firebase.NetworkManager
 import com.example.goodgun.main_function.model.Nutrition
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import okhttp3.OkHttpClient
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.concurrent.TimeUnit
-import kotlin.time.Duration.Companion.seconds
 
 /*오늘의 정보만 다루는 액티비티*/
 class FoodActivity : AppCompatActivity() {
-    private lateinit var client: OkHttpClient
     private lateinit var loadingDialog: Dialog
     lateinit var binding: ActivityFoodBinding
     lateinit var todayAdapter: TodayRVAdapter
@@ -47,10 +38,7 @@ class FoodActivity : AppCompatActivity() {
 
     @OptIn(BetaOpenAI::class)
     var completion: ChatCompletion ? = null
-    @OptIn(BetaOpenAI::class)
-    var completions: Flow<ChatCompletionChunk> ? = null
 
-    @OptIn(BetaOpenAI::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFoodBinding.inflate(layoutInflater)
@@ -60,13 +48,6 @@ class FoodActivity : AppCompatActivity() {
         val todayDate =
             LocalDateTime.now().format(DateTimeFormatter.ofPattern(" yyyy-MM-dd"))
 
-        client = OkHttpClient().newBuilder()
-            .connectTimeout(60, TimeUnit.SECONDS)
-            .writeTimeout(120, TimeUnit.SECONDS)
-            .readTimeout(60, TimeUnit.SECONDS)
-            .build()
-
-//        temporaryFillArr()
         initLayout()
         initTodayRV()
         getDataFromFirebase(todayDate)
@@ -111,17 +92,18 @@ class FoodActivity : AppCompatActivity() {
         }
     }
 
+    @OptIn(BetaOpenAI::class)
     private fun getDataFromFirebase(date: String) {
         var nutrition: Nutrition ? = null
         CoroutineScope(Dispatchers.Main).launch {
             withContext(Dispatchers.IO) {
-                nutrition = FirebaseManager.getNutritionData(date)
+                nutrition = NetworkManager.getNutritionData(date)
                 food_list.apply {
-                    addAll(FirebaseManager.getFoodData(date))
+                    addAll(NetworkManager.getFoodData(date))
                 }
             }
             todayAdapter.notifyItemRangeInserted(0, food_list.size)
-            if(food_list.size == 0){
+            if (food_list.size == 0) {
                 Handler(Looper.getMainLooper()).post {
                     binding.tvNoFood.visibility = View.VISIBLE
                 }
@@ -129,10 +111,13 @@ class FoodActivity : AppCompatActivity() {
 
             nutrition?.let {
                 setNutrition(it)
+                val question = it.getQuestion(1)
 
-                val question = it.getQuestionForFood()
                 if (question != null) {
-                    callAI(question)
+                    completion = NetworkManager.callAI(question)
+                    val str = completion!!.choices[0].message?.content.toString()
+                    Log.d("Checking OPENAI", str)
+                    tokenizeString(str)
                 }
             }
         }
@@ -153,36 +138,6 @@ class FoodActivity : AppCompatActivity() {
             tvFoodSodium.text = nutrition.sodium.toString() + "/" + max.sodium
         }
         loadingDialog.dismiss()
-    }
-
-    @OptIn(BetaOpenAI::class)
-    private suspend fun callAI(question: String) = withContext(Dispatchers.IO) {
-        val openAI = OpenAI(
-            token = BuildConfig.SAMPLE_API_KEY,
-            timeout = Timeout(socket = 120.seconds),
-            // additional configurations...
-        )
-
-        val chatCompletionRequest = ChatCompletionRequest(
-            model = ModelId("gpt-3.5-turbo"),
-            messages = listOf(
-                ChatMessage(
-                    role = ChatRole.User,
-//                    content = "평소에 탄수화물 섭취가 과다한 사람에게 추천할 생활 패턴을 알려줘.
-                    content = question
-                )
-            )
-        )
-        completion = openAI.chatCompletion(chatCompletionRequest)
-// or, as flow
-        completions = openAI.chatCompletions(chatCompletionRequest)
-
-        if (completion != null) {
-            val str = completion!!.choices[0].message?.content.toString()
-            Log.d("Checking OPENAI", str)
-            tokenizeString(str)
-        } else
-            Log.d("Checking OPENAI", "completion null")
     }
 
     @SuppressLint("NotifyDataSetChanged")
