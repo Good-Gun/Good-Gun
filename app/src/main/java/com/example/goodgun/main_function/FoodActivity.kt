@@ -121,6 +121,12 @@ class FoodActivity : AppCompatActivity() {
                 }
             }
             todayAdapter.notifyItemRangeInserted(0, food_list.size)
+            if(food_list.size == 0){
+                Handler(Looper.getMainLooper()).post {
+                    binding.tvNoFood.visibility = View.VISIBLE
+                }
+            }
+
             nutrition?.let {
                 setNutrition(it)
 

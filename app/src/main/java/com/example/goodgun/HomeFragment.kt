@@ -4,6 +4,8 @@ import android.app.Dialog
 import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -57,7 +59,6 @@ class HomeFragment : Fragment() {
     /*일반 레이아웃 초기화*/
     fun initLayout() {
         binding!!.apply {
-            tvHomeName.text = ApplicationClass.uname
             tvHomeDate.text = today
 
             /*날짜 탐색 (이전 날짜)*/
@@ -117,9 +118,17 @@ class HomeFragment : Fragment() {
                 food_list.apply {
 
                     addAll(FirebaseManager.getFoodData(today))
+
+
                 }
             }
             todayAdapter.notifyItemRangeInserted(0, food_list.size)
+            if(food_list.size == 0){
+            Handler(Looper.getMainLooper()).post {
+                binding!!.tvNoFood.visibility = View.VISIBLE
+            }
+        }
+
             setProgress()
         }
     }
@@ -144,6 +153,9 @@ class HomeFragment : Fragment() {
             tvHomeCarbohydrates.text = nutrition.carbohydrates.toString() + "/" + max.carbohydrates.toString()
             tvHomeProteins.text = nutrition.protein.toString() + "/" + max.protein.toString()
             tvHomeFat.text = nutrition.fat.toString() + "/" + max.fat.toString()
+
+            Log.d("Login Check", "userSnapshot key = ${ApplicationClass.user.u_name}")
+            tvHomeName.text = ApplicationClass.uname
         }
         loadingDialog.dismiss()
     }
