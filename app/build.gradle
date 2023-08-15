@@ -105,5 +105,11 @@ dependencies {
     runtimeOnly 'io.ktor:ktor-client-okhttp'
 
 
+    // rest api
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
+    // viewmodel
+    implementation 'androidx.fragment:fragment-ktx:1.5.7'
 
 }
