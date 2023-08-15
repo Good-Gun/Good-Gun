@@ -1,7 +1,17 @@
 package com.example.goodgun.firebase
 
 import android.util.Log
+import com.aallam.openai.api.BetaOpenAI
+import com.aallam.openai.api.chat.ChatCompletion
+import com.aallam.openai.api.chat.ChatCompletionRequest
+import com.aallam.openai.api.chat.ChatMessage
+import com.aallam.openai.api.chat.ChatRole
+import com.aallam.openai.api.http.Timeout
+import com.aallam.openai.api.model.ModelId
+import com.aallam.openai.client.OpenAI
+import com.doinglab.foodlens.sdk.ui.util.UnitTokenizer.tokenizeString
 import com.example.goodgun.ApplicationClass
+import com.example.goodgun.BuildConfig
 import com.example.goodgun.Food
 import com.example.goodgun.User
 import com.example.goodgun.main_function.model.Nutrition
@@ -11,8 +21,9 @@ import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
 import java.time.LocalDate
+import kotlin.time.Duration.Companion.seconds
 
-object FirebaseManager {
+object NetworkManager {
     private val userId = "MhAk3L1JdrcV2bnoCkvKq2vCnD02"
     private val database = FirebaseDatabase.getInstance()
 
@@ -159,5 +170,31 @@ object FirebaseManager {
             .addOnFailureListener {
                 Log.d("Firebase Communication", "Data Add Failed: $date, ${food.name}")
             }
+    }
+
+    @OptIn(BetaOpenAI::class)
+    suspend fun callAI(question: String): ChatCompletion = withContext(Dispatchers.IO) {
+        val openAI = OpenAI(
+            token = BuildConfig.SAMPLE_API_KEY,
+            timeout = Timeout(socket = 120.seconds),
+            // additional configurations...
+        )
+
+        val chatCompletionRequest = ChatCompletionRequest(
+            model = ModelId("gpt-3.5-turbo"),
+            messages = listOf(
+                ChatMessage(
+                    role = ChatRole.User,
+                    content = question
+                )
+            )
+        )
+        val completion = openAI.chatCompletion(chatCompletionRequest)
+
+        val str = completion.choices[0].message?.content.toString()
+        Log.d("Checking OPENAI", str)
+        tokenizeString(str)
+
+        completion
     }
 }

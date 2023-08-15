@@ -3,15 +3,16 @@
     <string name="foodlens_company_token">373314f48e12481b88820b45cb932c78</string>
     <string name="foodlens_app_token">4684d6b85d5141d594c0b4ca6be28b96</string>
 
-    <string name="calorie">열량</string>
-    <string name="carbohydrate">탄수화물</string>
-    <string name="protein">단백질</string>
-    <string name="fat">지방</string>
-    <string name="sugar">당류</string>
-    <string name="sodium">나트륨</string>
-    <string name="cholesterol">콜레스테롤</string>
-    <string name="trans_fat">트랜스지방</string>
-    <string name="saturated_fat">포화지방</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="calorie">열량(kcal)</string>
+    <string name="carbohydrate">탄수화물(g)</string>
+    <string name="protein">단백질(g)</string>
+    <string name="fat">지방(g)</string>
+    <string name="sugar">당류(g)</string>
+    <string name="sodium">나트륨(mg)</string>
+    <string name="cholesterol">콜레스테롤(mg)</string>
+    <string name="trans_fat">트랜스지방(g)</string>
+    <string name="saturated_fat">포화지방(g)</string>
+
+
+    <string name="no_food_today">오늘 드신 음식이 없어요!</string>
 </resources>

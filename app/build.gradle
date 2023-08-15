@@ -5,6 +5,10 @@ plugins {
     id 'kotlin-kapt'
 }
 tasks.register("prepareKotlinBuildScriptModel"){}
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
 android {
     namespace 'com.example.goodgun'
     compileSdk 33
@@ -21,6 +25,7 @@ android {
         versionName "1.0"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "SAMPLE_API_KEY", properties['API_KEY']
     }
 
     buildTypes {
