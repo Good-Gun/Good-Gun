@@ -29,5 +29,5 @@ interface FoodDAO {
     fun deleteSumFood()
 
     @Query("SELECT count(*) FROM table_food WHERE name != 'is_sum_entity'")
-    fun foodCount()
+    fun foodCount(): Int
 }
