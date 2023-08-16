@@ -5,7 +5,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface FoodService {
-    @GET("api/{keyId}/{seviceId}/{dataType}/1/1000")
+    @GET("api/{keyId}/{serviceId}/{dataType}/1/100")
     fun getFoodName(
         @Path("keyId") keyId : String,
         @Path("serviceId") serviceId : String,
