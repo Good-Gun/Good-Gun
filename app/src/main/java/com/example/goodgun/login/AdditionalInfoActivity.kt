@@ -9,6 +9,9 @@ import android.widget.ArrayAdapter
 import android.widget.MultiAutoCompleteTextView.CommaTokenizer
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.startActivity
+import androidx.core.view.get
+import com.example.goodgun.ApplicationClass
 import com.example.goodgun.MainActivity
 import com.example.goodgun.databinding.AdditionalInfoLayoutBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -35,7 +38,9 @@ class AdditionalInfoActivity : AppCompatActivity() {
     private var exFreqList: List<String> = ArrayList()
 
     private lateinit var selectedType: String
+
     private lateinit var selectedFreq: String
+    private lateinit var selectedFreqPosition: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = AdditionalInfoLayoutBinding.inflate(layoutInflater)
@@ -47,9 +52,11 @@ class AdditionalInfoActivity : AppCompatActivity() {
         var adapter = ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, items)
         multiAutoCompleteTextView.setAdapter(adapter)
         multiAutoCompleteTextView.setTokenizer(CommaTokenizer())
-        multiAutoCompleteTextView.setOnClickListener {
-            multiAutoCompleteTextView.showDropDown()
+        multiAutoCompleteTextView.setOnFocusChangeListener { v, hasFocus ->
+            if (hasFocus)
+                multiAutoCompleteTextView.showDropDown()
         }
+
         // 운동 스피너 초기화
         initSpinners()
         // 유저의 기존 데이터 불러오기
@@ -61,7 +68,7 @@ class AdditionalInfoActivity : AppCompatActivity() {
     }
 
     private fun initSpinners() {
-        exTypeList = arrayListOf("무산소 운동", "유산소 운동")
+        exTypeList = arrayListOf("무산소 운동", "유산소 운동", "둘 다")
         exTypeSpinnerAdapter = CustomSpinnerAdapter(this, exTypeList)
         exTypeSpinner = binding.exTypeSpinner
         exTypeSpinner.adapter = exTypeSpinnerAdapter
@@ -79,7 +86,7 @@ class AdditionalInfoActivity : AppCompatActivity() {
                 TODO("Not yet implemented")
             }
         }
-        exFreqList = arrayListOf("1회 이하", "2 ~ 3회", "4 ~ 5 회", "6회 이상")
+        exFreqList = arrayListOf("거의 안함", "1회 이하", "2 ~ 3회", "4 ~ 5 회", "6회 이상")
         exFreqSpinnerAdapter = CustomSpinnerAdapter(this, exFreqList)
         exFreqSpinner = binding.exFreqSpinner
         exFreqSpinner.adapter = exFreqSpinnerAdapter
@@ -91,6 +98,7 @@ class AdditionalInfoActivity : AppCompatActivity() {
                 id: Long
             ) {
                 selectedFreq = exFreqSpinner.getItemAtPosition(position) as String
+                selectedFreqPosition = position.toString()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -145,8 +153,11 @@ class AdditionalInfoActivity : AppCompatActivity() {
             userRef.child("u_age").setValue(binding.ageInput.text.toString())
             var allergies = binding.allergyInput.text.toString().split(", ")
             allergies = allergies.dropLast(1)
-
             userRef.child("u_allergy").setValue(allergies)
+            userRef.child("u_exercise_freq").setValue(selectedFreqPosition + 1)
+            userRef.child("u_exercise_type").setValue(selectedType)
+
+            ApplicationClass.updateUserInfo()
 
             startActivity(Intent(this, MainActivity::class.java))
             finish()

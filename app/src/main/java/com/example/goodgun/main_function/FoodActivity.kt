@@ -1,16 +1,23 @@
 package com.example.goodgun.main_function
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.graphics.Rect
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.aallam.openai.api.BetaOpenAI
+import com.aallam.openai.api.chat.*
+import com.example.goodgun.ApplicationClass
 import com.example.goodgun.Food
 import com.example.goodgun.LoadingDialog
 import com.example.goodgun.databinding.ActivityFoodBinding
-import com.example.goodgun.firebase.FirebaseManager
+import com.example.goodgun.firebase.NetworkManager
 import com.example.goodgun.main_function.model.Nutrition
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -18,14 +25,19 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.Collections.addAll
 
 /*오늘의 정보만 다루는 액티비티*/
 class FoodActivity : AppCompatActivity() {
     private lateinit var loadingDialog: Dialog
     lateinit var binding: ActivityFoodBinding
     lateinit var todayAdapter: TodayRVAdapter
+    lateinit var foodAdapter: FoodRVAdapter
+
     private var food_list: ArrayList<Food> = arrayListOf()
+    private var recommend_list: ArrayList<String> = arrayListOf()
+
+    @OptIn(BetaOpenAI::class)
+    var completion: ChatCompletion ? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +48,6 @@ class FoodActivity : AppCompatActivity() {
         val todayDate =
             LocalDateTime.now().format(DateTimeFormatter.ofPattern(" yyyy-MM-dd"))
 
-//        temporaryFillArr()
         initLayout()
         initTodayRV()
         getDataFromFirebase(todayDate)
@@ -58,6 +69,14 @@ class FoodActivity : AppCompatActivity() {
         // 간격 20으로
         val spaceDecoration = this.VerticalSpaceItemDecoration(20)
         binding.rvFoodToday.addItemDecoration(spaceDecoration)
+
+        foodAdapter = FoodRVAdapter(this, recommend_list, 5)
+        binding.rvFoodRecommend.adapter = foodAdapter
+        binding.rvFoodRecommend.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        // 간격 20으로
+        val foodSpaceDecoration = this.VerticalSpaceItemDecoration(5)
+        binding.rvFoodRecommend.addItemDecoration(foodSpaceDecoration)
     }
 
     inner class VerticalSpaceItemDecoration(private val verticalSpaceHeight: Int) :
@@ -73,47 +92,64 @@ class FoodActivity : AppCompatActivity() {
         }
     }
 
+    @OptIn(BetaOpenAI::class)
     private fun getDataFromFirebase(date: String) {
         var nutrition: Nutrition ? = null
         CoroutineScope(Dispatchers.Main).launch {
             withContext(Dispatchers.IO) {
-                nutrition = FirebaseManager.getNutritionData(date)
+                nutrition = NetworkManager.getNutritionData(date)
                 food_list.apply {
-                    addAll(FirebaseManager.getFoodData(date))
+                    addAll(NetworkManager.getFoodData(date))
                 }
             }
             todayAdapter.notifyItemRangeInserted(0, food_list.size)
-            nutrition?.let { setNutrition(it) }
+            if (food_list.size == 0) {
+                Handler(Looper.getMainLooper()).post {
+                    binding.tvNoFood.visibility = View.VISIBLE
+                }
+            }
+
+            nutrition?.let {
+                setNutrition(it)
+                val question = it.getQuestion(1)
+
+                if (question != null) {
+                    completion = NetworkManager.callAI(question)
+                    val str = completion!!.choices[0].message?.content.toString()
+                    Log.d("Checking OPENAI", str)
+                    tokenizeString(str)
+                }
+            }
         }
     }
 
     private fun setNutrition(nutrition: Nutrition) {
+        val max = ApplicationClass.maxNutrition
         binding.apply {
-
-            tvFoodCalorie.text = nutrition.calorie.toString() + "/" + "2000"
-            tvFoodCarbo.text = nutrition.carbohydrates.toString() + "/" + "100"
-            tvFoodSugar.text = nutrition.sugar.toString() + "/" + "100"
-            tvFoodFat.text = nutrition.fat.toString() + "/" + "100"
-            tvFoodTrans.text = nutrition.trans_fat.toString() + "/" + "100"
-            tvFoodSaturated.text = nutrition.saturated_fat.toString() + "/" + "100"
-            tvFoodProtein.text = nutrition.protein.toString() + "/" + "100"
-            tvFoodCholesterol.text = nutrition.cholesterol.toString() + "/" + "100"
-            tvFoodProtein.text = nutrition.protein.toString() + "/" + "100"
-            tvFoodSodium.text = nutrition.sodium.toString() + "/" + "100"
+            tvFoodCalorie.text = nutrition.calorie.toString() + "/" + max.calorie
+            tvFoodCarbo.text = nutrition.carbohydrates.toString() + "/" + max.carbohydrates
+            tvFoodSugar.text = nutrition.sugar.toString() + "/" + max.sugar
+            tvFoodFat.text = nutrition.fat.toString() + "/" + max.fat
+            tvFoodTrans.text = nutrition.trans_fat.toString() + "/" + max.trans_fat
+            tvFoodSaturated.text = nutrition.saturated_fat.toString() + "/" + max.saturated_fat
+            tvFoodProtein.text = nutrition.protein.toString() + "/" + max.protein
+            tvFoodCholesterol.text = nutrition.cholesterol.toString() + "/" + max.cholesterol
+            tvFoodProtein.text = nutrition.protein.toString() + "/" + max.protein
+            tvFoodSodium.text = nutrition.sodium.toString() + "/" + max.sodium
         }
-
         loadingDialog.dismiss()
     }
 
-    private fun generateQuestion() {
+    @SuppressLint("NotifyDataSetChanged")
+    fun tokenizeString(str: String) {
+        str.split("1.", "2.", "3.", "4.", "5.", "6.", "7.").toCollection(recommend_list)
+        recommend_list.removeAt(0)
+        Log.d("Checking OPENAI", "${recommend_list[0]}, ${recommend_list[1]}")
+        Handler(Looper.getMainLooper()).post {
+            foodAdapter.notifyDataSetChanged()
+        }
+        /*for(i in recommend_list){
+            Log.d("Checking OPENAI", "tokenized result: ${i.trim()}")
+        }*/
     }
-
-    /*테스트용 배열 생성을 위한 임시 함수*/
-//    private fun temporaryFillArr() {
-//        todayArray.apply {
-//            for (i in 0..3) {
-//                add(Pair(('A' + i).toString(), ('A' + i).toString()))
-//            }
-//        }
-//    }
 }
