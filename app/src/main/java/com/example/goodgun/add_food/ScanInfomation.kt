@@ -1,16 +1,21 @@
 package com.example.goodgun.add_food
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.goodgun.BuildConfig
 import com.example.goodgun.MainActivity
 import com.example.goodgun.R
 import com.example.goodgun.databinding.ActivityScanInfomationBinding
+import com.example.goodgun.openAPI.FoodClient.foodService
+import com.example.goodgun.openAPI.FoodList
 import com.example.goodgun.roomDB.DatabaseManager
 import com.example.goodgun.roomDB.FoodDatabase
 import com.example.goodgun.roomDB.FoodEntity
@@ -24,6 +29,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ScanInfomation : AppCompatActivity() {
 
@@ -37,7 +45,7 @@ class ScanInfomation : AppCompatActivity() {
     var currentUser: FirebaseUser? = null
     var userid: String = ""
 
-    val model:FoodViewModel by viewModels()
+    val model: FoodViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,16 +86,18 @@ class ScanInfomation : AppCompatActivity() {
         binding.dbCheck.setOnClickListener {
             GlobalScope.launch(Dispatchers.IO) {
                 val tmp: List<FoodEntity> = roomdb.foodDao().getAll()
-                val message = tmp.joinToString("\n") { "FoodEntity(id=${it.id}, name=${it.name}), calory=${it.calory})" }
+                val message =
+                    tmp.joinToString("\n") { "FoodEntity(id=${it.id}, name=${it.name}), calory=${it.calory})" }
                 withContext(Dispatchers.Main) {
                     Toast.makeText(this@ScanInfomation, message, Toast.LENGTH_SHORT).show()
                 }
             }
         }
         binding.directAdd.setOnClickListener {
-            model.reset()
-            val dialog = DirectInputFragment()
-            dialog.show(supportFragmentManager, "DirectInputFragment")
+//            model.reset()
+//            val dialog = DirectInputFragment()
+//            dialog.show(supportFragmentManager, "DirectInputFragment")
+            FoodName()
         }
     }
 
@@ -141,7 +151,8 @@ class ScanInfomation : AppCompatActivity() {
                 roomdb.foodDao().deleteSumFood()
                 val foods: List<FoodEntity> = roomdb.foodDao().getAll()
                 for (food in foods) {
-                    database.child("user_list").child(userid).child(food.registerDate).child(food.name)
+                    database.child("user_list").child(userid).child(food.registerDate)
+                        .child(food.name)
                         .setValue(food)
                 }
                 roomdb.foodDao().deleteAll()
@@ -172,7 +183,9 @@ class ScanInfomation : AppCompatActivity() {
                     roomdb.foodDao().saveFood(data)
                     updateSumFoodEntity(data)
                 }
-                binding.recyclerView.findViewHolderForAdapterPosition(position)?.itemView?.findViewById<ImageButton>(R.id.food_add)?.visibility = View.GONE
+                binding.recyclerView.findViewHolderForAdapterPosition(position)?.itemView?.findViewById<ImageButton>(
+                    R.id.food_add
+                )?.visibility = View.GONE
             }
         }
         adapter.itemdelete = object : FoodAddAdapter.OnItemClickListener {
@@ -190,11 +203,34 @@ class ScanInfomation : AppCompatActivity() {
 
 
     // 다이얼로그 닫힐 때 실행되는 함수
-    fun onDialogDissmissed(){
+    fun onDialogDissmissed() {
         val directFood = model.testget()
-        if (directFood!=""){
+        if (directFood != "") {
             tmpdata.add(FoodEntity(directFood))
             adapter.notifyDataSetChanged()
         }
+    }
+
+    // open api
+    private fun FoodName() {
+        foodService.getFoodName(BuildConfig.KEY_ID, "I2790", "json")
+            .enqueue(object : Callback<FoodList> {
+                override fun onResponse(call: Call<FoodList>, response: Response<FoodList>) {
+                    if (response.isSuccessful.not()) {
+                        Log.e(TAG, response.toString())
+                        return
+                    } else {
+                        response.body()?.let {
+                            val foodList = response.body() // 응답 데이터 객체
+                            Log.d(TAG, "Received data: $foodList")
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<FoodList>, t: Throwable) {
+                    Log.e(TAG, "연결 실패")
+                    Log.e(TAG, t.toString())
+                }
+            })
     }
 }

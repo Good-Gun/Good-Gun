@@ -4,10 +4,13 @@ plugins {
     id 'com.google.gms.google-services'
     id 'kotlin-kapt'
 }
-tasks.register("prepareKotlinBuildScriptModel"){}
 
+// local.properties 사용
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+
+tasks.register("prepareKotlinBuildScriptModel"){}
 
 android {
     namespace 'com.example.goodgun'
@@ -25,6 +28,9 @@ android {
         versionName "1.0"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        // key 지정
+        buildConfigField "String", "KEY_ID", properties['keyId']
         buildConfigField "String", "SAMPLE_API_KEY", properties['API_KEY']
     }
 
