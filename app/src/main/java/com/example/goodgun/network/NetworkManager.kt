@@ -1,4 +1,4 @@
-package com.example.goodgun.firebase
+package com.example.goodgun.network
 
 import android.util.Log
 import com.aallam.openai.api.BetaOpenAI
@@ -14,7 +14,8 @@ import com.example.goodgun.ApplicationClass
 import com.example.goodgun.BuildConfig
 import com.example.goodgun.Food
 import com.example.goodgun.User
-import com.example.goodgun.main_function.model.Nutrition
+import com.example.goodgun.network.model.Nutrition
+import com.example.goodgun.network.model.NutritionResponse
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -23,29 +24,22 @@ import kotlinx.coroutines.tasks.await
 import java.time.LocalDate
 import kotlin.time.Duration.Companion.seconds
 
-object NetworkManager {
-    private val userId = "MhAk3L1JdrcV2bnoCkvKq2vCnD02"
+object NetworkManager:NetworkInterface {
+    private val userId = ApplicationClass.uid
     private val database = FirebaseDatabase.getInstance()
 
     /*firebase에서 date부터 오늘까지의 음식 정보들 가져오기*/
-    suspend fun getFoodData(date: String): List<Food> = withContext(Dispatchers.IO) {
-        val foodList: MutableList<Food> = mutableListOf<Food>()
+    override suspend fun getFoodByDate(date: String): NutritionResponse = withContext(Dispatchers.IO) {
+        val response = NutritionResponse()
         val datesRef: DatabaseReference =
             database.getReference("user_list").child(userId).child("food")
-
         val outerSnapshot: DataSnapshot = datesRef.get().await()
         for (dateSnapshot in outerSnapshot.children) {
             if (dateSnapshot.value != null) {
-                Log.d(
-                    "Firebase Communication",
+                val date1 = LocalDate.parse(dateSnapshot.key.toString().trim()) //파이어베이스에 저장된 날짜
+                val date2 = LocalDate.parse(date.trim())    //찾는 날짜
 
-                    "key ${dateSnapshot.key!!}"
-                )
-
-                val date1 = LocalDate.parse(dateSnapshot.key.toString().trim())
-                val date2 = LocalDate.parse(date.trim())
-
-                if (date1 >= date2) {
+                if (date1 == date2) {
                     val innerSnapshot = datesRef.child(dateSnapshot.key!!).get().await()
                     for (foodSnapshot in innerSnapshot.children) {
                         val food = foodSnapshot.getValue(Food::class.java)!!
@@ -53,30 +47,38 @@ object NetworkManager {
                             "Firebase Communication",
                             "Adding food: ${food.name}, regDate: ${food.registerDate}"
                         )
-                        foodList.add(food)
+                        response.food_list.add(food)
+                        response.nutrition.apply {
+                            calorie += food.calorie
+                            carbohydrates += food.carbohydrates
+                            fat += food.fat
+                            saturated_fat += food.saturated_fat
+                            trans_fat += food.trans_fat
+                            cholesterol += food.cholesterol
+                            protein += food.protein
+                            sodium += food.sodium
+                            sugar += food.sugar
+                        }
                     }
                 }
             }
         }
-        foodList
+        response
     }
 
     /*firebase에서 date부터 오늘까지의 음식들의 영양정보 총합 가져오기*/
-
-    suspend fun getNutritionData(date: String): Nutrition = withContext(Dispatchers.IO) {
+    /*GraphActivity*/
+    override suspend fun getNutritionData(date: String): Nutrition = withContext(Dispatchers.IO) {
         val nutrition = Nutrition()
         var days = 0
-
         val datesRef: DatabaseReference =
             database.getReference("user_list").child(userId).child("food")
-
         val outerSnapshot: DataSnapshot = datesRef.get().await()
         for (dateSnapshot in outerSnapshot.children) {
             if (dateSnapshot.value != null) {
                 Log.d(
                     "Firebase Communication",
                     "key ${dateSnapshot.key!!}"
-
                 )
 
                 val date1 = LocalDate.parse(dateSnapshot.key.toString().trim())
@@ -87,11 +89,6 @@ object NetworkManager {
                     val innerSnapshot = datesRef.child(dateSnapshot.key!!).get().await()
                     for (foodSnapshot in innerSnapshot.children) {
                         val food = foodSnapshot.getValue(Food::class.java)!!
-                        Log.d(
-                            "Firebase Communication",
-
-                            "Adding food: ${food.name}, regDate: ${food.registerDate}"
-                        )
                         nutrition.apply {
                             calorie += food.calorie
                             carbohydrates += food.carbohydrates
@@ -124,7 +121,7 @@ object NetworkManager {
     }
 
     /*firebase에서 date에 등록된 음식들의 영양정보 총합 가져오기*/
-    suspend fun getDayNutrition(date: String): Nutrition = withContext(Dispatchers.IO) {
+    override suspend fun getDayNutrition(date: String): Nutrition = withContext(Dispatchers.IO) {
         val nutrition = Nutrition()
 
         val datesRef: DatabaseReference =
@@ -149,7 +146,7 @@ object NetworkManager {
         nutrition
     }
 
-    suspend fun getUserData(): User = withContext(Dispatchers.IO) {
+    override suspend fun getUserData(): User = withContext(Dispatchers.IO) {
         val dataRef: DatabaseReference =
             database.getReference("user_list").child(ApplicationClass.uid)
         val dataSnapshot: DataSnapshot = dataRef.get().await()
@@ -159,7 +156,7 @@ object NetworkManager {
     }
 
     /*임시로 만들어둔 음식 등록용 함수*/
-    fun postFoodData(date: String, food: Food) {
+    override fun postFoodData(date: String, food: Food) {
         val foodRef =
             FirebaseDatabase.getInstance().getReference("user_list").child(userId).child("food").child(date.trim()).push()
         foodRef.setValue(food)
@@ -173,7 +170,7 @@ object NetworkManager {
     }
 
     @OptIn(BetaOpenAI::class)
-    suspend fun callAI(question: String): ChatCompletion = withContext(Dispatchers.IO) {
+    override suspend fun callAI(question: String): String = withContext(Dispatchers.IO) {
         val openAI = OpenAI(
             token = BuildConfig.SAMPLE_API_KEY,
             timeout = Timeout(socket = 120.seconds),
@@ -191,10 +188,10 @@ object NetworkManager {
         )
         val completion = openAI.chatCompletion(chatCompletionRequest)
 
-        val str = completion.choices[0].message?.content.toString()
-        Log.d("Checking OPENAI", str)
-        tokenizeString(str)
+        /*Log.d("Checking OPENAI", str)
+        tokenizeString(str)*/
 
-        completion
+        val str = completion.choices[0].message?.content.toString()
+        str
     }
 }
