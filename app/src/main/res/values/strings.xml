@@ -13,6 +13,16 @@
     <string name="trans_fat">트랜스지방(g)</string>
     <string name="saturated_fat">포화지방(g)</string>
 
+    <string name="calorie2">열량</string>
+    <string name="carbohydrate2">탄수화물</string>
+    <string name="protein2">단백질</string>
+    <string name="fat2">지방</string>
+    <string name="sugar2">당류</string>
+    <string name="sodium2">나트륨</string>
+    <string name="cholesterol2">콜레스테롤</string>
+    <string name="trans_fat2">트랜스지방</string>
+    <string name="saturated_fat2">포화지방</string>
+
 
     <string name="no_food_today">오늘 드신 음식이 없어요!</string>
 </resources>

@@ -1,12 +1,13 @@
 package com.example.goodgun
 
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
+import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,14 +17,21 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.goodgun.add_food.ScanInfomation
 import com.example.goodgun.databinding.FragmentHomeBinding
-import com.example.goodgun.firebase.NetworkManager
+import com.example.goodgun.network.NetworkManager
 import com.example.goodgun.main_function.FoodActivity
 import com.example.goodgun.main_function.GraphActivity
+import com.example.goodgun.main_function.SolutionActivity
 import com.example.goodgun.main_function.TodayRVAdapter
 import com.example.goodgun.main_function.model.Nutrition
 import com.example.goodgun.roomDB.DatabaseManager
 import com.example.goodgun.roomDB.FoodEntity
 import kotlinx.coroutines.*
+import com.example.goodgun.network.model.Food
+import com.example.goodgun.network.model.NutritionResponse
+import com.example.goodgun.util.LoadingDialog
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -32,9 +40,9 @@ class HomeFragment : Fragment() {
 
     private lateinit var loadingDialog: Dialog // 로딩창 클래스
     lateinit var todayAdapter: TodayRVAdapter // 오늘 섭취한 음식정보 recyclerView
-    lateinit var nutrition: Nutrition // 영양 정보 저장을 위한 클래스
+    lateinit var nutritionResponse: NutritionResponse // 영양 정보 저장을 위한 클래스
     val food_list: ArrayList<Food> = arrayListOf() // 음식 리스트
-    lateinit var today: String // 오늘 날짜 저장
+    val today: String = LocalDateTime.now().format(DateTimeFormatter.ofPattern(" yyyy-MM-dd"))
     lateinit var date: String // 다른 날짜의 영양정보 탐색을 위한 변수
 
     var binding: FragmentHomeBinding? = null
@@ -45,7 +53,6 @@ class HomeFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
-        today = LocalDateTime.now().format(DateTimeFormatter.ofPattern(" yyyy-MM-dd"))
         date = today
         loadingDialog = LoadingDialog(requireContext())
         loadingDialog.show()
@@ -56,16 +63,22 @@ class HomeFragment : Fragment() {
         return binding!!.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        /*파이어베이스 요청*/
+        getNutrition(date)
+    }
+
     /*일반 레이아웃 초기화*/
     fun initLayout() {
         binding!!.apply {
-            tvHomeDate.text = today
+            tvHomeDate.text = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"))
 
             /*날짜 탐색 (이전 날짜)*/
             ivHomeLeft.setOnClickListener {
                 loadingDialog.show()
                 date = LocalDate.parse(date.trim()).minusDays(1).toString()
-                tvHomeDate.text = date
+                tvHomeDate.text = LocalDate.parse(date.trim()).format(DateTimeFormatter.ofPattern("yyyy/MM/dd"))
                 getNutrition(date)
             }
 
@@ -74,11 +87,16 @@ class HomeFragment : Fragment() {
                 loadingDialog.show()
                 if (LocalDate.parse(today.trim()) > LocalDate.parse(date.trim())) {
                     date = LocalDate.parse(date.trim()).plusDays(1).toString()
-                    tvHomeDate.text = date
+                    tvHomeDate.text = LocalDate.parse(date.trim()).format(DateTimeFormatter.ofPattern("yyyy/MM/dd"))
                     getNutrition(date)
                 } else {
                     loadingDialog.dismiss()
                 }
+            }
+
+            homeBtn1.setOnClickListener {
+                val intent = Intent(activity, SolutionActivity::class.java)
+                startActivity(intent)
             }
 
             /*식단 추천 창으로 이동*/
@@ -104,56 +122,48 @@ class HomeFragment : Fragment() {
     private fun initRV() {
         todayAdapter = TodayRVAdapter(requireContext(), food_list, 5)
         binding?.rvHomeToday?.adapter = todayAdapter
-        binding?.rvHomeToday?.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        binding?.rvHomeToday?.layoutManager = LinearLayoutManagerWrapper(requireContext(), LinearLayoutManager.VERTICAL, false)
 
         // 간격 20으로
         val spaceDecoration = this.VerticalSpaceItemDecoration(20)
         binding?.rvHomeToday?.addItemDecoration(spaceDecoration)
 
-        /*파이어베이스 요청*/
-
-        CoroutineScope(Dispatchers.Main).launch {
-            withContext(Dispatchers.IO) {
-                nutrition = NetworkManager.getDayNutrition(today)
-                food_list.apply {
-
-                    addAll(NetworkManager.getFoodData(today))
-                }
-            }
-            todayAdapter.notifyItemRangeInserted(0, food_list.size)
-            if (food_list.size == 0) {
-                Handler(Looper.getMainLooper()).post {
-                    binding!!.tvNoFood.visibility = View.VISIBLE
-                }
-            }
-
-            setProgress()
-        }
     }
 
     /*날짜를 바꿀 시 파이어베이스 요청*/
     private fun getNutrition(date: String) {
         CoroutineScope(Dispatchers.Main).launch {
-            withContext(Dispatchers.IO) {
-                Log.d("Firebase Communication at main", "at main, date: $date")
-                nutrition = NetworkManager.getDayNutrition(date)
+            nutritionResponse = NetworkManager.getFoodByDate(date)
+            food_list.apply {
+                val num = food_list.size
+                clear()
+                todayAdapter.notifyItemRangeRemoved(0, num)
+                addAll(nutritionResponse.food_list)
+                todayAdapter.notifyItemRangeInserted(0, nutritionResponse.food_list.size)
             }
-            setProgress()
+            Handler(Looper.getMainLooper()).post {
+                if (food_list.size == 0) {
+                    binding!!.tvNoFood.visibility = View.VISIBLE
+                } else {
+                    binding!!.tvNoFood.visibility = View.GONE
+                }
+            }
+            setData()
         }
     }
 
     /*프로그래스 및 기타 정보 수정*/
-    private fun setProgress() {
+    private fun setData() {
         val max = ApplicationClass.maxNutrition
+        val nutrition = nutritionResponse.nutrition
         binding!!.apply {
+            /*tvHomeName.text = ApplicationClass.uname*/
+
             pbHomeCalorie.setProgress((nutrition.calorie / 2000.0 * 100.0).toInt())
             tvHomeCalorie.text = nutrition.calorie.toString() + "/" + max.calorie.toString()
             tvHomeCarbohydrates.text = nutrition.carbohydrates.toString() + "/" + max.carbohydrates.toString()
             tvHomeProteins.text = nutrition.protein.toString() + "/" + max.protein.toString()
             tvHomeFat.text = nutrition.fat.toString() + "/" + max.fat.toString()
-
-            Log.d("Login Check", "userSnapshot key = ${ApplicationClass.user.u_name}")
-            tvHomeName.text = ApplicationClass.uname
         }
         loadingDialog.dismiss()
     }
@@ -161,7 +171,6 @@ class HomeFragment : Fragment() {
     /*리사이클러뷰에서 아이템 간격 조정*/
     inner class VerticalSpaceItemDecoration(private val verticalSpaceHeight: Int) :
         RecyclerView.ItemDecoration() {
-
         override fun getItemOffsets(
             outRect: Rect,
             view: View,
@@ -182,6 +191,15 @@ class HomeFragment : Fragment() {
             withContext(Dispatchers.Main) {
                 binding!!.roomDBcount.text=count.toString()
             }
+    inner class LinearLayoutManagerWrapper: LinearLayoutManager {
+        constructor(context: Context) : super(context) {}
+
+        constructor(context: Context, orientation: Int, reverseLayout: Boolean) : super(context, orientation, reverseLayout) {}
+
+        constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {}
+
+        override fun supportsPredictiveItemAnimations(): Boolean {
+            return false
         }
     }
 }

@@ -11,19 +11,30 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/bottom_navigation_main"/>
+        app:layout_constraintBottom_toTopOf="@id/bubbleTabBar"/>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
+    <!--<com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_main"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         app:itemIconSize="25dp"
+        app:labelVisibilityMode="selected"
         android:background="@drawable/box_radius_top_10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:labelVisibilityMode="unlabeled"
         android:elevation="0dp"
-        app:menu="@menu/bottom_navigation_menu"/>
 
+        app:menu="@menu/bottom_navigation_menu"/>-->
+
+    <io.ak1.BubbleTabBar
+        android:id="@+id/bubbleTabBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="7dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/box_radius_top_10dp"
+        app:bubbletab_title_size="12sp"
+        app:bubbletab_menuResource="@menu/bottom_navigation_menu">
+    </io.ak1.BubbleTabBar>
 
     <ImageView
         android:id="@+id/iv_add"

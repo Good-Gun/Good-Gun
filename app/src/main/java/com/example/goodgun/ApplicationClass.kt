@@ -2,8 +2,9 @@ package com.example.goodgun
 
 import android.app.Application
 import android.util.Log
-import com.example.goodgun.firebase.NetworkManager
-import com.example.goodgun.main_function.model.Nutrition
+import com.example.goodgun.network.NetworkManager
+import com.example.goodgun.network.model.Nutrition
+import com.example.goodgun.network.model.User
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope

@@ -9,8 +9,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".ApplicationClass"
@@ -24,6 +24,10 @@
         android:theme="@style/Theme.GoodGun"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".main_function.SolutionActivity"
+            android:exported="false" />
+
         <meta-data
             android:name="com.doinglab.foodlens.sdk.apptoken"
             android:value="@string/foodlens_app_token" />
@@ -43,13 +47,10 @@
         <activity
             android:name=".login.SplashActivity"
             android:exported="true"
-            android:theme="@style/SplashTheme">
-
-
-        </activity> <!-- Splash Activity -->
+            android:theme="@style/SplashTheme"></activity> <!-- Splash Activity -->
         <activity
             android:name=".MainActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".login.LoginActivity"
             android:exported="true">
@@ -58,16 +59,13 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".login.RegistrationActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".login.AdditionalInfoActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".login.ProfileActivity"
             android:exported="false" />

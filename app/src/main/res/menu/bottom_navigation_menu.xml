@@ -3,14 +3,19 @@
     <item
         android:id="@+id/nav_home"
         android:icon="@drawable/baseline_home_24"
-        android:title="Home" />
+        android:title="홈"
+        android:checked="true"
+        android:color="@color/theme1"
+        />
     <item
         android:id="@+id/nav_camera"
         android:enabled="false"
-        android:title="" />
+        android:title=""
+        android:checkable="false" />
 
     <item
         android:id="@+id/nav_option"
         android:icon="@drawable/baseline_person_24"
-        android:title="User"/>
+        android:title="사용자"
+        android:color="@color/theme1"/>
 </menu>

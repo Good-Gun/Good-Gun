@@ -4,7 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.goodgun.Food
+import com.example.goodgun.network.model.Food
 import com.example.goodgun.databinding.ItemFoodListTodayBinding
 
 class TodayRVAdapter(

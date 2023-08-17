@@ -9,10 +9,13 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.aallam.openai.api.BetaOpenAI
+import com.doinglab.foodlens.sdk.ui.network.models.Nutrition
 import com.example.goodgun.MainActivity
 import com.example.goodgun.R
 import com.example.goodgun.add_food.direct_add.DirectInputFragment
 import com.example.goodgun.databinding.ActivityScanInfomationBinding
+import com.example.goodgun.network.NetworkManager
 import com.example.goodgun.roomDB.DatabaseManager
 import com.example.goodgun.roomDB.FoodDatabase
 import com.example.goodgun.roomDB.FoodEntity
@@ -22,6 +25,12 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import kotlinx.coroutines.*
 
 class ScanInfomation : AppCompatActivity() {
@@ -147,6 +156,7 @@ class ScanInfomation : AppCompatActivity() {
         }
     }
 
+    @OptIn(BetaOpenAI::class)
     private fun initBtn() {
         binding.registerFoods.setOnClickListener {
             GlobalScope.launch(Dispatchers.IO) {
@@ -159,6 +169,21 @@ class ScanInfomation : AppCompatActivity() {
                 }
                 roomdb.foodDao().deleteAll()
                 roomdb.foodDao().saveFood(FoodEntity())
+
+                val nutrition = withContext(Dispatchers.IO) {
+                    val nutrition = NetworkManager.getNutritionData(LocalDateTime.now().minusWeeks(1)
+                        .format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+                    nutrition
+                }
+                
+                Log.d("Managing Network from ScanInfo", "${nutrition.calorie}, ${Nutrition.ColumnInfo.sugar}")
+
+                val question = nutrition.getQuestion(2)
+                val answer = if(question != null){
+                    NetworkManager.callAI(question)
+                } else null
+
+                Log.d("Managing Network from ScanInfo", answer!!)
                 // 영양소 합계 저장할 foodentity 생성
             }
             startActivity(Intent(this, MainActivity::class.java))

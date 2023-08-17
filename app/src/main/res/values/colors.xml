@@ -24,9 +24,11 @@
     <color name="dark_grey">#FFa1a1a1</color>
     <color name="green">#FF006710</color>
 
-    <color name="theme1">#FF6E179A</color>
+    <color name="theme1">#FF354AFF</color>
+    <color name="theme1_1">#E2E4FA</color>
     <color name="theme2">#FFEEEEEE</color>
     <color name="theme3">#FFB04BFF</color>
+    <color name="theme3_1">#E8CBFF</color>
     <color name="theme4">#FFffffff</color>
 
 
