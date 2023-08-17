@@ -38,7 +38,7 @@ class HomeFragment : Fragment() {
     lateinit var todayAdapter: TodayRVAdapter // 오늘 섭취한 음식정보 recyclerView
     lateinit var nutritionResponse: NutritionResponse // 영양 정보 저장을 위한 클래스
     val food_list: ArrayList<Food> = arrayListOf() // 음식 리스트
-    lateinit var today: String // 오늘 날짜 저장
+    val today: String = LocalDateTime.now().format(DateTimeFormatter.ofPattern(" yyyy-MM-dd"))
     lateinit var date: String // 다른 날짜의 영양정보 탐색을 위한 변수
 
     var binding: FragmentHomeBinding? = null
@@ -49,7 +49,6 @@ class HomeFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
-        today = LocalDateTime.now().format(DateTimeFormatter.ofPattern(" yyyy-MM-dd"))
         date = today
         loadingDialog = LoadingDialog(requireContext())
         loadingDialog.show()
@@ -58,6 +57,12 @@ class HomeFragment : Fragment() {
         initRV()
 
         return binding!!.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        /*파이어베이스 요청*/
+        getNutrition(date)
     }
 
     /*일반 레이아웃 초기화*/
@@ -119,8 +124,6 @@ class HomeFragment : Fragment() {
         val spaceDecoration = this.VerticalSpaceItemDecoration(20)
         binding?.rvHomeToday?.addItemDecoration(spaceDecoration)
 
-        /*파이어베이스 요청*/
-        getNutrition(today)
     }
 
     /*날짜를 바꿀 시 파이어베이스 요청*/
