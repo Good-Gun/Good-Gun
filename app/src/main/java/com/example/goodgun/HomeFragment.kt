@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,10 +21,9 @@ import com.example.goodgun.main_function.FoodActivity
 import com.example.goodgun.main_function.GraphActivity
 import com.example.goodgun.main_function.TodayRVAdapter
 import com.example.goodgun.main_function.model.Nutrition
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import com.example.goodgun.roomDB.DatabaseManager
+import com.example.goodgun.roomDB.FoodEntity
+import kotlinx.coroutines.*
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -169,6 +169,19 @@ class HomeFragment : Fragment() {
             state: RecyclerView.State,
         ) {
             outRect.bottom = verticalSpaceHeight
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        /*room DB에 저장되어 있는 음식 개수*/
+        val roomdb = DatabaseManager.getDatabaseInstance(ApplicationClass.uid, requireContext())
+        GlobalScope.launch(Dispatchers.IO) {
+            val count = roomdb.foodDao().foodCount()
+            withContext(Dispatchers.Main) {
+                binding!!.roomDBcount.text=count.toString()
+            }
         }
     }
 }
