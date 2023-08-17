@@ -28,10 +28,15 @@
 
     </LinearLayout>
 
-
-    <ListView
-        android:id="@+id/listView"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/searchRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"/>
+    <TextView
+        android:id="@+id/emptyTextView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="검색 결과가 없습니다."
+        android:visibility="gone"/>
 
 </LinearLayout>
