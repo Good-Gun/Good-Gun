@@ -18,6 +18,8 @@
     <color name="deep_purple">#FF6E179A</color>
     <color name="light_purple">#FFB04BFF</color>
     <color name="red">#FFFE0000</color>
+    <color name="yellow">#FFE925</color>
+    <color name="graph">#54FD66</color>
     <color name="bright_grey">#FFEEEEEE</color>
     <color name="dark_grey">#FFa1a1a1</color>
     <color name="green">#FF006710</color>

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.goodgun.MainActivity
@@ -36,6 +37,8 @@ class ScanInfomation : AppCompatActivity() {
     var currentUser: FirebaseUser? = null
     var userid: String = ""
 
+    val model: FoodViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityScanInfomationBinding.inflate(layoutInflater)
@@ -64,9 +67,14 @@ class ScanInfomation : AppCompatActivity() {
 
         initBtn()
         initRecyclerView()
+        initDirectAdd()
 
+        init()
+    }
+
+    private fun initDirectAdd() {
         // 임시 룸DB 확인
-        binding.directAdd.setOnClickListener {
+        binding.dbCheck.setOnClickListener {
             GlobalScope.launch(Dispatchers.IO) {
                 val tmp: List<FoodEntity> = roomdb.foodDao().getAll()
                 val message = tmp.joinToString("\n") { "FoodEntity(id=${it.id}, name=${it.name}), calory=${it.calory})" }
@@ -75,8 +83,11 @@ class ScanInfomation : AppCompatActivity() {
                 }
             }
         }
-
-        init()
+        binding.directAdd.setOnClickListener {
+            model.reset()
+            val dialog = DirectInputFragment()
+            dialog.show(supportFragmentManager, "DirectInputFragment")
+        }
     }
 
     private fun init() {
@@ -174,5 +185,14 @@ class ScanInfomation : AppCompatActivity() {
             }
         }
         binding.recyclerView.adapter = adapter
+    }
+
+    // 다이얼로그 닫힐 때 실행되는 함수
+    fun onDialogDissmissed() {
+        val directFood = model.testget()
+        if (directFood != "") {
+            tmpdata.add(FoodEntity(directFood))
+            adapter.notifyDataSetChanged()
+        }
     }
 }

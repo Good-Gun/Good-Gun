@@ -7,19 +7,45 @@ data class Nutrition(
     var calorie: Int,
     var carbohydrates: Int,
     var sugar: Int,
-    var protein: Int,
     var fat: Int,
     var trans_fat: Int,
     var saturated_fat: Int,
-    var cholesterol: Int,
+    var protein: Int,
     var sodium: Int,
+    var cholesterol: Int,
 ) {
     constructor() : this(
         0, 0, 0, 0, 0, 0, 0, 0, 0,
     )
 
-    private val arr1: List<String> = listOf("탄수화물", "단백질", "지방", "포화지방", "트랜스지방", "당류", "나트륨", "콜레스테롤")
-    private val arr2: List<String> = listOf("carbohydrates", "proteins", "fats", "saturated_fat", "trans_fat", "sugar", "sodium", "cholesterol")
+    private val arr1: List<String> = listOf("탄수화물", "당류", "지방", "트랜스지방", "포화지방", "단백질", "나트륨", "콜레스테롤")
+    private val arr2: List<String> = listOf("carbohydrates", "proteins", "fats", "trans_fat", "saturated_fat", "sugar", "sodium", "cholesterol")
+
+    /*case 1: 음식 추천, 2: 솔루션 */
+    fun getQuestion(case: Int): String? {
+        var question: String? = ""
+
+        for (i in arr1.indices) {
+            if (calculateNutrientIntake(arr2[i]) == 2) {
+                question += "과한 " + arr1[i] + ","
+            } else if (calculateNutrientIntake(arr2[i]) == -2) question += "부족한 " + arr1[i] + ","
+        }
+        if (question != "") {
+            question = question?.removeSuffix(",")
+            if (case == 1) {
+                question += " 섭취를 하는 사람에게 건강해질 식단을 추천해줘. 앞뒤 설명은 일절 보여주지 말고, 출력 형식은 음식이름:간략한 설명 으로 해서 5개 보여줘"
+            } else {
+                question += " 섭취를 하는 사람에게 건강해질 생활 패턴을 추천해줘."
+            }
+            // question += " 섭취를 하는 사람에게 생활 패턴을 추천해줘. 앞뒤 설명 생략하고 숫자 붙여서 부제와 내용 형식으로 보여줘"
+        } else {
+            question = null
+        }
+
+        Log.d("Checking OPENAI", "$question")
+
+        return question
+    }
 
     fun getQuestionForFood(): String? {
         var question: String? = ""
@@ -32,7 +58,7 @@ data class Nutrition(
         if (question != "") {
             question = question?.removeSuffix(",")
             // question += " 섭취를 하는 사람에게 생활 패턴을 추천해줘. 앞뒤 설명 생략하고 숫자 붙여서 부제와 내용 형식으로 보여줘"
-            question += " 섭취를 하는 사람에게 건강해질 식단을 추천해줘. 앞뒤 설명 자르고 숫자 붙여서 재료 이름:주요 영양소 이름을 7개만 나열해줘"
+            question += " 섭취를 하는 사람에게 건강해질 식단을 추천해줘. 앞뒤 설명은 일절 보여주지 말고, 출력 형식은 음식이름:간략한 설명 으로 해서 5개 보여줘"
         } else {
             question = null
         }

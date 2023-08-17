@@ -108,8 +108,9 @@
 
         <LinearLayout
             android:id="@+id/view_calorie"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            app:layout_constraintWidth_percent="0.5"
             android:layout_marginVertical="15dp"
             android:layout_marginStart="15dp"
             android:background="@drawable/box_radius_10dp"
@@ -124,7 +125,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
-                android:layout_marginHorizontal="60dp"
                 android:text="@string/calorie"
                 android:textColor="@color/black"
                 android:textSize="17dp"
@@ -284,6 +284,20 @@
             android:textStyle="bold"
             android:drawableEnd="@drawable/baseline_keyboard_arrow_right_24"
             android:drawableTint="@color/black"/>
+
+        <TextView
+            android:id="@+id/tv_no_food"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:padding="10dp"
+            android:text="@string/no_food_today"
+            style="@style/foodText"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_home_info_title"
+            tools:layout_editor_absoluteX="15dp"
+            android:textAlignment="center"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_home_today"
