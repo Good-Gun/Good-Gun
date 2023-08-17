@@ -2,18 +2,16 @@ package com.example.goodgun.network
 
 import android.util.Log
 import com.aallam.openai.api.BetaOpenAI
-import com.aallam.openai.api.chat.ChatCompletion
 import com.aallam.openai.api.chat.ChatCompletionRequest
 import com.aallam.openai.api.chat.ChatMessage
 import com.aallam.openai.api.chat.ChatRole
 import com.aallam.openai.api.http.Timeout
 import com.aallam.openai.api.model.ModelId
 import com.aallam.openai.client.OpenAI
-import com.doinglab.foodlens.sdk.ui.util.UnitTokenizer.tokenizeString
 import com.example.goodgun.ApplicationClass
 import com.example.goodgun.BuildConfig
-import com.example.goodgun.Food
-import com.example.goodgun.User
+import com.example.goodgun.network.model.Food
+import com.example.goodgun.network.model.User
 import com.example.goodgun.network.model.Nutrition
 import com.example.goodgun.network.model.NutritionResponse
 import com.google.firebase.database.DataSnapshot

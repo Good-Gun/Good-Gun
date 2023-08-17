@@ -1,9 +1,8 @@
 package com.example.goodgun.network
 
 import com.aallam.openai.api.BetaOpenAI
-import com.aallam.openai.api.chat.ChatCompletion
-import com.example.goodgun.Food
-import com.example.goodgun.User
+import com.example.goodgun.network.model.Food
+import com.example.goodgun.network.model.User
 import com.example.goodgun.network.model.Nutrition
 import com.example.goodgun.network.model.NutritionResponse
 

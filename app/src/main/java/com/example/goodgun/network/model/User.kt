@@ -1,4 +1,4 @@
-package com.example.goodgun
+package com.example.goodgun.network.model
 
 class User(
     var u_email: String,

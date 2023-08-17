@@ -13,8 +13,8 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import com.example.goodgun.ApplicationClass
-import com.example.goodgun.Food
-import com.example.goodgun.LoadingDialog
+import com.example.goodgun.network.model.Food
+import com.example.goodgun.util.LoadingDialog
 import com.example.goodgun.R
 import com.example.goodgun.databinding.ActivityGraphBinding
 import com.example.goodgun.network.NetworkManager

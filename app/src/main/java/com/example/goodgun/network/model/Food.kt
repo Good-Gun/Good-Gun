@@ -1,4 +1,4 @@
-package com.example.goodgun
+package com.example.goodgun.network.model
 
 import java.time.LocalDate
 
