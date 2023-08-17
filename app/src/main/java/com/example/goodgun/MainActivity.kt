@@ -50,6 +50,9 @@ class MainActivity : AppCompatActivity() {
                                 .commitAllowingStateLoss()
                         }
                         R.id.nav_option -> {
+                            /*supportFragmentManager.beginTransaction()
+                                .replace(R.id.frame_main, ProfileFragment())
+                                .commitAllowingStateLoss()*/
                         }
                     }
                 }
