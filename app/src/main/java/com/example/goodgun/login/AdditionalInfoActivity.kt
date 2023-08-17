@@ -53,8 +53,9 @@ class AdditionalInfoActivity : AppCompatActivity() {
         multiAutoCompleteTextView.setAdapter(adapter)
         multiAutoCompleteTextView.setTokenizer(CommaTokenizer())
         multiAutoCompleteTextView.setOnFocusChangeListener { v, hasFocus ->
-            if(hasFocus)
+            if (hasFocus) {
                 multiAutoCompleteTextView.showDropDown()
+            }
         }
 
         // 운동 스피너 초기화
@@ -77,7 +78,7 @@ class AdditionalInfoActivity : AppCompatActivity() {
                 parent: AdapterView<*>?,
                 view: View,
                 position: Int,
-                id: Long
+                id: Long,
             ) {
                 selectedType = exTypeSpinner.getItemAtPosition(position) as String
             }
@@ -95,7 +96,7 @@ class AdditionalInfoActivity : AppCompatActivity() {
                 parent: AdapterView<*>?,
                 view: View,
                 position: Int,
-                id: Long
+                id: Long,
             ) {
                 selectedFreq = exFreqSpinner.getItemAtPosition(position) as String
                 selectedFreqPosition = position.toString()
@@ -112,7 +113,7 @@ class AdditionalInfoActivity : AppCompatActivity() {
         val reader: BufferedReader
         try {
             reader = BufferedReader(
-                InputStreamReader(mContext.resources.assets.open("$fileName.txt"))
+                InputStreamReader(mContext.resources.assets.open("$fileName.txt")),
             )
             var str: String?
             while (reader.readLine().also { str = it } != null) {

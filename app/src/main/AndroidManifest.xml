@@ -9,14 +9,15 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".ApplicationClass"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_good_gun"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_good_gun_round"
@@ -24,6 +25,14 @@
         android:theme="@style/Theme.GoodGun"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".camera.BarcodeScanActivity"
+            android:launchMode="singleInstance"
+            android:exported="false" />
+        <activity
+            android:name=".camera.BarcodeResultActivity"
+            android:exported="false" />
+
         <meta-data
             android:name="com.doinglab.foodlens.sdk.apptoken"
             android:value="@string/foodlens_app_token" />
@@ -33,6 +42,7 @@
 
         <activity
             android:name=".camera.CameraActivity"
+            android:launchMode="singleInstance"
             android:exported="false" />
         <activity
             android:name=".main_function.GraphActivity"
@@ -43,13 +53,10 @@
         <activity
             android:name=".login.SplashActivity"
             android:exported="true"
-            android:theme="@style/SplashTheme">
-
-
-        </activity> <!-- Splash Activity -->
+            android:theme="@style/SplashTheme" /> <!-- Splash Activity -->
         <activity
             android:name=".MainActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".login.LoginActivity"
             android:exported="true">
@@ -58,16 +65,13 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".login.RegistrationActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".login.AdditionalInfoActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".login.ProfileActivity"
             android:exported="false" />

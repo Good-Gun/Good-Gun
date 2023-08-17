@@ -28,7 +28,7 @@ object FirebaseManager {
                 Log.d(
                     "Firebase Communication",
 
-                    "key ${dateSnapshot.key!!}"
+                    "key ${dateSnapshot.key!!}",
                 )
 
                 val date1 = LocalDate.parse(dateSnapshot.key.toString().trim())
@@ -40,7 +40,7 @@ object FirebaseManager {
                         val food = foodSnapshot.getValue(Food::class.java)!!
                         Log.d(
                             "Firebase Communication",
-                            "Adding food: ${food.name}, regDate: ${food.registerDate}"
+                            "Adding food: ${food.name}, regDate: ${food.registerDate}",
                         )
                         foodList.add(food)
                     }
@@ -64,7 +64,7 @@ object FirebaseManager {
             if (dateSnapshot.value != null) {
                 Log.d(
                     "Firebase Communication",
-                    "key ${dateSnapshot.key!!}"
+                    "key ${dateSnapshot.key!!}",
 
                 )
 
@@ -79,7 +79,7 @@ object FirebaseManager {
                         Log.d(
                             "Firebase Communication",
 
-                            "Adding food: ${food.name}, regDate: ${food.registerDate}"
+                            "Adding food: ${food.name}, regDate: ${food.registerDate}",
                         )
                         nutrition.apply {
                             calorie += food.calorie

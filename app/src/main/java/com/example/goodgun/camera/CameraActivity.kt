@@ -21,6 +21,7 @@ import androidx.camera.core.TorchState
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.PermissionChecker.checkCallingOrSelfPermission
 import com.example.goodgun.R
 import com.example.goodgun.add_food.FoodPhotoCheck
 import com.example.goodgun.databinding.ActivityCameraBinding
@@ -34,7 +35,6 @@ class CameraActivity : AppCompatActivity() {
         ActivityCameraBinding.inflate(layoutInflater)
     }
     var image: ImageCapture? = null
-    var mode = false // false = 바코드 촬영 모드, true = 음식 촬영 모드
     private lateinit var outputDirectory: File
     private lateinit var cameraProvider: ProcessCameraProvider
     private lateinit var camera: Camera
@@ -43,73 +43,50 @@ class CameraActivity : AppCompatActivity() {
     private lateinit var cameraExecutor: ExecutorService
     private lateinit var cameraAnimationListener: Animation.AnimationListener
     private var savedUri: Uri? = null
+
+    private val permissions = arrayOf(android.Manifest.permission.CAMERA)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        setCameraAnimationListener()
+        setListener()
         initLayout()
         checkPermissions()
 //        permissionCheck()
     }
-
     private fun initLayout() {
         outputDirectory = getOutputDirectory()
+        setCameraAnimationListener()
         openCamera()
-        setListener()
         binding.apply {
             phoneLight.setOnClickListener {
                 toggleTorch()
             }
             cameraMode.setOnClickListener {
-                if (mode == false) { // 바코드 촬영 모드
-                    cameraMode.setImageResource(R.drawable.food_mode)
-                    cameraModeText.text = "제품 바코드 촬영"
-                    cameraFrame.setImageResource(R.drawable.barcode_layout)
-                } else {
-                    cameraMode.setImageResource(R.drawable.ic_barcode_20dp)
-                    cameraModeText.text = "음식 사진 촬영"
-                    cameraFrame.setImageResource(R.drawable.food_camera)
-                }
-                mode = !mode
+                val i = Intent(this@CameraActivity, BarcodeScanActivity::class.java)
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                finish()
+                startActivity(i)
+//                mode = !mode
+//                if (mode == false) { // 바코드 촬영 모드
+//                    cameraShutter.isEnabled = false
+// //                    zxingBarcodeSurface.resume()
+//                    cameraMode.setImageResource(R.drawable.food_mode)
+//                    cameraModeText.text = "제품 바코드 촬영"
+//                    cameraFrame.setImageResource(R.drawable.barcode_layout)
+//                } else {
+//                    cameraShutter.isEnabled = true
+// //                    zxingBarcodeSurface.pause()
+//                    cameraMode.setImageResource(R.drawable.ic_barcode_20dp)
+//                    cameraModeText.text = "음식 사진 촬영"
+//                    cameraFrame.setImageResource(R.drawable.food_camera)
+//                }
             }
             cameraShutter.isEnabled = false
+//            zxingBarcodeSurface.decodeContinuous {
+//                Toast.makeText(this@CameraActivity, it.text, Toast.LENGTH_SHORT)
+//            }
         }
-    }
-
-    private fun savePhoto() {
-        image = image ?: return
-
-        val animation = AnimationUtils.loadAnimation(this@CameraActivity, R.anim.shutter_animation)
-        animation.setAnimationListener(cameraAnimationListener)
-        binding.frameLayoutShutter.animation = animation
-        binding.frameLayoutShutter.startAnimation(animation)
-
-        val child = SimpleDateFormat("yy-mm-dd", Locale.US).format(System.currentTimeMillis()) + ".png"
-
-        val photoFile = File(
-            outputDirectory,
-            child,
-        )
-        val outputOption = ImageCapture.OutputFileOptions.Builder(photoFile).build()
-
-        image?.takePicture(
-            outputOption,
-            ContextCompat.getMainExecutor(this),
-            object : ImageCapture.OnImageSavedCallback {
-                override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                    savedUri = Uri.fromFile(photoFile)
-                    val i = Intent(this@CameraActivity, FoodPhotoCheck::class.java)
-                    i.putExtra("food", savedUri.toString())
-                    Log.i("camera", "saved")
-                    startActivity(i)
-                }
-
-                override fun onError(exception: ImageCaptureException) {
-                    exception.printStackTrace()
-                    onBackPressed()
-                }
-            },
-        )
     }
 
     private fun setListener() {
@@ -166,6 +143,42 @@ class CameraActivity : AppCompatActivity() {
         }
     }
 
+    private fun savePhoto() {
+        image = image ?: return
+
+        val animation = AnimationUtils.loadAnimation(this, R.anim.shutter_animation)
+        animation.setAnimationListener(cameraAnimationListener)
+        binding!!.frameLayout.animation = animation
+        binding!!.frameLayout.startAnimation(animation)
+
+        val child = SimpleDateFormat("yy-mm-dd", Locale.US).format(System.currentTimeMillis()) + ".png"
+
+        val photoFile = File(
+            outputDirectory,
+            child,
+        )
+        val outputOption = ImageCapture.OutputFileOptions.Builder(photoFile).build()
+
+        image?.takePicture(
+            outputOption,
+            ContextCompat.getMainExecutor(this),
+            object : ImageCapture.OnImageSavedCallback {
+                override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+                    savedUri = Uri.fromFile(photoFile)
+                    val i = Intent(this@CameraActivity, FoodPhotoCheck::class.java)
+                    i.putExtra("food", savedUri.toString())
+                    Log.i("camera", "saved")
+                    startActivity(i)
+                }
+
+                override fun onError(exception: ImageCaptureException) {
+                    exception.printStackTrace()
+//                    onBackPressed()
+                }
+            },
+        )
+    }
+
     private fun setCameraAnimationListener() {
         cameraAnimationListener = object : Animation.AnimationListener {
             override fun onAnimationStart(animation: Animation?) {
@@ -178,8 +191,6 @@ class CameraActivity : AppCompatActivity() {
             }
         }
     }
-
-    val permissions = arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.CAMERA)
 
     val multiplePermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
@@ -207,28 +218,13 @@ class CameraActivity : AppCompatActivity() {
 
     fun checkPermissions() {
         when {
-            ActivityCompat.checkSelfPermission(
-                this,
-                android.Manifest.permission.READ_EXTERNAL_STORAGE,
-            ) == PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)
-                == PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(
-                this,
-                android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            ) == PackageManager.PERMISSION_GRANTED
+            ActivityCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)
+                == PackageManager.PERMISSION_GRANTED
             -> {
-                Toast.makeText(this, "모든 권한 승인됨", Toast.LENGTH_SHORT).show()
             }
             ActivityCompat.shouldShowRequestPermissionRationale(
                 this,
-                android.Manifest.permission.READ_EXTERNAL_STORAGE,
-            ) || ActivityCompat.shouldShowRequestPermissionRationale(
-                this,
                 android.Manifest.permission.CAMERA,
-            ) || ActivityCompat.shouldShowRequestPermissionRationale(
-                this,
-                android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
             ) -> {
                 permissionCheckAlertDialog()
             }
@@ -240,28 +236,19 @@ class CameraActivity : AppCompatActivity() {
 
     fun permissionCheckAlertDialog() {
         val builder = AlertDialog.Builder(this)
-        builder.setMessage("반드시 READ_EXTERNAL_STORAGE과 CAMERA 권한이 모두 허용되어야 합니다.").setTitle("권한 체크").setPositiveButton("OK") {
-            _, _ ->
+        builder.setMessage("반드시 CAMERA 권한이 모두 허용되어야 합니다.").setTitle("권한 체크").setPositiveButton("OK") {
+                _, _ ->
             multiplePermissionLauncher.launch(permissions)
         }.setNegativeButton("Cancel") {
-            dlg, _ ->
+                dlg, _ ->
             dlg.dismiss()
         }
         val dialog = builder.create()
         dialog.show()
     }
 
-    fun allPermissionGranted() = permissions.all {
-        ActivityCompat.checkSelfPermission(this, it) == PackageManager.PERMISSION_GRANTED
+    override fun onDestroy() {
+        super.onDestroy()
+        cameraProvider.unbindAll()
     }
-
-    fun readPermissionGranted() = ActivityCompat.checkSelfPermission(
-        this,
-        android.Manifest.permission.READ_EXTERNAL_STORAGE,
-    ) == PackageManager.PERMISSION_GRANTED
-
-    fun cameraPermissionGranted() = ActivityCompat.checkSelfPermission(
-        this,
-        android.Manifest.permission.CAMERA,
-    ) == PackageManager.PERMISSION_GRANTED
 }

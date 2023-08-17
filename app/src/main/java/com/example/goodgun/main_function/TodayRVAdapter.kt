@@ -10,7 +10,7 @@ import com.example.goodgun.databinding.ItemFoodListTodayBinding
 class TodayRVAdapter(
     val context: Context,
     private val dataList: List<Food>,
-    private val maxItemCount: Int
+    private val maxItemCount: Int,
 ) : RecyclerView.Adapter<TodayRVAdapter.ItemViewHolder>() {
 
     /*interface OnItemClickListener{

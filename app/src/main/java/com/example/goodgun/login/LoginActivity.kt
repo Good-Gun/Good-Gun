@@ -115,7 +115,7 @@ class LoginActivity : AppCompatActivity() {
         var credential = GoogleAuthProvider.getCredential(account?.idToken, null)
         auth?.signInWithCredential(credential)
             ?.addOnCompleteListener {
-                task ->
+                    task ->
                 if (task.isSuccessful) {
                     // 로그인 성공 시
                     // 이미 회원인 경우의 action

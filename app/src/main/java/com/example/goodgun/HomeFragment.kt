@@ -115,7 +115,6 @@ class HomeFragment : Fragment() {
             withContext(Dispatchers.IO) {
                 nutrition = FirebaseManager.getDayNutrition(today)
                 food_list.apply {
-
                     addAll(FirebaseManager.getFoodData(today))
                 }
             }

@@ -47,6 +47,7 @@ class FoodActivity : AppCompatActivity() {
 
     @OptIn(BetaOpenAI::class)
     var completion: ChatCompletion ? = null
+
     @OptIn(BetaOpenAI::class)
     var completions: Flow<ChatCompletionChunk> ? = null
 
@@ -163,9 +164,9 @@ class FoodActivity : AppCompatActivity() {
                 ChatMessage(
                     role = ChatRole.User,
 //                    content = "평소에 탄수화물 섭취가 과다한 사람에게 추천할 생활 패턴을 알려줘.
-                    content = question
-                )
-            )
+                    content = question,
+                ),
+            ),
         )
         completion = openAI.chatCompletion(chatCompletionRequest)
 // or, as flow
@@ -175,8 +176,9 @@ class FoodActivity : AppCompatActivity() {
             val str = completion!!.choices[0].message?.content.toString()
             Log.d("Checking OPENAI", str)
             tokenizeString(str)
-        } else
+        } else {
             Log.d("Checking OPENAI", "completion null")
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")

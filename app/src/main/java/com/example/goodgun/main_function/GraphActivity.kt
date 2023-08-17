@@ -74,7 +74,7 @@ class GraphActivity : AppCompatActivity() {
             parent: AdapterView<*>,
             view: View,
             position: Int,
-            id: Long
+            id: Long,
         ) {
             // dateSelect(position)
             var time = LocalDateTime.now()

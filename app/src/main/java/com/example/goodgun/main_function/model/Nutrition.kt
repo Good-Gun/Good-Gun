@@ -25,14 +25,17 @@ data class Nutrition(
         var question: String? = ""
 
         for (i in arr1.indices) {
-            if (calculateNutrientIntake(arr2[i]) == 2) question += "과한 " + arr1[i] + ","
-            else if (calculateNutrientIntake(arr2[i]) == -2) question += "부족한 " + arr1[i] + ","
+            if (calculateNutrientIntake(arr2[i]) == 2) {
+                question += "과한 " + arr1[i] + ","
+            } else if (calculateNutrientIntake(arr2[i]) == -2) question += "부족한 " + arr1[i] + ","
         }
         if (question != "") {
             question = question?.removeSuffix(",")
             // question += " 섭취를 하는 사람에게 생활 패턴을 추천해줘. 앞뒤 설명 생략하고 숫자 붙여서 부제와 내용 형식으로 보여줘"
             question += " 섭취를 하는 사람에게 건강해질 식단을 추천해줘. 앞뒤 설명 자르고 숫자 붙여서 재료 이름:주요 영양소 이름을 7개만 나열해줘"
-        } else question = null
+        } else {
+            question = null
+        }
 
         Log.d("Checking OPENAI", "$question")
 

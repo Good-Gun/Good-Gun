@@ -66,13 +66,10 @@ class ApplicationClass : Application() {
             maxNutrition.sodium = 2000
             maxNutrition.cholesterol = 300
         }
-
     }
 
     override fun onCreate() {
         super.onCreate()
         updateUserInfo()
     }
-
-
 }
