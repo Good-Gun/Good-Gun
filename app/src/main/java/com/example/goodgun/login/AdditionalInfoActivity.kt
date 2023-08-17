@@ -32,11 +32,14 @@ class AdditionalInfoActivity : AppCompatActivity() {
 
     private lateinit var exTypeSpinner: Spinner
     private lateinit var exFreqSpinner: Spinner
+    private lateinit var goalSpinner: Spinner
     private lateinit var exTypeSpinnerAdapter: CustomSpinnerAdapter
     private lateinit var exFreqSpinnerAdapter: CustomSpinnerAdapter
+    private lateinit var goalSpinnerAdapter: CustomSpinnerAdapter
 
     private var exTypeList: List<String> = ArrayList()
     private var exFreqList: List<String> = ArrayList()
+    private var goalList: List<String> = ArrayList()
 
     private lateinit var selectedType: String
 
@@ -48,6 +51,7 @@ class AdditionalInfoActivity : AppCompatActivity() {
         auth = Firebase.auth
         val currentUser = auth.currentUser
 
+        //알레르기 멀티 검색바
         var items = getAssetsTextArray(this, "allergies")
         var multiAutoCompleteTextView = binding.allergyInput
         var adapter = ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, items)
@@ -58,7 +62,7 @@ class AdditionalInfoActivity : AppCompatActivity() {
                 multiAutoCompleteTextView.showDropDown()
         }
 
-        // 운동 스피너 초기화
+        // 스피너들 초기화
         initSpinners()
         // 유저의 기존 데이터 불러오기
         loadAdditionalInfo(currentUser)
@@ -106,6 +110,11 @@ class AdditionalInfoActivity : AppCompatActivity() {
                 TODO("Not yet implemented")
             }
         }
+
+        goalList = arrayListOf("다이어트", "밸런스", "벌크 업")
+        goalSpinnerAdapter = CustomSpinnerAdapter(this, goalList)
+        goalSpinner = binding.goalSpinner
+        goalSpinner.adapter = goalSpinnerAdapter
     }
 
     fun getAssetsTextArray(mContext: Context, fileName: String): Array<String> {
@@ -180,7 +189,6 @@ class AdditionalInfoActivity : AppCompatActivity() {
             userRef.child("u_exercise_freq").setValue(selectedFreqPosition + 1)
             userRef.child("u_exercise_type").setValue(selectedType)
             ApplicationClass.updateUserInfo()
-
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
