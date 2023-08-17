@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,12 +21,12 @@ import com.example.goodgun.main_function.FoodActivity
 import com.example.goodgun.main_function.GraphActivity
 import com.example.goodgun.main_function.SolutionActivity
 import com.example.goodgun.main_function.TodayRVAdapter
-import com.example.goodgun.network.model.Nutrition
+import com.example.goodgun.network.model.Food
 import com.example.goodgun.network.model.NutritionResponse
+import com.example.goodgun.util.LoadingDialog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter

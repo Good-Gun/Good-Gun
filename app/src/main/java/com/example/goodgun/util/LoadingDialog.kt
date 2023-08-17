@@ -1,4 +1,4 @@
-package com.example.goodgun
+package com.example.goodgun.util
 
 import android.app.Dialog
 import android.content.Context

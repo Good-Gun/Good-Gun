@@ -1,4 +1,4 @@
-package com.example.goodgun
+package com.example.goodgun.main_function
 
 import android.content.Context
 import android.graphics.Canvas

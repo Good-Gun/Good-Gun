@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.aallam.openai.api.BetaOpenAI
 import com.aallam.openai.api.chat.*
 import com.example.goodgun.ApplicationClass
-import com.example.goodgun.Food
-import com.example.goodgun.LoadingDialog
+import com.example.goodgun.network.model.Food
+import com.example.goodgun.util.LoadingDialog
 import com.example.goodgun.databinding.ActivityFoodBinding
 import com.example.goodgun.network.NetworkManager
 import com.example.goodgun.network.model.Nutrition
