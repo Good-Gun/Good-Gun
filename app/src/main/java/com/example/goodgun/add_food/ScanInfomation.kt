@@ -1,21 +1,17 @@
 package com.example.goodgun.add_food
 
-import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.goodgun.BuildConfig
 import com.example.goodgun.MainActivity
 import com.example.goodgun.R
+import com.example.goodgun.add_food.direct_add.DirectInputFragment
 import com.example.goodgun.databinding.ActivityScanInfomationBinding
-import com.example.goodgun.openAPI.FoodClient.foodService
-import com.example.goodgun.openAPI.FoodList
 import com.example.goodgun.roomDB.DatabaseManager
 import com.example.goodgun.roomDB.FoodDatabase
 import com.example.goodgun.roomDB.FoodEntity
@@ -25,13 +21,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.*
 
 class ScanInfomation : AppCompatActivity() {
 
@@ -69,6 +59,9 @@ class ScanInfomation : AppCompatActivity() {
             roomdb.foodDao().deleteAll()
             roomdb.foodDao().saveFood(FoodEntity())
             // 영양소 합계 저장할 foodentity 생성
+            withContext(Dispatchers.Main) {
+                updateSum()
+            }
         }
 
         database = Firebase.database("https://goodgun-4740f-default-rtdb.firebaseio.com/").reference
@@ -94,15 +87,14 @@ class ScanInfomation : AppCompatActivity() {
             }
         }
         binding.directAdd.setOnClickListener {
-//            model.reset()
-//            val dialog = DirectInputFragment()
-//            dialog.show(supportFragmentManager, "DirectInputFragment")
-            FoodName()
+            model.reset()
+            val dialog = DirectInputFragment()
+            dialog.show(supportFragmentManager, "DirectInputFragment")
         }
     }
 
     private fun init() {
-        updateSum()
+//        updateSum()
     }
 
     private fun updateSum() {
@@ -204,33 +196,12 @@ class ScanInfomation : AppCompatActivity() {
 
     // 다이얼로그 닫힐 때 실행되는 함수
     fun onDialogDissmissed() {
-        val directFood = model.testget()
-        if (directFood != "") {
-            tmpdata.add(FoodEntity(directFood))
+        if (!model.is_blank()) {
+            tmpdata.add(model.getfood())
             adapter.notifyDataSetChanged()
         }
     }
 
-    // open api
-    private fun FoodName() {
-        foodService.getFoodName(BuildConfig.KEY_ID, "I2790", "json")
-            .enqueue(object : Callback<FoodList> {
-                override fun onResponse(call: Call<FoodList>, response: Response<FoodList>) {
-                    if (response.isSuccessful.not()) {
-                        Log.e(TAG, response.toString())
-                        return
-                    } else {
-                        response.body()?.let {
-                            val foodList = response.body() // 응답 데이터 객체
-                            Log.d(TAG, "Received data: $foodList")
-                        }
-                    }
-                }
 
-                override fun onFailure(call: Call<FoodList>, t: Throwable) {
-                    Log.e(TAG, "연결 실패")
-                    Log.e(TAG, t.toString())
-                }
-            })
-    }
+
 }
