@@ -2,14 +2,17 @@ package com.example.goodgun.add_food
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.aallam.openai.api.BetaOpenAI
 import com.example.goodgun.MainActivity
 import com.example.goodgun.R
 import com.example.goodgun.databinding.ActivityScanInfomationBinding
+import com.example.goodgun.network.NetworkManager
 import com.example.goodgun.roomDB.DatabaseManager
 import com.example.goodgun.roomDB.FoodDatabase
 import com.example.goodgun.roomDB.FoodEntity
@@ -23,6 +26,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class ScanInfomation : AppCompatActivity() {
 
@@ -123,6 +129,7 @@ class ScanInfomation : AppCompatActivity() {
         }
     }
 
+    @OptIn(BetaOpenAI::class)
     private fun initBtn() {
         binding.registerFoods.setOnClickListener {
             GlobalScope.launch(Dispatchers.IO) {
@@ -134,6 +141,15 @@ class ScanInfomation : AppCompatActivity() {
                 }
                 roomdb.foodDao().deleteAll()
                 roomdb.foodDao().saveFood(FoodEntity())
+
+                val nutrition = NetworkManager.getNutritionData(LocalDateTime.now().minusWeeks(1)
+                    .format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+                val question = nutrition.getQuestion(2)
+                val answer = if(question != null){
+                    NetworkManager.callAI(question)
+                } else null
+
+                Log.d("NetworkManager", answer!!)
                 // 영양소 합계 저장할 foodentity 생성
             }
             startActivity(Intent(this, MainActivity::class.java))

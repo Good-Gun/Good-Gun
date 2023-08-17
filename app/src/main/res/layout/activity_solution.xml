@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".main_function.SolutionActivity">
+
+    <LinearLayout
+        android:id="@+id/view9"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@drawable/box_radius_bottom_20dp"
+        android:backgroundTint="@color/red"
+        android:elevation="10dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/backBtn"
+            android:paddingVertical="20dp"
+            android:paddingStart="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            app:srcCompat="@drawable/baseline_arrow_back_24"
+            app:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/registrationTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/goodgun"
+            android:paddingVertical="20dp"
+            android:paddingStart="10dp"
+            android:text="국건 솔루션"
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+
+
+        <ImageView
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="50dp"
+            android:layout_gravity="center_vertical"
+            app:srcCompat="@drawable/good_gun_no_bg"
+            app:tint="@color/white" />
+    </LinearLayout>
+
+    
+
+</LinearLayout>
