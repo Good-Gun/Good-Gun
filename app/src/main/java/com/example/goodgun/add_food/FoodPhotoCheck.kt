@@ -65,14 +65,14 @@ class FoodPhotoCheck : AppCompatActivity() {
                             Log.i("FoodLens", food.nutrition.calories.toString())
                             val temp = FoodEntity(food.foodName)
                             val nutrition = food.nutrition
-                            temp.calory = nutrition.calories.toInt()
-                            temp.carbohydrates = nutrition.carbonHydrate.toInt()
-                            temp.sugar = nutrition.sugar.toInt()
-                            temp.protein = nutrition.protein.toInt()
-                            temp.fat = nutrition.fat.toInt()
-                            temp.trans_fat = nutrition.transFat.toInt()
-                            temp.saturated_fat = nutrition.saturatedFat.toInt()
-                            temp.cholesterol = nutrition.cholesterol.toInt()
+                            temp.calory = nutrition.calories.toDouble()
+                            temp.carbohydrates = nutrition.carbonHydrate.toDouble()
+                            temp.sugar = nutrition.sugar.toDouble()
+                            temp.protein = nutrition.protein.toDouble()
+                            temp.fat = nutrition.fat.toDouble()
+                            temp.trans_fat = nutrition.transFat.toDouble()
+                            temp.saturated_fat = nutrition.saturatedFat.toDouble()
+                            temp.cholesterol = nutrition.cholesterol.toDouble()
                             data.add(temp)
                         }
                     }

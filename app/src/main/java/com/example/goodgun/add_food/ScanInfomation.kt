@@ -6,11 +6,13 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.aallam.openai.api.BetaOpenAI
 import com.example.goodgun.MainActivity
 import com.example.goodgun.R
+import com.example.goodgun.add_food.direct_add.DirectInputFragment
 import com.example.goodgun.databinding.ActivityScanInfomationBinding
 import com.example.goodgun.network.NetworkManager
 import com.example.goodgun.roomDB.DatabaseManager
@@ -29,6 +31,7 @@ import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import kotlinx.coroutines.*
 
 class ScanInfomation : AppCompatActivity() {
 
@@ -41,6 +44,8 @@ class ScanInfomation : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     var currentUser: FirebaseUser? = null
     var userid: String = ""
+
+    val model: FoodViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,29 +69,42 @@ class ScanInfomation : AppCompatActivity() {
             roomdb.foodDao().deleteAll()
             roomdb.foodDao().saveFood(FoodEntity())
             // 영양소 합계 저장할 foodentity 생성
+            withContext(Dispatchers.Main) {
+                updateSum()
+            }
         }
 
         database = Firebase.database("https://goodgun-4740f-default-rtdb.firebaseio.com/").reference
 
         initBtn()
         initRecyclerView()
+        initDirectAdd()
 
+
+        init()
+    }
+
+    private fun initDirectAdd() {
         // 임시 룸DB 확인
-        binding.directAdd.setOnClickListener {
+        binding.dbCheck.setOnClickListener {
             GlobalScope.launch(Dispatchers.IO) {
                 val tmp: List<FoodEntity> = roomdb.foodDao().getAll()
-                val message = tmp.joinToString("\n") { "FoodEntity(id=${it.id}, name=${it.name}), calory=${it.calory})" }
+                val message =
+                    tmp.joinToString("\n") { "FoodEntity(id=${it.id}, name=${it.name}), calory=${it.calory})" }
                 withContext(Dispatchers.Main) {
                     Toast.makeText(this@ScanInfomation, message, Toast.LENGTH_SHORT).show()
                 }
             }
         }
-
-        init()
+        binding.directAdd.setOnClickListener {
+            model.reset()
+            val dialog = DirectInputFragment()
+            dialog.show(supportFragmentManager, "DirectInputFragment")
+        }
     }
 
     private fun init() {
-        updateSum()
+//        updateSum()
     }
 
     private fun updateSum() {
@@ -136,7 +154,8 @@ class ScanInfomation : AppCompatActivity() {
                 roomdb.foodDao().deleteSumFood()
                 val foods: List<FoodEntity> = roomdb.foodDao().getAll()
                 for (food in foods) {
-                    database.child("user_list").child(userid).child(food.registerDate).child(food.name)
+                    database.child("user_list").child(userid).child(food.registerDate)
+                        .child(food.name)
                         .setValue(food)
                 }
                 roomdb.foodDao().deleteAll()
@@ -176,7 +195,9 @@ class ScanInfomation : AppCompatActivity() {
                     roomdb.foodDao().saveFood(data)
                     updateSumFoodEntity(data)
                 }
-                binding.recyclerView.findViewHolderForAdapterPosition(position)?.itemView?.findViewById<ImageButton>(R.id.food_add)?.visibility = View.GONE
+                binding.recyclerView.findViewHolderForAdapterPosition(position)?.itemView?.findViewById<ImageButton>(
+                    R.id.food_add
+                )?.visibility = View.GONE
             }
         }
         adapter.itemdelete = object : FoodAddAdapter.OnItemClickListener {
@@ -191,4 +212,16 @@ class ScanInfomation : AppCompatActivity() {
         }
         binding.recyclerView.adapter = adapter
     }
+
+
+    // 다이얼로그 닫힐 때 실행되는 함수
+    fun onDialogDissmissed() {
+        if (!model.is_blank()) {
+            tmpdata.add(model.getfood())
+            adapter.notifyDataSetChanged()
+        }
+    }
+
+
+
 }
