@@ -11,7 +11,7 @@ class FoodViewModel:ViewModel() {
     }
 
     fun is_blank():Boolean{
-        return food==FoodEntity()
+        return food.name=="기본 생성자"
     }
 
     fun getfood():FoodEntity{
