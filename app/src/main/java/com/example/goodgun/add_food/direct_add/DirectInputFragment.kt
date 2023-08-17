@@ -9,14 +9,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.widget.ImageButton
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.goodgun.BuildConfig
-import com.example.goodgun.R
-import com.example.goodgun.add_food.FoodAddAdapter
 import com.example.goodgun.add_food.FoodViewModel
 import com.example.goodgun.add_food.ScanInfomation
 import com.example.goodgun.databinding.FragmentDirectInputBinding
@@ -30,7 +26,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class DirectInputFragment : DialogFragment() {
-    private var _binding: FragmentDirectInputBinding?=null
+    private var _binding: FragmentDirectInputBinding? = null
     private val binding get() = _binding!!
 
     lateinit var dialog: AlertDialog
@@ -45,16 +41,16 @@ class DirectInputFragment : DialogFragment() {
         val dialogBuilder = AlertDialog.Builder(requireContext())
             .setTitle("Search Dialog")
             .setView(view)
-            .setPositiveButton("선택"){
-                dialog, _ ->
+            .setPositiveButton("선택") {
+                    dialog, _ ->
                 // model 값 넣기
             }
-            .setNegativeButton("취소"){
-                dialog, _ ->
+            .setNegativeButton("취소") {
+                    dialog, _ ->
                 dialog.dismiss()
             }
 
-        dialog=dialogBuilder.create()
+        dialog = dialogBuilder.create()
         dialog.setOnShowListener {
             dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.isEnabled = false
         }
@@ -72,9 +68,8 @@ class DirectInputFragment : DialogFragment() {
         adapter = SearchAdapter(emptyList())
         adapter.click = object : SearchAdapter.OnItemClickListener {
             override fun onItemClick(data: FoodItem, position: Int) {
-
                 GlobalScope.launch(Dispatchers.IO) {
-                    val selectFood=FoodEntity(
+                    val selectFood = FoodEntity(
                         data.foodName,
                         data.calory.toDouble(),
                         data.carbohydrates.toDouble(),
@@ -83,11 +78,11 @@ class DirectInputFragment : DialogFragment() {
                         data.fat.toDouble(),
                         data.trans_fat.toDouble(),
                         data.saturated_fat.toDouble(),
-                        data.cholesterol.toDouble()
+                        data.cholesterol.toDouble(),
                     )
                     model.setfood(selectFood)
                     withContext(Dispatchers.Main) {
-                        adapter.selectedItemPosition=position
+                        adapter.selectedItemPosition = position
                         adapter.notifyDataSetChanged()
                         dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.isEnabled = true
                     }
@@ -126,13 +121,13 @@ class DirectInputFragment : DialogFragment() {
     }
 
     private fun performSearch() {
-        val searchtext=binding.editTextSearch.text.toString()
+        val searchtext = binding.editTextSearch.text.toString()
         dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.isEnabled = false
-        adapter.selectedItemPosition=-1
-        if (searchtext==""){
+        adapter.selectedItemPosition = -1
+        if (searchtext == "") {
             binding.emptyTextView.visibility = View.VISIBLE
             binding.searchRecyclerView.visibility = View.GONE
-        }else{
+        } else {
             CoroutineScope(Dispatchers.IO).launch {
                 FoodName(searchtext)
             }
@@ -140,7 +135,7 @@ class DirectInputFragment : DialogFragment() {
     }
 
     // open api
-    private fun FoodName(name:String) {
+    private fun FoodName(name: String) {
         FoodClient.foodService.getFoodName(BuildConfig.KEY_ID, "I2790", "json", name)
             .enqueue(object : Callback<FoodList> {
                 override fun onResponse(call: Call<FoodList>, response: Response<FoodList>) {
@@ -167,11 +162,8 @@ class DirectInputFragment : DialogFragment() {
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
 
-        if(activity is ScanInfomation){
+        if (activity is ScanInfomation) {
             (activity as ScanInfomation).onDialogDissmissed()
         }
     }
-
-
-
 }

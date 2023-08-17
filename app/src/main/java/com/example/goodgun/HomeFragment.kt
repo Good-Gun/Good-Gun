@@ -11,23 +11,21 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.goodgun.add_food.ScanInfomation
 import com.example.goodgun.databinding.FragmentHomeBinding
-import com.example.goodgun.network.NetworkManager
 import com.example.goodgun.main_function.FoodActivity
 import com.example.goodgun.main_function.GraphActivity
 import com.example.goodgun.main_function.SolutionActivity
 import com.example.goodgun.main_function.TodayRVAdapter
-import com.example.goodgun.roomDB.DatabaseManager
-import com.example.goodgun.roomDB.FoodEntity
-import kotlinx.coroutines.*
+import com.example.goodgun.network.NetworkManager
 import com.example.goodgun.network.model.Food
 import com.example.goodgun.network.model.NutritionResponse
+import com.example.goodgun.roomDB.DatabaseManager
 import com.example.goodgun.util.LoadingDialog
+import kotlinx.coroutines.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -120,7 +118,6 @@ class HomeFragment : Fragment() {
         // 간격 20으로
         val spaceDecoration = this.VerticalSpaceItemDecoration(20)
         binding?.rvHomeToday?.addItemDecoration(spaceDecoration)
-
     }
 
     /*날짜를 바꿀 시 파이어베이스 요청*/
@@ -177,7 +174,6 @@ class HomeFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-
         getNutrition(date)
 
         /*room DB에 저장되어 있는 음식 개수*/
@@ -189,7 +185,7 @@ class HomeFragment : Fragment() {
             }
         }
     }
-    inner class LinearLayoutManagerWrapper: LinearLayoutManager {
+    inner class LinearLayoutManagerWrapper : LinearLayoutManager {
         constructor(context: Context) : super(context) {}
 
         constructor(context: Context, orientation: Int, reverseLayout: Boolean) : super(context, orientation, reverseLayout) {}

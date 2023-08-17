@@ -14,21 +14,23 @@ import androidx.recyclerview.widget.RecyclerView
 import com.aallam.openai.api.BetaOpenAI
 import com.aallam.openai.api.chat.*
 import com.example.goodgun.ApplicationClass
-import com.example.goodgun.network.model.Food
-import com.example.goodgun.util.LoadingDialog
 import com.example.goodgun.databinding.ActivityFoodBinding
 import com.example.goodgun.network.NetworkManager
+import com.example.goodgun.network.model.Food
 import com.example.goodgun.network.model.Nutrition
 import com.example.goodgun.network.model.NutritionResponse
+import com.example.goodgun.util.LoadingDialog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import okhttp3.OkHttpClient
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 /*오늘의 정보만 다루는 액티비티*/
 class FoodActivity : AppCompatActivity() {
+    private lateinit var client: OkHttpClient
     private lateinit var loadingDialog: Dialog
     lateinit var binding: ActivityFoodBinding
     lateinit var todayAdapter: TodayRVAdapter

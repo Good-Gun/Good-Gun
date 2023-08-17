@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.goodgun.R
 import com.example.goodgun.databinding.SearchListBinding
 import com.example.goodgun.openAPI.FoodItem
-import com.example.goodgun.openAPI.FoodList
 
 class SearchAdapter(private var foodList: List<FoodItem>) : RecyclerView.Adapter<SearchAdapter.FoodViewHolder>() {
 
@@ -19,11 +18,10 @@ class SearchAdapter(private var foodList: List<FoodItem>) : RecyclerView.Adapter
     var click: OnItemClickListener? = null
     var selectedItemPosition: Int = -1
 
-    fun setData(newFoodList: List<FoodItem>){
+    fun setData(newFoodList: List<FoodItem>) {
         foodList = newFoodList
         notifyDataSetChanged()
     }
-
 
     inner class FoodViewHolder(val binding: SearchListBinding) : RecyclerView.ViewHolder(binding.root) {
         init {
@@ -45,17 +43,15 @@ class SearchAdapter(private var foodList: List<FoodItem>) : RecyclerView.Adapter
     override fun onBindViewHolder(holder: FoodViewHolder, position: Int) {
         if (position == selectedItemPosition) {
             // 선택된 아이템의 테두리 설정
-            holder.binding.searchLayout.background= ContextCompat.getDrawable(
+            holder.binding.searchLayout.background = ContextCompat.getDrawable(
                 holder.binding.searchLayout.context,
-                R.drawable.item_selected
+                R.drawable.item_selected,
             )
         } else {
             // 선택되지 않은 아이템의 테두리 설정 제거
-            holder.binding.searchLayout.background=null
+            holder.binding.searchLayout.background = null
         }
         holder.binding.num.text = foodList[position].number
         holder.binding.searchName.text = foodList[position].foodName
     }
-
-
 }

@@ -11,9 +11,9 @@ import com.aallam.openai.client.OpenAI
 import com.example.goodgun.ApplicationClass
 import com.example.goodgun.BuildConfig
 import com.example.goodgun.network.model.Food
-import com.example.goodgun.network.model.User
 import com.example.goodgun.network.model.Nutrition
 import com.example.goodgun.network.model.NutritionResponse
+import com.example.goodgun.network.model.User
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -22,7 +22,7 @@ import kotlinx.coroutines.tasks.await
 import java.time.LocalDate
 import kotlin.time.Duration.Companion.seconds
 
-object NetworkManager:NetworkInterface {
+object NetworkManager : NetworkInterface {
     private val userId = ApplicationClass.uid
     private val database = FirebaseDatabase.getInstance()
 
@@ -34,8 +34,8 @@ object NetworkManager:NetworkInterface {
         val outerSnapshot: DataSnapshot = datesRef.get().await()
         for (dateSnapshot in outerSnapshot.children) {
             if (dateSnapshot.value != null) {
-                val date1 = LocalDate.parse(dateSnapshot.key.toString().trim()) //파이어베이스에 저장된 날짜
-                val date2 = LocalDate.parse(date.trim())    //찾는 날짜
+                val date1 = LocalDate.parse(dateSnapshot.key.toString().trim()) // 파이어베이스에 저장된 날짜
+                val date2 = LocalDate.parse(date.trim()) // 찾는 날짜
 
                 if (date1 == date2) {
                     val innerSnapshot = datesRef.child(dateSnapshot.key!!).get().await()
@@ -43,7 +43,7 @@ object NetworkManager:NetworkInterface {
                         val food = foodSnapshot.getValue(Food::class.java)!!
                         Log.d(
                             "Firebase Communication",
-                            "Adding food: ${food.name}, regDate: ${food.registerDate}"
+                            "Adding food: ${food.name}, regDate: ${food.registerDate}",
                         )
                         response.food_list.add(food)
                         response.nutrition.apply {
@@ -76,7 +76,7 @@ object NetworkManager:NetworkInterface {
             if (dateSnapshot.value != null) {
                 Log.d(
                     "Firebase Communication",
-                    "key ${dateSnapshot.key!!}"
+                    "key ${dateSnapshot.key!!}",
                 )
 
                 val date1 = LocalDate.parse(dateSnapshot.key.toString().trim())
@@ -180,9 +180,9 @@ object NetworkManager:NetworkInterface {
             messages = listOf(
                 ChatMessage(
                     role = ChatRole.User,
-                    content = question
-                )
-            )
+                    content = question,
+                ),
+            ),
         )
         val completion = openAI.chatCompletion(chatCompletionRequest)
 

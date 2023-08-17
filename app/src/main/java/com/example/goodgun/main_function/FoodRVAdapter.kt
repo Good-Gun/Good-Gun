@@ -10,7 +10,7 @@ import com.example.goodgun.databinding.ItemFoodRecommendBinding
 class FoodRVAdapter(
     val context: Context,
     private val dataList: ArrayList<String>,
-    private val maxItemCount: Int
+    private val maxItemCount: Int,
 ) : RecyclerView.Adapter<FoodRVAdapter.ItemViewHolder>() {
 
     /*interface OnItemClickListener{

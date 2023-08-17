@@ -22,5 +22,5 @@ object FoodClient {
         .client(okHttpClient)
         .build()
 
-    val foodService : FoodService by lazy { retrofit.create(FoodService::class.java) }
+    val foodService: FoodService by lazy { retrofit.create(FoodService::class.java) }
 }

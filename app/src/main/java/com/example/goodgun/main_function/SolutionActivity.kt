@@ -1,7 +1,7 @@
 package com.example.goodgun.main_function
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.example.goodgun.R
 
 class SolutionActivity : AppCompatActivity() {
