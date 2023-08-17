@@ -1,4 +1,4 @@
-package com.example.goodgun.main_function.model
+package com.example.goodgun.network.model
 
 import android.util.Log
 import com.example.goodgun.ApplicationClass

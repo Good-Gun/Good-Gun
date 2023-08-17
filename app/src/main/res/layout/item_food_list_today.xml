@@ -4,8 +4,7 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/box_radius_10dp"
-    android:backgroundTint="@color/white"
+    android:background="@drawable/box_outline_radius_10dp"
     android:paddingHorizontal="10dp"
     android:paddingVertical="5dp">
 

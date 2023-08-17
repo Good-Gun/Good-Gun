@@ -2,15 +2,20 @@ package com.example.goodgun.add_food
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.aallam.openai.api.BetaOpenAI
+import com.doinglab.foodlens.sdk.ui.network.models.Nutrition
 import com.example.goodgun.MainActivity
 import com.example.goodgun.R
+import com.example.goodgun.add_food.direct_add.DirectInputFragment
 import com.example.goodgun.databinding.ActivityScanInfomationBinding
+import com.example.goodgun.network.NetworkManager
 import com.example.goodgun.roomDB.DatabaseManager
 import com.example.goodgun.roomDB.FoodDatabase
 import com.example.goodgun.roomDB.FoodEntity
@@ -20,10 +25,13 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class ScanInfomation : AppCompatActivity() {
 
@@ -61,6 +69,9 @@ class ScanInfomation : AppCompatActivity() {
             roomdb.foodDao().deleteAll()
             roomdb.foodDao().saveFood(FoodEntity())
             // 영양소 합계 저장할 foodentity 생성
+            withContext(Dispatchers.Main) {
+                updateSum()
+            }
         }
 
         database = Firebase.database("https://goodgun-4740f-default-rtdb.firebaseio.com/").reference
@@ -77,7 +88,8 @@ class ScanInfomation : AppCompatActivity() {
         binding.dbCheck.setOnClickListener {
             GlobalScope.launch(Dispatchers.IO) {
                 val tmp: List<FoodEntity> = roomdb.foodDao().getAll()
-                val message = tmp.joinToString("\n") { "FoodEntity(id=${it.id}, name=${it.name}), calory=${it.calory})" }
+                val message =
+                    tmp.joinToString("\n") { "FoodEntity(id=${it.id}, name=${it.name}), calory=${it.calory})" }
                 withContext(Dispatchers.Main) {
                     Toast.makeText(this@ScanInfomation, message, Toast.LENGTH_SHORT).show()
                 }
@@ -91,7 +103,7 @@ class ScanInfomation : AppCompatActivity() {
     }
 
     private fun init() {
-        updateSum()
+//        updateSum()
     }
 
     private fun updateSum() {
@@ -134,17 +146,38 @@ class ScanInfomation : AppCompatActivity() {
         }
     }
 
+    @OptIn(BetaOpenAI::class)
     private fun initBtn() {
         binding.registerFoods.setOnClickListener {
             GlobalScope.launch(Dispatchers.IO) {
                 roomdb.foodDao().deleteSumFood()
                 val foods: List<FoodEntity> = roomdb.foodDao().getAll()
                 for (food in foods) {
-                    database.child("user_list").child(userid).child(food.registerDate).child(food.name)
+                    database.child("user_list").child(userid).child(food.registerDate)
+                        .child(food.name)
                         .setValue(food)
                 }
                 roomdb.foodDao().deleteAll()
                 roomdb.foodDao().saveFood(FoodEntity())
+
+                val nutrition = withContext(Dispatchers.IO) {
+                    val nutrition = NetworkManager.getNutritionData(
+                        LocalDateTime.now().minusWeeks(1)
+                            .format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),
+                    )
+                    nutrition
+                }
+
+                Log.d("Managing Network from ScanInfo", "${nutrition.calorie}, ${Nutrition.ColumnInfo.sugar}")
+
+                val question = nutrition.getQuestion(2)
+                val answer = if (question != null) {
+                    NetworkManager.callAI(question)
+                } else {
+                    null
+                }
+
+                Log.d("Managing Network from ScanInfo", answer!!)
                 // 영양소 합계 저장할 foodentity 생성
             }
             startActivity(Intent(this, MainActivity::class.java))
@@ -171,7 +204,9 @@ class ScanInfomation : AppCompatActivity() {
                     roomdb.foodDao().saveFood(data)
                     updateSumFoodEntity(data)
                 }
-                binding.recyclerView.findViewHolderForAdapterPosition(position)?.itemView?.findViewById<ImageButton>(R.id.food_add)?.visibility = View.GONE
+                binding.recyclerView.findViewHolderForAdapterPosition(position)?.itemView?.findViewById<ImageButton>(
+                    R.id.food_add,
+                )?.visibility = View.GONE
             }
         }
         adapter.itemdelete = object : FoodAddAdapter.OnItemClickListener {
@@ -189,9 +224,8 @@ class ScanInfomation : AppCompatActivity() {
 
     // 다이얼로그 닫힐 때 실행되는 함수
     fun onDialogDissmissed() {
-        val directFood = model.testget()
-        if (directFood != "") {
-            tmpdata.add(FoodEntity(directFood))
+        if (!model.is_blank()) {
+            tmpdata.add(model.getfood())
             adapter.notifyDataSetChanged()
         }
     }

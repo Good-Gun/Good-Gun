@@ -188,13 +188,13 @@
         android:textStyle="bold"
         />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/goalSettingBtn"
+    <Spinner
+        android:id="@+id/goalSpinner"
         android:layout_gravity="center"
         android:layout_margin="13dp"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/purple_button"
+        android:background="@drawable/spinner_border_layout"
         android:textStyle="bold"
         android:textColor="@color/colorWhite"
         android:gravity="center"

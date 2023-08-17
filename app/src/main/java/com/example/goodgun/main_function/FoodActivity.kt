@@ -14,11 +14,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.aallam.openai.api.BetaOpenAI
 import com.aallam.openai.api.chat.*
 import com.example.goodgun.ApplicationClass
-import com.example.goodgun.Food
-import com.example.goodgun.LoadingDialog
 import com.example.goodgun.databinding.ActivityFoodBinding
-import com.example.goodgun.firebase.NetworkManager
-import com.example.goodgun.main_function.model.Nutrition
+import com.example.goodgun.network.NetworkManager
+import com.example.goodgun.network.model.Food
+import com.example.goodgun.network.model.Nutrition
+import com.example.goodgun.network.model.NutritionResponse
+import com.example.goodgun.util.LoadingDialog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -38,8 +39,7 @@ class FoodActivity : AppCompatActivity() {
     private var food_list: ArrayList<Food> = arrayListOf()
     private var recommend_list: ArrayList<String> = arrayListOf()
 
-    @OptIn(BetaOpenAI::class)
-    var completion: ChatCompletion ? = null
+    var completion: String ? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,12 +47,10 @@ class FoodActivity : AppCompatActivity() {
         setContentView(binding.root)
         loadingDialog = LoadingDialog(this)
         loadingDialog.show()
-        val todayDate =
-            LocalDateTime.now().format(DateTimeFormatter.ofPattern(" yyyy-MM-dd"))
 
         initLayout()
         initTodayRV()
-        getDataFromFirebase(todayDate)
+        getDataFromFirebase()
     }
 
     private fun initLayout() {
@@ -95,31 +93,32 @@ class FoodActivity : AppCompatActivity() {
     }
 
     @OptIn(BetaOpenAI::class)
-    private fun getDataFromFirebase(date: String) {
-        var nutrition: Nutrition ? = null
+    private fun getDataFromFirebase() {
+        var response: NutritionResponse?
+        val today = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
         CoroutineScope(Dispatchers.Main).launch {
             withContext(Dispatchers.IO) {
-                nutrition = NetworkManager.getNutritionData(date)
+                response = NetworkManager.getFoodByDate(today)
                 food_list.apply {
-                    addAll(NetworkManager.getFoodData(date))
+                    addAll(response!!.food_list)
                 }
             }
-            todayAdapter.notifyItemRangeInserted(0, food_list.size)
-            if (food_list.size == 0) {
+            if (response?.food_list?.size == 0) {
                 Handler(Looper.getMainLooper()).post {
                     binding.tvNoFood.visibility = View.VISIBLE
                 }
+            } else {
+                todayAdapter.notifyItemRangeInserted(0, response!!.food_list.size)
             }
 
-            nutrition?.let {
+            response?.nutrition?.let {
                 setNutrition(it)
                 val question = it.getQuestion(1)
 
                 if (question != null) {
                     completion = NetworkManager.callAI(question)
-                    val str = completion!!.choices[0].message?.content.toString()
-                    Log.d("Checking OPENAI", str)
-                    tokenizeString(str)
+                    Log.d("Checking OPENAI", completion!!)
+                    tokenizeString(completion!!)
                 }
             }
         }

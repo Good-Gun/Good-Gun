@@ -33,6 +33,10 @@
             android:name=".camera.BarcodeResultActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".main_function.SolutionActivity"
+            android:exported="false" />
+
         <meta-data
             android:name="com.doinglab.foodlens.sdk.apptoken"
             android:value="@string/foodlens_app_token" />
@@ -65,6 +69,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity
             android:name=".login.RegistrationActivity"

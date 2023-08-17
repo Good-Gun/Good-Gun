@@ -17,11 +17,10 @@ object FoodClient {
     var gson = GsonBuilder().setLenient().create()
 
     val retrofit = Retrofit.Builder()
-        .baseUrl("base_url")
+        .baseUrl("http://openapi.foodsafetykorea.go.kr/")
         .addConverterFactory(GsonConverterFactory.create(gson))
         .client(okHttpClient)
         .build()
 
     val foodService: FoodService by lazy { retrofit.create(FoodService::class.java) }
-    val loginService: LoginService by lazy { retrofit.create(LoginService::class.java) }
 }
