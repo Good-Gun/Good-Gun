@@ -23,7 +23,9 @@ import com.example.goodgun.main_function.TodayRVAdapter
 import com.example.goodgun.network.NetworkManager
 import com.example.goodgun.network.model.Food
 import com.example.goodgun.network.model.NutritionResponse
+import com.example.goodgun.roomDB.DatabaseManager
 import com.example.goodgun.util.LoadingDialog
+import kotlinx.coroutines.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -56,12 +58,6 @@ class HomeFragment : Fragment() {
         initRV()
 
         return binding!!.root
-    }
-
-    override fun onResume() {
-        super.onResume()
-        /*파이어베이스 요청*/
-        getNutrition(date)
     }
 
     /*일반 레이아웃 초기화*/
@@ -175,6 +171,20 @@ class HomeFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        getNutrition(date)
+
+        /*room DB에 저장되어 있는 음식 개수*/
+        val roomdb = DatabaseManager.getDatabaseInstance(ApplicationClass.uid, requireContext())
+        GlobalScope.launch(Dispatchers.IO) {
+            val count = roomdb.foodDao().foodCount()
+            withContext(Dispatchers.Main) {
+                binding!!.roomDBcount.text = count.toString()
+            }
+        }
+    }
     inner class LinearLayoutManagerWrapper : LinearLayoutManager {
         constructor(context: Context) : super(context) {}
 

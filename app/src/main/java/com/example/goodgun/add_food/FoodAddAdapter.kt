@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.goodgun.databinding.AddFoodRowBinding
 import com.example.goodgun.roomDB.FoodEntity
 
-class FoodAddAdapter(var items: ArrayList<FoodEntity>) : RecyclerView.Adapter<FoodAddAdapter.ViewHolder>() {
+class FoodAddAdapter(var items: List<FoodEntity>) : RecyclerView.Adapter<FoodAddAdapter.ViewHolder>() {
     interface OnItemClickListener {
         fun onItemClick(data: FoodEntity, position: Int)
     }
