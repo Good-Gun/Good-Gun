@@ -10,6 +10,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.aallam.openai.api.BetaOpenAI
+import com.doinglab.foodlens.sdk.ui.network.models.Nutrition
 import com.example.goodgun.MainActivity
 import com.example.goodgun.R
 import com.example.goodgun.add_food.direct_add.DirectInputFragment
@@ -28,7 +29,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import kotlinx.coroutines.*
@@ -161,14 +161,20 @@ class ScanInfomation : AppCompatActivity() {
                 roomdb.foodDao().deleteAll()
                 roomdb.foodDao().saveFood(FoodEntity())
 
-                val nutrition = NetworkManager.getNutritionData(LocalDateTime.now().minusWeeks(1)
-                    .format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+                val nutrition = withContext(Dispatchers.IO) {
+                    val nutrition = NetworkManager.getNutritionData(LocalDateTime.now().minusWeeks(1)
+                        .format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+                    nutrition
+                }
+                
+                Log.d("Managing Network from ScanInfo", "${nutrition.calorie}, ${Nutrition.ColumnInfo.sugar}")
+
                 val question = nutrition.getQuestion(2)
                 val answer = if(question != null){
                     NetworkManager.callAI(question)
                 } else null
 
-                Log.d("NetworkManager", answer!!)
+                Log.d("Managing Network from ScanInfo", answer!!)
                 // 영양소 합계 저장할 foodentity 생성
             }
             startActivity(Intent(this, MainActivity::class.java))
