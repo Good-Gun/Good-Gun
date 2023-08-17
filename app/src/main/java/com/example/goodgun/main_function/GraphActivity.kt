@@ -13,12 +13,12 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import com.example.goodgun.ApplicationClass
-import com.example.goodgun.Food
-import com.example.goodgun.LoadingDialog
 import com.example.goodgun.R
 import com.example.goodgun.databinding.ActivityGraphBinding
 import com.example.goodgun.network.NetworkManager
+import com.example.goodgun.network.model.Food
 import com.example.goodgun.network.model.Nutrition
+import com.example.goodgun.util.LoadingDialog
 import com.skydoves.progressview.ProgressView
 import kotlinx.coroutines.*
 import java.time.LocalDateTime
@@ -83,7 +83,7 @@ class GraphActivity : AppCompatActivity() {
             parent: AdapterView<*>,
             view: View,
             position: Int,
-            id: Long
+            id: Long,
         ) {
             // dateSelect(position)
             var time = LocalDateTime.now()
@@ -160,7 +160,7 @@ class GraphActivity : AppCompatActivity() {
             "saturated_fat",
             "proteins",
             "sodium",
-            "cholesterol"
+            "cholesterol",
         )
         val arr3: List<ProgressView> = listOf(
             binding.pvCarbohydrates,
@@ -170,7 +170,7 @@ class GraphActivity : AppCompatActivity() {
             binding.pvSaturatedFat,
             binding.pvProteins,
             binding.pvSodium,
-            binding.pvCholesterol
+            binding.pvCholesterol,
         )
 
         val arr4: List<TextView> = listOf(
@@ -181,7 +181,7 @@ class GraphActivity : AppCompatActivity() {
             binding.tvFoodSaturated,
             binding.tvFoodProtein,
             binding.tvFoodSodium,
-            binding.tvFoodCholesterol
+            binding.tvFoodCholesterol,
         )
         for (i in arr1.indices) {
             val text = arr4[i].text.toString()
@@ -194,7 +194,7 @@ class GraphActivity : AppCompatActivity() {
                         ForegroundColorSpan(Color.RED),
                         0,
                         text.indexOf("/"),
-                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE,
                     )
                     arr4[i].text = spannableString
                 }
@@ -205,7 +205,7 @@ class GraphActivity : AppCompatActivity() {
                         ForegroundColorSpan(Color.YELLOW),
                         0,
                         text.indexOf("/"),
-                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE,
                     )
                     arr4[i].text = spannableString
                 }
@@ -216,7 +216,7 @@ class GraphActivity : AppCompatActivity() {
                         ForegroundColorSpan(Color.YELLOW),
                         0,
                         text.indexOf("/"),
-                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE,
                     )
                     arr4[i].text = spannableString
                 }
@@ -227,14 +227,15 @@ class GraphActivity : AppCompatActivity() {
                         ForegroundColorSpan(Color.RED),
                         0,
                         text.indexOf("/"),
-                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE,
                     )
                     arr4[i].text = spannableString
                 }
             }
         }
-        if (str == "") str = "아무 이상 없습니다 :)"
-        else {
+        if (str == "") {
+            str = "아무 이상 없습니다 :)"
+        } else {
             str = str.removeSuffix("\n")
         }
 
@@ -246,7 +247,7 @@ class GraphActivity : AppCompatActivity() {
             while (startIndex != -1) {
                 val endIndex = startIndex + keyword[i].length
                 val colorSpan =
-                    if (i <2) { ForegroundColorSpan(Color.YELLOW) } else {
+                    if (i < 2) { ForegroundColorSpan(Color.YELLOW) } else {
                         ForegroundColorSpan(Color.RED)
                     }
 

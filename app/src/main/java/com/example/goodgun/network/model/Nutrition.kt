@@ -26,8 +26,9 @@ data class Nutrition(
         var question: String? = ""
 
         for (i in arr1.indices) {
-            if (calculateNutrientIntake(arr2[i]) == 2) question += "과한 " + arr1[i] + ","
-            else if (calculateNutrientIntake(arr2[i]) == -2) question += "부족한 " + arr1[i] + ","
+            if (calculateNutrientIntake(arr2[i]) == 2) {
+                question += "과한 " + arr1[i] + ","
+            } else if (calculateNutrientIntake(arr2[i]) == -2) question += "부족한 " + arr1[i] + ","
         }
         if (question != "") {
             question = question?.removeSuffix(",")
@@ -37,7 +38,9 @@ data class Nutrition(
                 question += " 섭취를 하는 사람에게 건강해질 생활 패턴을 추천해줘."
             }
             // question += " 섭취를 하는 사람에게 생활 패턴을 추천해줘. 앞뒤 설명 생략하고 숫자 붙여서 부제와 내용 형식으로 보여줘"
-        } else question = null
+        } else {
+            question = null
+        }
 
         Log.d("Checking OPENAI", "$question")
 
@@ -48,14 +51,17 @@ data class Nutrition(
         var question: String? = ""
 
         for (i in arr1.indices) {
-            if (calculateNutrientIntake(arr2[i]) == 2) question += "과한 " + arr1[i] + ","
-            else if (calculateNutrientIntake(arr2[i]) == -2) question += "부족한 " + arr1[i] + ","
+            if (calculateNutrientIntake(arr2[i]) == 2) {
+                question += "과한 " + arr1[i] + ","
+            } else if (calculateNutrientIntake(arr2[i]) == -2) question += "부족한 " + arr1[i] + ","
         }
         if (question != "") {
             question = question?.removeSuffix(",")
             // question += " 섭취를 하는 사람에게 생활 패턴을 추천해줘. 앞뒤 설명 생략하고 숫자 붙여서 부제와 내용 형식으로 보여줘"
             question += " 섭취를 하는 사람에게 건강해질 식단을 추천해줘. 앞뒤 설명은 일절 보여주지 말고, 출력 형식은 음식이름:간략한 설명 으로 해서 5개 보여줘"
-        } else question = null
+        } else {
+            question = null
+        }
 
         Log.d("Checking OPENAI", "$question")
 

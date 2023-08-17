@@ -51,15 +51,16 @@ class AdditionalInfoActivity : AppCompatActivity() {
         auth = Firebase.auth
         val currentUser = auth.currentUser
 
-        //알레르기 멀티 검색바
+        // 알레르기 멀티 검색바
         var items = getAssetsTextArray(this, "allergies")
         var multiAutoCompleteTextView = binding.allergyInput
         var adapter = ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, items)
         multiAutoCompleteTextView.setAdapter(adapter)
         multiAutoCompleteTextView.setTokenizer(CommaTokenizer())
         multiAutoCompleteTextView.setOnFocusChangeListener { v, hasFocus ->
-            if (hasFocus)
+            if (hasFocus) {
                 multiAutoCompleteTextView.showDropDown()
+            }
         }
         multiAutoCompleteTextView.setOnClickListener {
             multiAutoCompleteTextView.showDropDown()
@@ -85,7 +86,7 @@ class AdditionalInfoActivity : AppCompatActivity() {
                 parent: AdapterView<*>?,
                 view: View,
                 position: Int,
-                id: Long
+                id: Long,
             ) {
                 selectedTypePosition = position
             }
@@ -103,7 +104,7 @@ class AdditionalInfoActivity : AppCompatActivity() {
                 parent: AdapterView<*>?,
                 view: View,
                 position: Int,
-                id: Long
+                id: Long,
             ) {
                 selectedFreqPosition = position
             }
@@ -138,7 +139,7 @@ class AdditionalInfoActivity : AppCompatActivity() {
         val reader: BufferedReader
         try {
             reader = BufferedReader(
-                InputStreamReader(mContext.resources.assets.open("$fileName.txt"))
+                InputStreamReader(mContext.resources.assets.open("$fileName.txt")),
             )
             var str: String?
             while (reader.readLine().also { str = it } != null) {
@@ -187,6 +188,7 @@ class AdditionalInfoActivity : AppCompatActivity() {
             val weight = binding.weightInput.text.toString()
             val height = binding.heightInput.text.toString()
             val age = binding.ageInput.text.toString()
+
             if(isStringConvertibleToInt(height))
                 userRef.child("u_height").setValue(height)
             else{
@@ -205,6 +207,7 @@ class AdditionalInfoActivity : AppCompatActivity() {
             else{
                 Toast.makeText(this, "나이를 올바르게 입력해주세요", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
+
             }
             var allergies = binding.allergyInput.text.toString().split(", ")
             allergies = allergies.dropLast(1)

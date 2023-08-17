@@ -7,8 +7,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.goodgun.MainActivity
-import com.example.goodgun.User
 import com.example.goodgun.databinding.LoginLayoutBinding
+import com.example.goodgun.network.model.User
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -115,7 +115,7 @@ class LoginActivity : AppCompatActivity() {
         var credential = GoogleAuthProvider.getCredential(account?.idToken, null)
         auth?.signInWithCredential(credential)
             ?.addOnCompleteListener {
-                task ->
+                    task ->
                 if (task.isSuccessful) {
                     // 로그인 성공 시
                     // 이미 회원인 경우의 action

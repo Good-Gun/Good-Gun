@@ -24,9 +24,8 @@ data class FoodEntity(
     // LocalDate 타입은 sdk 버전 26 이상부터 작동하므로 minSdk를 26 이상으로 설정해야함
     // 기본 생성자
     // 이름, 열량, 탄수화물, 당류, 단백질, 지방, 트랜스지방, 포화지방, 콜레스테롤, 등록일자, 등록시간
-    constructor() : this(0, "is_sum_entity", 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, LocalDate.now().toString(), LocalTime.now().toString())
-    constructor(name: String) : this(0, name, 1.0, 2.0, 3.0, 0.0, 0.0, 0.0, 0.0, 0.0, LocalDate.now().toString(), LocalTime.now().toString())
-    // 테스트 위해 1, 2, 3 수치 넣었음
+    constructor() : this(0, "기본 생성자", 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, LocalDate.now().toString(), LocalTime.now().toString())
+    constructor(name: String) : this(0, name, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, LocalDate.now().toString(), LocalTime.now().toString())
 
     constructor(name: String, calory: Double, carbohydrates: Double, sugar: Double, protein: Double, fat: Double, trans_fat: Double, saturated_fat: Double, cholesterol: Double) : this(0, name, calory, carbohydrates, sugar, protein, fat, trans_fat, saturated_fat, cholesterol, LocalDate.now().toString(), LocalTime.now().toString())
 }

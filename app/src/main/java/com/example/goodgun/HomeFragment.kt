@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,17 +16,19 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.goodgun.add_food.ScanInfomation
 import com.example.goodgun.databinding.FragmentHomeBinding
-import com.example.goodgun.network.NetworkManager
 import com.example.goodgun.main_function.FoodActivity
 import com.example.goodgun.main_function.GraphActivity
 import com.example.goodgun.main_function.SolutionActivity
 import com.example.goodgun.main_function.TodayRVAdapter
-import com.example.goodgun.network.model.Nutrition
+import com.example.goodgun.network.NetworkManager
+import com.example.goodgun.network.model.Food
 import com.example.goodgun.network.model.NutritionResponse
+import com.example.goodgun.roomDB.DatabaseManager
+import com.example.goodgun.util.LoadingDialog
+import kotlinx.coroutines.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -38,7 +39,7 @@ class HomeFragment : Fragment() {
     lateinit var todayAdapter: TodayRVAdapter // 오늘 섭취한 음식정보 recyclerView
     lateinit var nutritionResponse: NutritionResponse // 영양 정보 저장을 위한 클래스
     val food_list: ArrayList<Food> = arrayListOf() // 음식 리스트
-    lateinit var today: String // 오늘 날짜 저장
+    val today: String = LocalDateTime.now().format(DateTimeFormatter.ofPattern(" yyyy-MM-dd"))
     lateinit var date: String // 다른 날짜의 영양정보 탐색을 위한 변수
 
     var binding: FragmentHomeBinding? = null
@@ -49,7 +50,6 @@ class HomeFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
-        today = LocalDateTime.now().format(DateTimeFormatter.ofPattern(" yyyy-MM-dd"))
         date = today
         loadingDialog = LoadingDialog(requireContext())
         loadingDialog.show()
@@ -118,9 +118,6 @@ class HomeFragment : Fragment() {
         // 간격 20으로
         val spaceDecoration = this.VerticalSpaceItemDecoration(20)
         binding?.rvHomeToday?.addItemDecoration(spaceDecoration)
-
-        /*파이어베이스 요청*/
-        getNutrition(today)
     }
 
     /*날짜를 바꿀 시 파이어베이스 요청*/
@@ -174,7 +171,21 @@ class HomeFragment : Fragment() {
         }
     }
 
-    inner class LinearLayoutManagerWrapper: LinearLayoutManager {
+    override fun onResume() {
+        super.onResume()
+
+        getNutrition(date)
+
+        /*room DB에 저장되어 있는 음식 개수*/
+        val roomdb = DatabaseManager.getDatabaseInstance(ApplicationClass.uid, requireContext())
+        GlobalScope.launch(Dispatchers.IO) {
+            val count = roomdb.foodDao().foodCount()
+            withContext(Dispatchers.Main) {
+                binding!!.roomDBcount.text = count.toString()
+            }
+        }
+    }
+    inner class LinearLayoutManagerWrapper : LinearLayoutManager {
         constructor(context: Context) : super(context) {}
 
         constructor(context: Context, orientation: Int, reverseLayout: Boolean) : super(context, orientation, reverseLayout) {}

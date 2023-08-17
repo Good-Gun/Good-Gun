@@ -309,7 +309,7 @@
                     app:layout_constraintGuide_percent="0.6667"
                     app:layout_constraintStart_toStartOf="@id/view_graph_2" />
 
-                <com.example.goodgun.DottedLineView
+                <com.example.goodgun.main_function.DottedLineView
                     android:id="@+id/viewToPosition"
                     android:layout_width="3dp"
                     android:layout_height="0dp"

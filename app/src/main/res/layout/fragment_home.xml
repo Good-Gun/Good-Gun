@@ -14,10 +14,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:elevation="10dp"
-            android:outlineSpotShadowColor="@color/theme1"
-            android:background="@drawable/box_radius_bottom_20dp"
-            android:backgroundTint="@color/theme1">
+            android:background="@color/theme1"
+            android:elevation="10dp">
 
             <TextView
                 android:id="@+id/tv_home_text1"
@@ -25,11 +23,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="20dp"
                 android:layout_marginStart="20dp"
-                android:text="굳건이"
+                android:fontFamily="@font/goodgun"
+                android:text="국건이"
                 android:textColor="@color/white"
                 android:textSize="25dp"
                 android:textStyle="bold"
-                android:fontFamily="@font/goodgun"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -37,8 +35,8 @@
                 android:id="@+id/iv_scan_num"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_marginEnd="40dp"
                 android:layout_marginVertical="20dp"
+                android:layout_marginEnd="40dp"
                 android:background="@drawable/circle_outline"
                 android:backgroundTint="@color/white"
                 android:scaleType="centerInside"
@@ -47,12 +45,12 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/roomDBcount"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginStart="25dp"
                 android:layout_marginTop="25dp"
                 android:background="@drawable/circle_outline"
-                android:text="1"
                 android:textAlignment="center"
                 android:textColor="@color/red"
                 android:textStyle="bold"
@@ -64,9 +62,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="20dp"
+                android:fontFamily="@font/goodgun"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                android:fontFamily="@font/goodgun"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -103,7 +101,8 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="20dp"
-            android:backgroundTint="@color/theme1"
+            android:backgroundTint="@color/theme4"
+            android:outlineSpotShadowColor="@color/theme1"
             app:cardCornerRadius="20dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -111,7 +110,6 @@
                 android:layout_height="wrap_content"
                 android:elevation="10dp"
                 android:padding="15dp"
-                android:outlineSpotShadowColor="@color/theme1"
                 app:layout_constraintCircleRadius="10dp">
 
                 <TextView
@@ -119,155 +117,176 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/baseline_medication_24"
-                    android:drawableTint="@color/white"
-                    android:text="영양 정보"
-                    android:textColor="@color/white"
+                    android:drawableTint="@color/black"
                     android:fontFamily="@font/goodgun"
+                    android:text="영양 정보"
+                    android:textColor="@color/black"
                     android:textSize="17sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <LinearLayout
+                <androidx.cardview.widget.CardView
                     android:id="@+id/view_calorie"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="20dp"
-                    android:background="@drawable/box_radius_10dp"
-                    android:backgroundTint="@color/white"
-                    android:gravity="center"
-                    android:orientation="vertical"
+                    android:background="@color/white"
+                    android:outlineSpotShadowColor="@color/theme1"
+                    app:cardCornerRadius="20dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_home_nut_title"
                     app:layout_constraintWidth_percent="0.5">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginVertical="10dp"
-                        android:text="@string/calorie"
-                        android:textColor="@color/black"
-                        android:textSize="17dp"
-                        android:textStyle="bold" />
+                        android:gravity="center"
+                        android:orientation="vertical">
 
-                    <com.appersiano.progressimage.ProgressImage
-                        android:id="@+id/pb_home_calorie"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        app:imageShadowColor="@color/bright_grey"
-                        app:srcImage="@drawable/baseline_cloud_24" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="10dp"
+                            android:fontFamily="@font/goodgun"
+                            android:text="@string/calorie"
+                            android:textColor="@color/black"
+                            android:textSize="17dp"
+                            android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/tv_home_calorie"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:textColor="@color/black"
-                        android:textSize="15dp"
-                        android:textStyle="bold" />
+                        <com.appersiano.progressimage.ProgressImage
+                            android:id="@+id/pb_home_calorie"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            app:imageShadowColor="@color/bright_grey"
+                            app:srcImage="@drawable/baseline_medication_24" />
 
-                </LinearLayout>
+                        <TextView
+                            android:id="@+id/tv_home_calorie"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:fontFamily="@font/goodgun"
+                            android:textColor="@color/black"
+                            android:textSize="15dp"
+                            android:textStyle="bold" />
 
-                <LinearLayout
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
                     android:id="@+id/view_carbo"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:background="@drawable/box_radius_10dp"
-                    android:backgroundTint="@color/white"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="10dp"
+                    android:background="@color/white"
+                    android:outlineSpotShadowColor="@color/theme1"
+                    app:cardCornerRadius="20dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/view_calorie"
                     app:layout_constraintTop_toTopOf="@id/view_calorie">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
                     <TextView
+                        style="@style/foodTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/carbohydrate"
-                        android:textColor="@color/black"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
+                        android:fontFamily="@font/goodgun"/>
 
 
                     <TextView
                         android:id="@+id/tv_home_carbohydrates"
+                        style="@style/foodText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
+                        android:fontFamily="@font/goodgun" />
 
                 </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
-                <LinearLayout
+                <androidx.cardview.widget.CardView
                     android:id="@+id/view_fat"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:background="@drawable/box_radius_10dp"
-                    android:backgroundTint="@color/white"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="10dp"
+                    android:background="@color/white"
+                    android:outlineSpotShadowColor="@color/theme1"
+                    app:cardCornerRadius="20dp"
                     app:layout_constraintBottom_toTopOf="@id/view_protein"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/view_calorie"
                     app:layout_constraintTop_toBottomOf="@id/view_carbo">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
                     <TextView
+                        style="@style/foodTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/fat"
-                        android:textColor="@color/black"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
+                        android:fontFamily="@font/goodgun" />
 
 
                     <TextView
                         android:id="@+id/tv_home_fat"
+                        style="@style/foodText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
+                        android:fontFamily="@font/goodgun"/>
 
                 </LinearLayout>
 
-                <LinearLayout
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
                     android:id="@+id/view_protein"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
-                    android:background="@drawable/box_radius_10dp"
-                    android:backgroundTint="@color/white"
                     android:layout_marginStart="10dp"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="10dp"
+                    android:background="@color/white"
+                    android:outlineSpotShadowColor="@color/theme1"
+                    app:cardCornerRadius="20dp"
                     app:layout_constraintBottom_toBottomOf="@id/view_calorie"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/view_calorie">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
                     <TextView
+                        style="@style/foodTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/protein"
-                        android:textColor="@color/black"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
+                        android:fontFamily="@font/goodgun" />
 
 
                     <TextView
                         android:id="@+id/tv_home_proteins"
+                        style="@style/foodText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
+                        android:fontFamily="@font/goodgun" />
                 </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -279,63 +298,63 @@
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="20dp"
             android:background="@color/white"
-            app:cardCornerRadius="20dp"
-            android:outlineSpotShadowColor="@color/theme1">
+            android:outlineSpotShadowColor="@color/theme1"
+            app:cardCornerRadius="20dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="15dp">
-
-            <TextView
-                android:id="@+id/tv_home_info_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableStart="@drawable/baseline_food_bank_24"
-                android:fontFamily="@font/goodgun"
-                android:text="식단 정보"
-                android:textColor="@color/black"
-                android:textSize="17sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableEnd="@drawable/baseline_keyboard_arrow_right_24"
-                android:drawableTint="@color/black"
-                android:gravity="center"
-                android:text="더보기"
-                android:textColor="@color/black"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tv_no_food"
-                style="@style/foodText"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:padding="10dp"
-                android:text="@string/no_food_today"
-                android:textAlignment="center"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_home_info_title"
-                tools:layout_editor_absoluteX="15dp" />
+                android:padding="15dp">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_home_today"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingVertical="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_home_info_title"
-                tools:layout_editor_absoluteX="15dp" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/tv_home_info_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/baseline_food_bank_24"
+                    android:fontFamily="@font/goodgun"
+                    android:text="식단 정보"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <!--<TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/baseline_keyboard_arrow_right_24"
+                    android:drawableTint="@color/black"
+                    android:gravity="center"
+                    android:text="더보기"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />-->
+
+                <TextView
+                    android:id="@+id/tv_no_food"
+                    style="@style/foodText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:padding="10dp"
+                    android:text="@string/no_food_today"
+                    android:textAlignment="center"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_home_info_title"
+                    tools:layout_editor_absoluteX="15dp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_home_today"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_home_info_title"
+                    tools:layout_editor_absoluteX="15dp" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
         <LinearLayout
@@ -349,18 +368,18 @@
                 android:id="@+id/home_btn1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="20dp"
+                android:layout_weight="1"
                 android:outlineSpotShadowColor="@color/red"
                 app:cardCornerRadius="20dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/red"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:background="@color/red"
                     android:paddingHorizontal="10dp"
                     android:paddingVertical="15dp">
 
@@ -376,11 +395,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
+                        android:fontFamily="@font/goodgun"
                         android:text="국건 솔루션"
                         android:textColor="@color/white"
                         android:textSize="17sp"
-                        android:textStyle="bold"
-                        android:fontFamily="@font/goodgun"/>
+                        android:textStyle="bold" />
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -389,9 +408,9 @@
                 android:id="@+id/home_btn2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="20dp"
+                android:layout_weight="1"
                 android:outlineSpotShadowColor="@color/theme1"
                 app:cardCornerRadius="20dp">
 
@@ -414,17 +433,17 @@
                         android:paddingBottom="20dp"
                         android:scaleType="centerCrop"
                         android:src="@drawable/baseline_fastfood_24"
-                        app:tint="@color/theme1"/>
+                        app:tint="@color/theme1" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
+                        android:fontFamily="@font/goodgun"
                         android:text="식단 추천"
                         android:textColor="@color/theme1"
                         android:textSize="17sp"
-                        android:textStyle="bold"
-                        android:fontFamily="@font/goodgun" />
+                        android:textStyle="bold" />
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -433,9 +452,9 @@
                 android:id="@+id/home_btn3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="20dp"
+                android:layout_weight="1"
                 android:outlineSpotShadowColor="@color/theme3"
                 app:cardCornerRadius="20dp">
 
@@ -458,17 +477,17 @@
                         android:paddingBottom="15dp"
                         android:scaleType="centerCrop"
                         android:src="@drawable/baseline_bar_chart_24"
-                        app:tint="@color/theme3"/>
+                        app:tint="@color/theme3" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
+                        android:fontFamily="@font/goodgun"
                         android:text="통계 보기"
                         android:textColor="@color/theme3"
                         android:textSize="17sp"
-                        android:textStyle="bold"
-                        android:fontFamily="@font/goodgun" />
+                        android:textStyle="bold" />
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>

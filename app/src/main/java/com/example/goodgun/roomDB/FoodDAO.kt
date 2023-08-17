@@ -8,11 +8,14 @@ import androidx.room.Query
 @Dao
 interface FoodDAO {
 
-    @Query("SELECT * FROM table_food")
+    @Query("SELECT * FROM table_food WHERE name != 'is_sum_entity'")
     fun getAll(): List<FoodEntity>
 
     @Query("SELECT * FROM table_food WHERE name = 'is_sum_entity'")
     fun getSumFood(): FoodEntity
+
+    @Query("SELECT EXISTS (SELECT 1 FROM table_food WHERE name = 'is_sum_entity' LIMIT 1)")
+    fun hasSumFood(): Boolean
 
     // food 저장 - 중복 값 충돌 발생 시 새로 들어온 데이터로 교체.
     @Insert(onConflict = OnConflictStrategy.REPLACE)

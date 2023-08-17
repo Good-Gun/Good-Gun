@@ -4,13 +4,13 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.goodgun.Food
 import com.example.goodgun.databinding.ItemFoodListTodayBinding
+import com.example.goodgun.network.model.Food
 
 class TodayRVAdapter(
     val context: Context,
     private val dataList: List<Food>,
-    private val maxItemCount: Int
+    private val maxItemCount: Int,
 ) : RecyclerView.Adapter<TodayRVAdapter.ItemViewHolder>() {
 
     /*interface OnItemClickListener{
