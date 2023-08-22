@@ -24,6 +24,7 @@ import com.google.firebase.ktx.Firebase
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
+import kotlin.properties.Delegates
 
 class AdditionalInfoActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
@@ -41,25 +42,28 @@ class AdditionalInfoActivity : AppCompatActivity() {
     private var exFreqList: List<String> = ArrayList()
     private var goalList: List<String> = ArrayList()
 
-    private lateinit var selectedType: String
-
-    private lateinit var selectedFreq: String
-    private lateinit var selectedFreqPosition: String
+    private var selectedTypePosition by Delegates.notNull<Int>()
+    private var selectedFreqPosition by Delegates.notNull<Int>()
+    private var selectedGoalPosition by Delegates.notNull<Int>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = AdditionalInfoLayoutBinding.inflate(layoutInflater)
         auth = Firebase.auth
         val currentUser = auth.currentUser
 
-        //알레르기 멀티 검색바
+        // 알레르기 멀티 검색바
         var items = getAssetsTextArray(this, "allergies")
         var multiAutoCompleteTextView = binding.allergyInput
         var adapter = ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, items)
         multiAutoCompleteTextView.setAdapter(adapter)
         multiAutoCompleteTextView.setTokenizer(CommaTokenizer())
         multiAutoCompleteTextView.setOnFocusChangeListener { v, hasFocus ->
-            if (hasFocus)
+            if (hasFocus) {
                 multiAutoCompleteTextView.showDropDown()
+            }
+        }
+        multiAutoCompleteTextView.setOnClickListener {
+            multiAutoCompleteTextView.showDropDown()
         }
 
         // 스피너들 초기화
@@ -82,13 +86,13 @@ class AdditionalInfoActivity : AppCompatActivity() {
                 parent: AdapterView<*>?,
                 view: View,
                 position: Int,
-                id: Long
+                id: Long,
             ) {
-                selectedType = exTypeSpinner.getItemAtPosition(position) as String
+                selectedTypePosition = position
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("Not yet implemented")
+
             }
         }
         exFreqList = arrayListOf("거의 안함", "1회 이하", "2 ~ 3회", "4 ~ 5 회", "6회 이상")
@@ -100,10 +104,9 @@ class AdditionalInfoActivity : AppCompatActivity() {
                 parent: AdapterView<*>?,
                 view: View,
                 position: Int,
-                id: Long
+                id: Long,
             ) {
-                selectedFreq = exFreqSpinner.getItemAtPosition(position) as String
-                selectedFreqPosition = position.toString()
+                selectedFreqPosition = position
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -115,6 +118,20 @@ class AdditionalInfoActivity : AppCompatActivity() {
         goalSpinnerAdapter = CustomSpinnerAdapter(this, goalList)
         goalSpinner = binding.goalSpinner
         goalSpinner.adapter = goalSpinnerAdapter
+        goalSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
+                selectedGoalPosition = position
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+        }
     }
 
     fun getAssetsTextArray(mContext: Context, fileName: String): Array<String> {
@@ -122,7 +139,7 @@ class AdditionalInfoActivity : AppCompatActivity() {
         val reader: BufferedReader
         try {
             reader = BufferedReader(
-                InputStreamReader(mContext.resources.assets.open("$fileName.txt"))
+                InputStreamReader(mContext.resources.assets.open("$fileName.txt")),
             )
             var str: String?
             while (reader.readLine().also { str = it } != null) {
@@ -171,23 +188,34 @@ class AdditionalInfoActivity : AppCompatActivity() {
             val weight = binding.weightInput.text.toString()
             val height = binding.heightInput.text.toString()
             val age = binding.ageInput.text.toString()
-            if(isStringConvertibleToInt(weight))
-                userRef.child("u_weight").setValue(weight)
-            else
-                Toast.makeText(this, "몸무게를 올바르게 입력해주세요", Toast.LENGTH_SHORT).show()
+
             if(isStringConvertibleToInt(height))
                 userRef.child("u_height").setValue(height)
-            else
+            else{
                 Toast.makeText(this, "키를 올바르게 입력해주세요", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            if(isStringConvertibleToInt(weight))
+                userRef.child("u_weight").setValue(weight)
+            else {
+                Toast.makeText(this, "몸무게를 올바르게 입력해주세요", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             if(isStringConvertibleToInt(age))
                 userRef.child("u_age").setValue(age)
-            else
+            else{
                 Toast.makeText(this, "나이를 올바르게 입력해주세요", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+
+            }
             var allergies = binding.allergyInput.text.toString().split(", ")
             allergies = allergies.dropLast(1)
             userRef.child("u_allergy").setValue(allergies)
-            userRef.child("u_exercise_freq").setValue(selectedFreqPosition + 1)
-            userRef.child("u_exercise_type").setValue(selectedType)
+            userRef.child("u_exercise_freq").setValue((selectedFreqPosition + 1).toString())
+            userRef.child("u_exercise_type").setValue((selectedTypePosition +1).toString())
+            userRef.child("u_physical_goals").setValue((selectedGoalPosition +1).toString())
+
             ApplicationClass.updateUserInfo()
             startActivity(Intent(this, MainActivity::class.java))
             finish()

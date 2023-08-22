@@ -25,13 +25,13 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import kotlinx.coroutines.*
 
 class ScanInfomation : AppCompatActivity() {
 
@@ -69,7 +69,6 @@ class ScanInfomation : AppCompatActivity() {
         initRecyclerView()
         initDirectAdd()
 
-
         init()
     }
 
@@ -93,7 +92,6 @@ class ScanInfomation : AppCompatActivity() {
     }
 
     private fun init() {
-
     }
 
     private fun updateSum() {
@@ -119,28 +117,27 @@ class ScanInfomation : AppCompatActivity() {
             val sumfood = roomdb.foodDao().getSumFood()
             val allfood = roomdb.foodDao().getAll()
 
-            var tmpcalory=0.0
-            var tmpcarbohydrates=0.0
-            var tmpsugar=0.0
-            var tmpprotein=0.0
-            var tmpfat=0.0
-            var tmptrans_fat=0.0
-            var tmpsaturated_fat=0.0
-            var tmpcholesterol=0.0
+            var tmpcalory = 0.0
+            var tmpcarbohydrates = 0.0
+            var tmpsugar = 0.0
+            var tmpprotein = 0.0
+            var tmpfat = 0.0
+            var tmptrans_fat = 0.0
+            var tmpsaturated_fat = 0.0
+            var tmpcholesterol = 0.0
             for (food in allfood) {
-                tmpcalory+=food.calory
-                tmpcarbohydrates+=food.carbohydrates
-                tmpsugar+=food.sugar
-                tmpprotein+=food.protein
-                tmpfat+=food.fat
-                tmptrans_fat+=food.trans_fat
-                tmpsaturated_fat+=food.saturated_fat
-                tmpcholesterol+=food.cholesterol
+                tmpcalory += food.calory
+                tmpcarbohydrates += food.carbohydrates
+                tmpsugar += food.sugar
+                tmpprotein += food.protein
+                tmpfat += food.fat
+                tmptrans_fat += food.trans_fat
+                tmpsaturated_fat += food.saturated_fat
+                tmpcholesterol += food.cholesterol
             }
 
             withContext(Dispatchers.Main) {
                 binding.apply {
-
                     sumfood.calory = tmpcalory
                     sumfood.carbohydrates = tmpcarbohydrates
                     sumfood.sugar = tmpsugar
@@ -171,17 +168,21 @@ class ScanInfomation : AppCompatActivity() {
                 roomdb.foodDao().saveFood(FoodEntity())
 
                 val nutrition = withContext(Dispatchers.IO) {
-                    val nutrition = NetworkManager.getNutritionData(LocalDateTime.now().minusWeeks(1)
-                        .format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+                    val nutrition = NetworkManager.getNutritionData(
+                        LocalDateTime.now().minusWeeks(1)
+                            .format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),
+                    )
                     nutrition
                 }
-                
+
                 Log.d("Managing Network from ScanInfo", "${nutrition.calorie}, ${Nutrition.ColumnInfo.sugar}")
 
                 val question = nutrition.getQuestion(2)
-                val answer = if(question != null){
+                val answer = if (question != null) {
                     NetworkManager.callAI(question)
-                } else null
+                } else {
+                    null
+                }
 
                 Log.d("Managing Network from ScanInfo", answer!!)
                 // 영양소 합계 저장할 foodentity 생성
@@ -196,11 +197,10 @@ class ScanInfomation : AppCompatActivity() {
     }
 
     private fun initRecyclerView() {
-
         GlobalScope.launch(Dispatchers.IO) {
             val tmpentity = roomdb.foodDao().hasSumFood()
-            Log.d("SumFood", "name: ${tmpentity}")
-            if(roomdb.foodDao().hasSumFood()==false){
+            Log.d("SumFood", "name: $tmpentity")
+            if (roomdb.foodDao().hasSumFood() == false) {
                 roomdb.foodDao().saveFood(FoodEntity("is_sum_entity"))
             }
             tmpdata = roomdb.foodDao().getAll().toMutableList()
@@ -217,7 +217,7 @@ class ScanInfomation : AppCompatActivity() {
                             updateSumFoodEntity()
                         }
                         binding.recyclerView.findViewHolderForAdapterPosition(position)?.itemView?.findViewById<ImageButton>(
-                            R.id.food_add
+                            R.id.food_add,
                         )?.visibility = View.GONE
                     }
                 }
@@ -239,19 +239,13 @@ class ScanInfomation : AppCompatActivity() {
                 updateSumFoodEntity()
             }
         }
-
-
     }
-
 
     // 다이얼로그 닫힐 때 실행되는 함수
     fun onDialogDissmissed() {
         if (!model.is_blank()) {
             tmpdata.add(model.getfood())
             adapter.notifyDataSetChanged()
-
         }
     }
-
-
 }
