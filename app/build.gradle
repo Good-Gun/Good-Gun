@@ -117,4 +117,7 @@ dependencies {
 
     // viewmodel
     implementation 'androidx.fragment:fragment-ktx:1.5.7'
+
+    //ViewPager2
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
 }
