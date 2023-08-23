@@ -206,7 +206,6 @@ class ScanInfomation : AppCompatActivity() {
             tmpdata = roomdb.foodDao().getAll().toMutableList()
             withContext(Dispatchers.Main) {
                 adapter = FoodAddAdapter(tmpdata)
-
                 binding.recyclerView.layoutManager =
                     LinearLayoutManager(this@ScanInfomation, LinearLayoutManager.VERTICAL, false)
 
@@ -235,7 +234,6 @@ class ScanInfomation : AppCompatActivity() {
                     }
                 }
                 binding.recyclerView.adapter = adapter
-
                 updateSumFoodEntity()
             }
         }

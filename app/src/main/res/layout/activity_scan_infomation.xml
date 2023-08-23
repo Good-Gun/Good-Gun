@@ -46,6 +46,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
             android:orientation="vertical">
 
             <LinearLayout
@@ -53,7 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="@drawable/button_round_white"
+                android:background="@drawable/round_white_border"
                 android:layout_margin="10dp"
                 android:padding="15dp">
 
@@ -77,11 +78,18 @@
                     android:layout_gravity="center"/>
 
                 <Button
+                    app:backgroundTint="@null"
                     android:id="@+id/directAdd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/button_round_gray"
+                    android:textSize="15sp"
                     android:text="직접 추가"
-                    android:layout_gravity="center"/>
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"
+
+                    />
 
 
             </LinearLayout>
