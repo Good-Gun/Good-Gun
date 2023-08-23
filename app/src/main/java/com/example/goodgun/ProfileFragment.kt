@@ -1,6 +1,5 @@
 package com.example.goodgun
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.goodgun.databinding.FragmentProfileBinding
 import com.example.goodgun.login.CustomSpinnerAdapter
-
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
@@ -40,13 +38,13 @@ class ProfileFragment : Fragment() {
     private var goalList: List<String> = ArrayList()
 
     val database: DatabaseReference = Firebase.database("https://goodgun-4740f-default-rtdb.firebaseio.com/").reference
-    lateinit var binding : FragmentProfileBinding
+    lateinit var binding: FragmentProfileBinding
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        binding = FragmentProfileBinding.inflate(layoutInflater,container,false)
+        binding = FragmentProfileBinding.inflate(layoutInflater, container, false)
         initLayout()
         return binding.root
     }
@@ -76,22 +74,22 @@ class ProfileFragment : Fragment() {
         val weight = binding.profileWeightInput.text.toString()
         val age = binding.profileAgeInput.text.toString()
 
-        if(isStringConvertibleToInt(height))
+        if (isStringConvertibleToInt(height)) {
             userRef.child("u_height").setValue(height)
-        else{
+        } else {
             Toast.makeText(this.requireContext(), "키를 올바르게 입력해주세요", Toast.LENGTH_SHORT).show()
             return
         }
-        if(isStringConvertibleToInt(weight))
+        if (isStringConvertibleToInt(weight)) {
             userRef.child("u_weight").setValue(weight)
-        else {
+        } else {
             Toast.makeText(this.requireContext(), "몸무게를 올바르게 입력해주세요", Toast.LENGTH_SHORT).show()
             return
         }
 
-        if(isStringConvertibleToInt(age))
+        if (isStringConvertibleToInt(age)) {
             userRef.child("u_age").setValue(age)
-        else{
+        } else {
             Toast.makeText(this.requireContext(), "나이를 올바르게 입력해주세요", Toast.LENGTH_SHORT).show()
             return
         }
@@ -99,13 +97,12 @@ class ProfileFragment : Fragment() {
         allergies = allergies.dropLast(1)
         userRef.child("u_allergy").setValue(allergies)
         userRef.child("u_exercise_freq").setValue((selectedFreqPosition + 1).toString())
-        userRef.child("u_exercise_type").setValue((selectedTypePosition +1).toString())
-        userRef.child("u_physical_goals").setValue((selectedGoalPosition +1).toString())
+        userRef.child("u_exercise_type").setValue((selectedTypePosition + 1).toString())
+        userRef.child("u_physical_goals").setValue((selectedGoalPosition + 1).toString())
         ApplicationClass.updateUserInfo()
-
     }
 
-    private fun initSpinners(typePos:Int, freqPos:Int, goalPos:Int) {
+    private fun initSpinners(typePos: Int, freqPos: Int, goalPos: Int) {
         exTypeList = arrayListOf("무산소 운동", "유산소 운동", "둘 다")
         exTypeSpinnerAdapter = CustomSpinnerAdapter(this.requireContext(), exTypeList)
         exTypeSpinner = binding.profileExTypeSpinner
@@ -115,9 +112,8 @@ class ProfileFragment : Fragment() {
                 parent: AdapterView<*>?,
                 view: View,
                 position: Int,
-                id: Long
+                id: Long,
             ) {
-
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -133,9 +129,8 @@ class ProfileFragment : Fragment() {
                 parent: AdapterView<*>?,
                 view: View,
                 position: Int,
-                id: Long
+                id: Long,
             ) {
-
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -147,12 +142,12 @@ class ProfileFragment : Fragment() {
         goalSpinnerAdapter = CustomSpinnerAdapter(this.requireContext(), goalList)
         goalSpinner = binding.profileGoalSpinner
         goalSpinner.adapter = goalSpinnerAdapter
-        goalSpinner.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
+        goalSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
                 position: Int,
-                id: Long
+                id: Long,
             ) {
                 TODO("Not yet implemented")
             }
@@ -160,11 +155,8 @@ class ProfileFragment : Fragment() {
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 goalSpinner.setSelection(goalPos)
             }
-
         }
-
     }
-
 
     private fun loadProfileInfo(currentUser: FirebaseUser?) {
         if (currentUser != null) {
@@ -176,16 +168,16 @@ class ProfileFragment : Fragment() {
 
                     val uName = dataSnapshot.child("u_name").getValue(String::class.java)
                     val uEmail = dataSnapshot.child("u_email").getValue(String::class.java)
-                    val uPW =  dataSnapshot.child("u_password").getValue(String::class.java)
+                    val uPW = dataSnapshot.child("u_password").getValue(String::class.java)
                     val uHeight = dataSnapshot.child("u_height").getValue(String::class.java)
                     val uWeight = dataSnapshot.child("u_weight").getValue(String::class.java)
                     val uAge = dataSnapshot.child("u_age").getValue(String::class.java)
                     val typeIndicator = object : GenericTypeIndicator<List<String>>() {}
                     val uAllergies: List<String>? = dataSnapshot.child("u_allergy").getValue(typeIndicator)
                     val result = StringBuilder()
-                    if(uAllergies == null){
+                    if (uAllergies == null) {
                         result.append("")
-                    }else{
+                    } else {
                         for ((index, allergy) in uAllergies.withIndex()) {
                             result.append(allergy)
                             if (index < uAllergies.size - 1) {
@@ -212,5 +204,4 @@ class ProfileFragment : Fragment() {
         }
         return
     }
-
 }

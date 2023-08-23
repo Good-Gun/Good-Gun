@@ -2,20 +2,12 @@ package com.example.goodgun.main_function
 
 import android.annotation.SuppressLint
 import android.app.Dialog
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.example.goodgun.R
 import com.example.goodgun.databinding.ActivitySolutionBinding
-import com.example.goodgun.databinding.FragmentSolutionBinding
 import com.example.goodgun.network.NetworkManager
 import com.example.goodgun.network.model.Nutrition
 import com.example.goodgun.util.LoadingDialog
@@ -24,12 +16,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class SolutionActivity : AppCompatActivity() {
-    private lateinit var viewPager:ViewPager2
-    private lateinit var adapter:SolutionVPAdapter
-    private lateinit var binding:ActivitySolutionBinding
+    private lateinit var viewPager: ViewPager2
+    private lateinit var adapter: SolutionVPAdapter
+    private lateinit var binding: ActivitySolutionBinding
     private lateinit var loadingDialog: Dialog
     private val fragmentTexts = mutableListOf<String>()
-    private var response:String = ""
+    private var response: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +40,7 @@ class SolutionActivity : AppCompatActivity() {
         adapter = SolutionVPAdapter(supportFragmentManager, lifecycle)
         viewPager.adapter = adapter
 
-        binding.backBtn.setOnClickListener{
+        binding.backBtn.setOnClickListener {
             finish()
         }
     }
@@ -66,7 +58,6 @@ class SolutionActivity : AppCompatActivity() {
     fun tokenizeString(str: String) {
         str.split("1.", "2.", "3.", "4.", "5.", "6.", "7.").toCollection(fragmentTexts)
         fragmentTexts.removeAt(0)
-            Log.d("Checking OPENAI", "Hi from SolutionActivity: $str")
+        Log.d("Checking OPENAI", "Hi from SolutionActivity: $str")
     }
-
 }

@@ -19,7 +19,7 @@ data class Nutrition(
     )
 
     private val arr1: List<String> = listOf("탄수화물", "당류", "지방", "트랜스지방", "포화지방", "단백질", "나트륨", "콜레스테롤")
-    private val arr2: List<String> = listOf("carbohydrates", "sugar","fats", "trans_fat", "saturated_fat", "proteins", "sodium", "cholesterol")
+    private val arr2: List<String> = listOf("carbohydrates", "sugar", "fats", "trans_fat", "saturated_fat", "proteins", "sodium", "cholesterol")
 
     /*case 1: 음식 추천, 2: 솔루션 */
     fun getQuestion(case: Int): String? {

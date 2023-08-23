@@ -54,7 +54,7 @@ class DirectInputFragment : DialogFragment() {
     }
 
     private fun performSearch() {
-        //model.testset("test")
+        // model.testset("test")
     }
 
     override fun onDismiss(dialog: DialogInterface) {

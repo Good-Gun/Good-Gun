@@ -92,7 +92,6 @@ class AdditionalInfoActivity : AppCompatActivity() {
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-
             }
         }
         exFreqList = arrayListOf("거의 안함", "1회 이하", "2 ~ 3회", "4 ~ 5 회", "6회 이상")
@@ -123,7 +122,7 @@ class AdditionalInfoActivity : AppCompatActivity() {
                 parent: AdapterView<*>?,
                 view: View,
                 position: Int,
-                id: Long
+                id: Long,
             ) {
                 selectedGoalPosition = position
             }
@@ -189,32 +188,31 @@ class AdditionalInfoActivity : AppCompatActivity() {
             val height = binding.heightInput.text.toString()
             val age = binding.ageInput.text.toString()
 
-            if(isStringConvertibleToInt(height))
+            if (isStringConvertibleToInt(height)) {
                 userRef.child("u_height").setValue(height)
-            else{
+            } else {
                 Toast.makeText(this, "키를 올바르게 입력해주세요", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            if(isStringConvertibleToInt(weight))
+            if (isStringConvertibleToInt(weight)) {
                 userRef.child("u_weight").setValue(weight)
-            else {
+            } else {
                 Toast.makeText(this, "몸무게를 올바르게 입력해주세요", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            if(isStringConvertibleToInt(age))
+            if (isStringConvertibleToInt(age)) {
                 userRef.child("u_age").setValue(age)
-            else{
+            } else {
                 Toast.makeText(this, "나이를 올바르게 입력해주세요", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
-
             }
             var allergies = binding.allergyInput.text.toString().split(", ")
             allergies = allergies.dropLast(1)
             userRef.child("u_allergy").setValue(allergies)
             userRef.child("u_exercise_freq").setValue((selectedFreqPosition + 1).toString())
-            userRef.child("u_exercise_type").setValue((selectedTypePosition +1).toString())
-            userRef.child("u_physical_goals").setValue((selectedGoalPosition +1).toString())
+            userRef.child("u_exercise_type").setValue((selectedTypePosition + 1).toString())
+            userRef.child("u_physical_goals").setValue((selectedGoalPosition + 1).toString())
 
             ApplicationClass.updateUserInfo()
             startActivity(Intent(this, MainActivity::class.java))
