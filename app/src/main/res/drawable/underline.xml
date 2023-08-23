@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 텍스트의 밑에 선을 그립니다. -->
+    <item android:left="-2dp" android:right="-2dp" android:top="37dp" android:bottom="2dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#000000" /> <!-- 밑줄의 색상을 원하는 색상으로 변경할 수 있습니다. -->
+        </shape>
+    </item>
+</layer-list>
