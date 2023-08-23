@@ -9,21 +9,28 @@
     <LinearLayout
         android:id="@+id/scan_navbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/scan_scroll">
+        app:layout_constraintBottom_toTopOf="@+id/scan_scroll"
+        android:gravity="center_vertical"
+        >
 
         <Button
             android:id="@+id/backBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="뒤로 가기"/>
+            android:layout_width="20dp"
+            android:layout_height="15dp"
+            android:background="@drawable/arrow_left"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textStyle="bold"
             android:text="스캔 목록"/>
 
     </LinearLayout>
@@ -39,6 +46,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
             android:orientation="vertical">
 
             <LinearLayout
@@ -46,7 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="@color/purple_200"
+                android:background="@drawable/round_white_border"
                 android:layout_margin="10dp"
                 android:padding="15dp">
 
@@ -61,12 +69,7 @@
 
                 </ScrollView>
 
-                <Button
-                    android:id="@+id/directAdd"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="직접 추가"
-                    android:layout_gravity="center"/>
+
                 <Button
                     android:id="@+id/dbCheck"
                     android:layout_width="wrap_content"
@@ -74,20 +77,36 @@
                     android:text="룸DB 아이템 확인"
                     android:layout_gravity="center"/>
 
+                <Button
+                    app:backgroundTint="@null"
+                    android:id="@+id/directAdd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_round_gray"
+                    android:textSize="15sp"
+                    android:text="직접 추가"
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"
+
+                    />
+
+
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/scan_sum"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="@color/bright_grey"
+                android:background = "@drawable/button_round_gray"
                 android:layout_margin="10dp"
                 android:padding="20dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="15dp"
+                    android:textSize="25dp"
+                    android:textStyle="bold"
                     android:text="합계"
                     android:layout_marginBottom="10dp"/>
 
@@ -95,15 +114,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:background="@color/white"
+                    android:background="@drawable/button_round_white"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
+
                     android:padding="10dp">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textStyle="bold"
                         android:text="열량"
                         android:gravity="center"/>
                     <View
@@ -115,6 +136,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textStyle="bold"
                         android:text="1756"
                         android:gravity="center"/>
 
@@ -123,7 +145,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:background="@color/white"
+                    android:background="@drawable/button_round_white"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:padding="10dp">
@@ -132,7 +154,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="탄수화문"
+                        android:textStyle="bold"
+                        android:text="탄수화물"
                         android:gravity="center"/>
                     <View
                         android:layout_width="0dp"
@@ -144,6 +167,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="2000"
+                        android:textStyle="bold"
                         android:gravity="center"/>
 
                 </LinearLayout>
@@ -151,7 +175,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:background="@color/white"
+                    android:background="@drawable/button_round_white"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:padding="10dp">
@@ -161,6 +185,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="당류"
+                        android:textStyle="bold"
                         android:gravity="center"/>
                     <View
                         android:layout_width="0dp"
@@ -172,6 +197,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="1321412"
+                        android:textStyle="bold"
                         android:gravity="center"/>
 
                 </LinearLayout>
@@ -179,7 +205,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:background="@color/white"
+                    android:background="@drawable/button_round_white"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:padding="10dp">
@@ -189,6 +215,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="단백질"
+                        android:textStyle="bold"
                         android:gravity="center"/>
                     <View
                         android:layout_width="0dp"
@@ -200,6 +227,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="20"
+                        android:textStyle="bold"
                         android:gravity="center"/>
 
                 </LinearLayout>
@@ -207,7 +235,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:background="@color/white"
+                    android:background="@drawable/button_round_white"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:padding="10dp">
@@ -217,6 +245,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="지방"
+                        android:textStyle="bold"
                         android:gravity="center"/>
                     <View
                         android:layout_width="0dp"
@@ -228,6 +257,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="20"
+                        android:textStyle="bold"
                         android:gravity="center"/>
 
                 </LinearLayout>
@@ -235,7 +265,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:background="@color/white"
+                    android:background="@drawable/button_round_white"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:padding="10dp">
@@ -245,6 +275,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="트랜스지방"
+                        android:textStyle="bold"
                         android:gravity="center"/>
                     <View
                         android:layout_width="0dp"
@@ -256,6 +287,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="20"
+                        android:textStyle="bold"
                         android:gravity="center"/>
 
                 </LinearLayout>
@@ -263,7 +295,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:background="@color/white"
+                    android:background="@drawable/button_round_white"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:padding="10dp">
@@ -273,6 +305,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="포화지방"
+                        android:textStyle="bold"
                         android:gravity="center"/>
                     <View
                         android:layout_width="0dp"
@@ -284,6 +317,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="20"
+                        android:textStyle="bold"
                         android:gravity="center"/>
 
                 </LinearLayout>
@@ -291,7 +325,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:background="@color/white"
+                    android:background="@drawable/button_round_white"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:padding="10dp">
@@ -301,6 +335,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="콜레스테롤"
+                        android:textStyle="bold"
                         android:gravity="center"/>
                     <View
                         android:layout_width="0dp"
@@ -312,6 +347,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="20"
+                        android:textStyle="bold"
                         android:gravity="center"/>
 
                 </LinearLayout>

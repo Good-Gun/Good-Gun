@@ -171,7 +171,7 @@ object NetworkManager : NetworkInterface {
     override suspend fun callAI(question: String): String = withContext(Dispatchers.IO) {
         val openAI = OpenAI(
             token = BuildConfig.SAMPLE_API_KEY,
-            timeout = Timeout(socket = 120.seconds),
+            timeout = Timeout(socket = 200.seconds),
             // additional configurations...
         )
 

@@ -13,7 +13,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:orientation="horizontal"
-
         >
 
         <ImageButton
@@ -50,12 +49,14 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="match_parent"
+        android:layout_width="70dp"
+        android:gravity="center"
         android:layout_height="wrap_content"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
+
+        android:background="@drawable/button_round_gray"
         android:textSize="16dp"
         android:textStyle="bold"
         android:text="계정정보" />
@@ -77,7 +78,7 @@
             android:text="이름" />
 
         <EditText
-            android:id="@+id/editTextText2"
+            android:id="@+id/profile_nameInput"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -103,7 +104,7 @@
             android:text="아이디" />
 
         <EditText
-            android:id="@+id/editTextText3"
+            android:id="@+id/profile_idInput"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -129,7 +130,7 @@
             android:text="비밀번호" />
 
         <EditText
-            android:id="@+id/editTextText4"
+            android:id="@+id/profile_pwInput"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -141,15 +142,15 @@
 
     <TextView
         android:id="@+id/textView5"
-        android:layout_width="match_parent"
+        android:layout_width="70dp"
+        android:gravity="center"
         android:layout_height="wrap_content"
-
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
-        android:layout_marginTop="36dp"
-        android:layout_marginBottom="15dp"
+        android:layout_marginTop="5dp"
         android:textSize="16dp"
         android:textStyle="bold"
+        android:background="@drawable/button_round_gray"
         android:text="건강정보" />
 
     <LinearLayout
@@ -169,7 +170,7 @@
             android:text="키" />
 
         <EditText
-            android:id="@+id/editTextText6"
+            android:id="@+id/profile_heightInput"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -195,7 +196,7 @@
             android:text="몸무게" />
 
         <EditText
-            android:id="@+id/editTextText7"
+            android:id="@+id/profile_weightInput"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -204,6 +205,7 @@
             android:gravity="center"
             android:text="144 kg" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -221,97 +223,109 @@
             android:text="나이" />
 
         <EditText
-            android:id="@+id/editTextText8"
+            android:id="@+id/profile_ageInput"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
             android:inputType="text"
             android:gravity="center"
-
-            android:text="만 23" />
+            />
     </LinearLayout>
     <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:layout_marginLeft="25dp"
-    android:layout_marginRight="25dp"
-    >
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        >
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:text="알레르기" />
+
+        <EditText
+            android:id="@+id/profile_allergy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="text"
+            android:gravity="center"
+            android:text="갑각류, 알밥" />
+    </LinearLayout>
+    <TextView
+        android:id="@+id/workTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:text="운동횟수 (일주일)"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@drawable/button_round_gray"
+        android:layout_marginTop="10dp"
+
+        android:padding="10dp"
+        >
+
+        <Spinner
+            android:id="@+id/profile_exTypeSpinner"
+            android:background="@drawable/spinner_border_layout"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            />
+
+        <Spinner
+            android:id="@+id/profile_exFreqSpinner"
+            android:background="@drawable/spinner_border_layout"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            />
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/textView9"
-        android:layout_width="20dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textStyle="bold"
-        android:text="알레르기" />
-
-    <EditText
-        android:id="@+id/editTextText9"
+        android:id="@+id/goalTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:ems="10"
-        android:inputType="text"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:text="건강 목표"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        />
+
+    <Spinner
+        android:id="@+id/profile_GoalSpinner"
+        android:layout_gravity="center"
+
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/spinner_border_layout"
+        android:textStyle="bold"
+        android:textColor="@color/colorWhite"
         android:gravity="center"
-        android:text="갑각류, 알밥" />
-</LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
-        >
+        android:text="ex) 체중관리 ▼" />
 
-        <TextView
-            android:id="@+id/textView10"
-            android:layout_width="20dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textStyle="bold"
-            android:text="운동 횟수" />
-
-        <EditText
-            android:id="@+id/editTextText10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="text"
-            android:gravity="center"
-            android:text="주 5회" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
-        >
-
-        <TextView
-            android:id="@+id/textView11"
-            android:layout_width="20dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textStyle="bold"
-            android:text="건강 목표" />
-
-        <EditText
-            android:id="@+id/editTextText11"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="text"
-            android:gravity="center"
-            android:text="체형 유지" />
-
-
-
-</LinearLayout>
 
     <LinearLayout
         android:layout_marginTop="30dp"
@@ -322,7 +336,7 @@
         >
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/logOutBtn"
+            android:id="@+id/profile_fixBtn"
             android:layout_gravity="center"
             android:layout_margin="13dp"
             android:layout_width="100dp"
@@ -331,10 +345,10 @@
             android:textStyle="bold"
             android:textColor="@color/colorWhite"
             android:gravity="center"
-            android:text="시작하기" />
+            android:text="수정" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/withDrawBtn"
+            android:id="@+id/profile_LogoutBtn"
             android:layout_gravity="center"
             android:layout_margin="13dp"
             android:layout_width="100dp"
@@ -343,7 +357,7 @@
             android:textStyle="bold"
             android:textColor="@color/colorWhite"
             android:gravity="center"
-            android:text="회원탈퇴" />
+            android:text="로그아웃" />
 
     </LinearLayout>
 
