@@ -126,14 +126,14 @@ class ScanInfomation : AppCompatActivity() {
             var tmpsaturated_fat = 0.0
             var tmpcholesterol = 0.0
             for (food in allfood) {
-                tmpcalory += food.calory
-                tmpcarbohydrates += food.carbohydrates
-                tmpsugar += food.sugar
-                tmpprotein += food.protein
-                tmpfat += food.fat
-                tmptrans_fat += food.trans_fat
-                tmpsaturated_fat += food.saturated_fat
-                tmpcholesterol += food.cholesterol
+                tmpcalory += food.calory ?: 0.0
+                tmpcarbohydrates += food.carbohydrates ?: 0.0
+                tmpsugar += food.sugar ?: 0.0
+                tmpprotein += food.protein ?: 0.0
+                tmpfat += food.fat ?: 0.0
+                tmptrans_fat += food.trans_fat ?: 0.0
+                tmpsaturated_fat += food.saturated_fat ?: 0.0
+                tmpcholesterol += food.cholesterol ?: 0.0
             }
 
             withContext(Dispatchers.Main) {

@@ -10,14 +10,14 @@ data class FoodEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
     val name: String = "none",
-    var calory: Double = 0.0,
-    var carbohydrates: Double = 0.0,
-    var sugar: Double = 0.0,
-    var protein: Double = 0.0,
-    var fat: Double = 0.0,
-    var trans_fat: Double = 0.0,
-    var saturated_fat: Double = 0.0,
-    var cholesterol: Double = 0.0,
+    var calory: Double? = 0.0,
+    var carbohydrates: Double? = 0.0,
+    var sugar: Double? = 0.0,
+    var protein: Double? = 0.0,
+    var fat: Double? = 0.0,
+    var trans_fat: Double? = 0.0,
+    var saturated_fat: Double? = 0.0,
+    var cholesterol: Double? = 0.0,
     val registerDate: String = LocalDate.now().toString(),
     val registerTime: String = LocalTime.now().toString(),
 ) {
@@ -27,5 +27,7 @@ data class FoodEntity(
     constructor() : this(0, "기본 생성자", 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, LocalDate.now().toString(), LocalTime.now().toString())
     constructor(name: String) : this(0, name, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, LocalDate.now().toString(), LocalTime.now().toString())
 
-    constructor(name: String, calory: Double, carbohydrates: Double, sugar: Double, protein: Double, fat: Double, trans_fat: Double, saturated_fat: Double, cholesterol: Double) : this(0, name, calory, carbohydrates, sugar, protein, fat, trans_fat, saturated_fat, cholesterol, LocalDate.now().toString(), LocalTime.now().toString())
+    constructor(name: String, calory: Double?, carbohydrates: Double?, sugar: Double?, protein: Double?, fat: Double?, trans_fat: Double?, saturated_fat: Double?, cholesterol: Double?)
+            : this(0, name, calory, carbohydrates, sugar, protein, fat, trans_fat, saturated_fat, cholesterol, LocalDate.now().toString(), LocalTime.now().toString())
+
 }

@@ -77,14 +77,14 @@ class DirectInputFragment : DialogFragment() {
                 GlobalScope.launch(Dispatchers.IO) {
                     val selectFood = FoodEntity(
                         data.foodName,
-                        data.calory.toDouble(),
-                        data.carbohydrates.toDouble(),
-                        data.sugar.toDouble(),
-                        data.protein.toDouble(),
-                        data.fat.toDouble(),
-                        data.trans_fat.toDouble(),
-                        data.saturated_fat.toDouble(),
-                        data.cholesterol.toDouble(),
+                        data.calory?.toDoubleOrNull()?:0.0,
+                        data.carbohydrates?.toDoubleOrNull()?:0.0,
+                        data.sugar?.toDoubleOrNull()?:0.0,
+                        data.protein?.toDoubleOrNull()?:0.0,
+                        data.fat?.toDoubleOrNull()?:0.0,
+                        data.trans_fat?.toDoubleOrNull()?:0.0,
+                        data.saturated_fat?.toDoubleOrNull()?:0.0,
+                        data.cholesterol?.toDoubleOrNull()?:0.0,
                     )
                     model.setfood(selectFood)
                     withContext(Dispatchers.Main) {
