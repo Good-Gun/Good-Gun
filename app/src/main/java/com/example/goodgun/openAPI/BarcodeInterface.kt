@@ -6,9 +6,9 @@ import retrofit2.http.Path
 
 interface BarcodeInterface {
 
-    @GET("api/{keyId}/I2570/json/1/1/BRCD_NO={BRCD_NO}")
+    @GET("api/{keyId}/C005/json/1/1/BAR_CD={BAR_CD}")
     fun getBarcodeInfo(
         @Path("keyId") keyId: String,
-        @Path("BRCD_NO") BRCD_NO: String,
+        @Path("BAR_CD") BAR_CD: String,
     ): Call<BarcodeList>
 }

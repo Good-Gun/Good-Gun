@@ -3,7 +3,7 @@ package com.example.goodgun.openAPI
 import com.google.gson.annotations.SerializedName
 
 data class BarcodeList(
-    @SerializedName("I2570") val barcodeResult: BarcodeDto,
+    @SerializedName("C005") val barcodeResult: BarcodeDto,
 )
 
 data class BarcodeDto(
@@ -11,5 +11,5 @@ data class BarcodeDto(
     @SerializedName("row") val barcodeDto: List<BarcodeItem>,
 )
 data class BarcodeItem(
-    @SerializedName("PRDT_NM") val productName: String,
+    @SerializedName("PRDLST_NM") val productName: String,
 )
