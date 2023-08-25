@@ -31,10 +31,10 @@ import java.util.Locale
 import java.util.concurrent.ExecutorService
 
 class CameraActivity : AppCompatActivity() {
-    val binding: ActivityCameraBinding by lazy {
+    private val binding: ActivityCameraBinding by lazy {
         ActivityCameraBinding.inflate(layoutInflater)
     }
-    var image: ImageCapture? = null
+    private var image: ImageCapture? = null
     private lateinit var outputDirectory: File
     private lateinit var cameraProvider: ProcessCameraProvider
     private lateinit var camera: Camera
@@ -54,6 +54,7 @@ class CameraActivity : AppCompatActivity() {
         checkPermissions()
 //        permissionCheck()
     }
+
     private fun initLayout() {
         outputDirectory = getOutputDirectory()
         setCameraAnimationListener()
