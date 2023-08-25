@@ -248,15 +248,18 @@
             android:textStyle="bold"
             android:text="알레르기" />
 
-        <EditText
+        <MultiAutoCompleteTextView
             android:id="@+id/profile_allergy"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:completionThreshold="1"
+            android:textSize="10sp"
             android:ems="10"
             android:inputType="text"
             android:gravity="center"
-            android:text="갑각류, 알밥" />
+            android:singleLine="false" />
+
     </LinearLayout>
     <TextView
         android:id="@+id/workTextView"
