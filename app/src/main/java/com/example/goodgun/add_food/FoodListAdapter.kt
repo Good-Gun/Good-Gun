@@ -9,7 +9,7 @@ import com.example.goodgun.roomDB.FoodEntity
 
 class FoodListAdapter(val items: ArrayList<FoodEntity>) : RecyclerView.Adapter<FoodListAdapter.ViewHolder>() {
 
-    val itemClickListener: OnItemClickListener? = null
+    var itemClickListener: OnItemClickListener? = null
     interface OnItemClickListener {
         fun onItemClick(holder: ViewHolder, position: Int)
     }

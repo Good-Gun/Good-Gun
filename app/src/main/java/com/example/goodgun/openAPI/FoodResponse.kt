@@ -8,6 +8,7 @@ data class FoodList(
 
 data class FoodDto(
     @SerializedName("row") val food: List<FoodItem>,
+    @SerializedName("total_count") val count: Int,
 )
 
 data class FoodItem(
