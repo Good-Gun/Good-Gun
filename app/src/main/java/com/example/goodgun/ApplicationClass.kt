@@ -1,6 +1,7 @@
 package com.example.goodgun
 
 import android.app.Application
+import android.content.SharedPreferences
 import android.util.Log
 import com.example.goodgun.network.NetworkManager
 import com.example.goodgun.network.model.Nutrition
@@ -14,6 +15,9 @@ import kotlinx.coroutines.withContext
 
 class ApplicationClass : Application() {
     companion object {
+        lateinit var sharedPreferences: SharedPreferences
+        lateinit var pref_edit: SharedPreferences.Editor
+
         lateinit var uid: String
         lateinit var email: String
         var uname: String = ""
@@ -34,9 +38,7 @@ class ApplicationClass : Application() {
                 email = currentUser.email!!
 
                 CoroutineScope(Dispatchers.Main).launch {
-                    withContext(Dispatchers.IO) {
-                        user = NetworkManager.getUserData()
-                    }
+                    user = NetworkManager.getUserData()
                     uname = user.u_name
                     Log.d("Login Check", "userSnapshot key = ${user.u_name}")
                     calculateMaxNut()
@@ -71,6 +73,7 @@ class ApplicationClass : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        updateUserInfo()
+        sharedPreferences = applicationContext.getSharedPreferences("GoodGun", MODE_PRIVATE)
+        pref_edit = sharedPreferences.edit()
     }
 }

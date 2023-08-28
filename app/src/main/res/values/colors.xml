@@ -22,6 +22,7 @@
     <color name="graph">#54FD66</color>
     <color name="bright_grey">#FFEEEEEE</color>
     <color name="dark_grey">#FFa1a1a1</color>
+    <color name="extra_grey">#5E5E5E</color>
     <color name="green">#FF006710</color>
 
     <color name="theme1">#FF354AFF</color>
