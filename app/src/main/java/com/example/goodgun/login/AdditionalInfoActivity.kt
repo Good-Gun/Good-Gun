@@ -75,6 +75,23 @@ class AdditionalInfoActivity : AppCompatActivity() {
 
         setContentView(binding.root)
     }
+    fun getAssetsTextArray(mContext: Context, fileName: String): Array<String> {
+        val lines = mutableListOf<String>()
+        val reader: BufferedReader
+        try {
+            reader = BufferedReader(
+                InputStreamReader(mContext.resources.assets.open("$fileName.txt")),
+            )
+            var str: String?
+            while (reader.readLine().also { str = it } != null) {
+                lines.add(str!!)
+            }
+            reader.close()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        return lines.toTypedArray()
+    }
 
     private fun initSpinners() {
         exTypeList = arrayListOf("무산소 운동", "유산소 운동", "둘 다")
@@ -133,23 +150,7 @@ class AdditionalInfoActivity : AppCompatActivity() {
         }
     }
 
-    fun getAssetsTextArray(mContext: Context, fileName: String): Array<String> {
-        val lines = mutableListOf<String>()
-        val reader: BufferedReader
-        try {
-            reader = BufferedReader(
-                InputStreamReader(mContext.resources.assets.open("$fileName.txt")),
-            )
-            var str: String?
-            while (reader.readLine().also { str = it } != null) {
-                lines.add(str!!)
-            }
-            reader.close()
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-        return lines.toTypedArray()
-    }
+
     private fun loadAdditionalInfo(currentUser: FirebaseUser?) {
         if (currentUser != null) {
             val uid = currentUser.uid

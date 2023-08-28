@@ -74,6 +74,7 @@
         android:gravity="center">
 
         <android.widget.Button
+            android:id="@+id/cancel_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/gray_button"
@@ -82,6 +83,7 @@
             android:layout_width="100dp"
             android:layout_height="0dp"/>
         <android.widget.Button
+            android:id="@+id/ok_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/ivory_button"

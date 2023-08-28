@@ -1,10 +1,13 @@
 package com.example.goodgun
 
+import android.R
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.MultiAutoCompleteTextView
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -16,7 +19,9 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.GenericTypeIndicator
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import kotlin.properties.Delegates
+import java.io.BufferedReader
+import java.io.IOException
+import java.io.InputStreamReader
 
 class ProfileFragment : Fragment() {
     private val auth = Firebase.auth
@@ -29,9 +34,9 @@ class ProfileFragment : Fragment() {
     private lateinit var exFreqSpinnerAdapter: CustomSpinnerAdapter
     private lateinit var goalSpinnerAdapter: CustomSpinnerAdapter
 
-    private var selectedTypePosition by Delegates.notNull<Int>()
-    private var selectedFreqPosition by Delegates.notNull<Int>()
-    private var selectedGoalPosition by Delegates.notNull<Int>()
+    private var selectedTypePosition :Int = 0
+    private var selectedFreqPosition :Int = 0
+    private var selectedGoalPosition :Int = 0
 
     private var exTypeList: List<String> = ArrayList()
     private var exFreqList: List<String> = ArrayList()
@@ -49,12 +54,49 @@ class ProfileFragment : Fragment() {
         return binding.root
     }
 
+    fun getAssetsTextArray(mContext: ProfileFragment, fileName: String): Array<String> {
+        val lines = mutableListOf<String>()
+        val reader: BufferedReader
+        try {
+            reader = BufferedReader(
+                InputStreamReader(mContext.resources.assets.open("$fileName.txt")),
+            )
+            var str: String?
+            while (reader.readLine().also { str = it } != null) {
+                lines.add(str!!)
+            }
+            reader.close()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        return lines.toTypedArray()
+    }
+
     private fun initLayout() {
+        // 알레르기 멀티 검색바
+        var items = getAssetsTextArray(this, "allergies")
+        var multiAutoCompleteTextView = binding.profileAllergy
+        var adapter = ArrayAdapter<String>(requireContext(), R.layout.simple_dropdown_item_1line, items)
+        multiAutoCompleteTextView.setAdapter(adapter)
+        multiAutoCompleteTextView.setTokenizer(MultiAutoCompleteTextView.CommaTokenizer())
+        multiAutoCompleteTextView.setOnFocusChangeListener { v, hasFocus ->
+            if (hasFocus) {
+                multiAutoCompleteTextView.showDropDown()
+            }
+        }
+        multiAutoCompleteTextView.setOnClickListener {
+            multiAutoCompleteTextView.showDropDown()
+        }
         binding.apply {
             loadProfileInfo(currentUser)
         }
         binding.profileFixBtn.setOnClickListener {
             uploadData(currentUser)
+            Toast.makeText(this.requireContext(),"회원정보가 수정되었습니다.", Toast.LENGTH_SHORT).show()
+//            requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
+//            requireActivity().supportFragmentManager.popBackStack()
+            //프래그먼트 종료하는게 아닌가 보네?
+
         }
     }
 
@@ -96,8 +138,8 @@ class ProfileFragment : Fragment() {
         var allergies = binding.profileAllergy.text.toString().split(", ")
         allergies = allergies.dropLast(1)
         userRef.child("u_allergy").setValue(allergies)
-        userRef.child("u_exercise_freq").setValue((selectedFreqPosition + 1).toString())
         userRef.child("u_exercise_type").setValue((selectedTypePosition + 1).toString())
+        userRef.child("u_exercise_freq").setValue((selectedFreqPosition + 1).toString())
         userRef.child("u_physical_goals").setValue((selectedGoalPosition + 1).toString())
         ApplicationClass.updateUserInfo()
     }
@@ -114,9 +156,10 @@ class ProfileFragment : Fragment() {
                 position: Int,
                 id: Long,
             ) {
+                selectedTypePosition = position
             }
-
             override fun onNothingSelected(parent: AdapterView<*>?) {
+                selectedTypePosition = typePos
                 exTypeSpinner.setSelection(typePos)
             }
         }
@@ -131,9 +174,11 @@ class ProfileFragment : Fragment() {
                 position: Int,
                 id: Long,
             ) {
+                selectedFreqPosition = position
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
+                selectedFreqPosition = freqPos
                 exFreqSpinner.setSelection(freqPos)
             }
         }
@@ -149,10 +194,10 @@ class ProfileFragment : Fragment() {
                 position: Int,
                 id: Long,
             ) {
-                TODO("Not yet implemented")
+                selectedGoalPosition = position
             }
-
             override fun onNothingSelected(parent: AdapterView<*>?) {
+                selectedGoalPosition = goalPos
                 goalSpinner.setSelection(goalPos)
             }
         }
@@ -197,6 +242,7 @@ class ProfileFragment : Fragment() {
                     binding.profileAgeInput.setText(uAge)
                     binding.profileAllergy.setText(result)
                     initSpinners(uExTypePos, uExFreqPos, uExGoalPos)
+
                 }
             }
         } else {

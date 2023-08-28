@@ -42,13 +42,13 @@ android {
     }
     //11 -> 17로 변경
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     //11 -> 17로 변경
     kotlinOptions {
-        jvmTarget = '11'
+        jvmTarget = '17'
     }
 
     viewBinding{
@@ -119,4 +119,7 @@ dependencies {
 
     // viewmodel
     implementation 'androidx.fragment:fragment-ktx:1.5.7'
+
+    //ViewPager2
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
 }

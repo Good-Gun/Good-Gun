@@ -3,6 +3,7 @@ package com.example.goodgun.add_food.direct_add
 
 import android.app.AlertDialog
 import android.app.Dialog
+import android.app.ProgressDialog
 import android.content.ContentValues
 import android.content.DialogInterface
 import android.os.Bundle
@@ -20,6 +21,7 @@ import com.example.goodgun.openAPI.FoodClient
 import com.example.goodgun.openAPI.FoodItem
 import com.example.goodgun.openAPI.FoodList
 import com.example.goodgun.roomDB.FoodEntity
+import com.example.goodgun.util.LoadingDialog
 import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -33,6 +35,8 @@ class DirectInputFragment : DialogFragment() {
     val model: FoodViewModel by activityViewModels()
 
     lateinit var adapter: SearchAdapter
+
+    private lateinit var loadingDialog: Dialog // 로딩창 클래스
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         _binding = FragmentDirectInputBinding.inflate(layoutInflater)
@@ -58,6 +62,8 @@ class DirectInputFragment : DialogFragment() {
         initRecyclerView()
         initBtn()
 
+        loadingDialog = LoadingDialog(requireContext())
+
         return dialog
     }
 
@@ -71,14 +77,14 @@ class DirectInputFragment : DialogFragment() {
                 GlobalScope.launch(Dispatchers.IO) {
                     val selectFood = FoodEntity(
                         data.foodName,
-                        data.calory.toDouble(),
-                        data.carbohydrates.toDouble(),
-                        data.sugar.toDouble(),
-                        data.protein.toDouble(),
-                        data.fat.toDouble(),
-                        data.trans_fat.toDouble(),
-                        data.saturated_fat.toDouble(),
-                        data.cholesterol.toDouble(),
+                        data.calory?.toDoubleOrNull()?:0.0,
+                        data.carbohydrates?.toDoubleOrNull()?:0.0,
+                        data.sugar?.toDoubleOrNull()?:0.0,
+                        data.protein?.toDoubleOrNull()?:0.0,
+                        data.fat?.toDoubleOrNull()?:0.0,
+                        data.trans_fat?.toDoubleOrNull()?:0.0,
+                        data.saturated_fat?.toDoubleOrNull()?:0.0,
+                        data.cholesterol?.toDoubleOrNull()?:0.0,
                     )
                     model.setfood(selectFood)
                     withContext(Dispatchers.Main) {
@@ -108,6 +114,8 @@ class DirectInputFragment : DialogFragment() {
         binding.apply {
             editTextSearch.setOnEditorActionListener { _, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    loadingDialog = LoadingDialog(requireContext())
+                    loadingDialog.show()
                     performSearch()
                     true
                 } else {
@@ -115,6 +123,7 @@ class DirectInputFragment : DialogFragment() {
                 }
             }
             searchBtn.setOnClickListener {
+                loadingDialog.show()
                 performSearch()
             }
         }
@@ -127,6 +136,7 @@ class DirectInputFragment : DialogFragment() {
         if (searchtext == "") {
             binding.emptyTextView.visibility = View.VISIBLE
             binding.searchRecyclerView.visibility = View.GONE
+            loadingDialog.dismiss()
         } else {
             CoroutineScope(Dispatchers.IO).launch {
                 FoodName(searchtext)
@@ -148,6 +158,7 @@ class DirectInputFragment : DialogFragment() {
                             val foodList = foodDto?.food ?: emptyList()
                             adapter.setData(foodList)
                             checkRecyclerViewIsEmpty()
+                            loadingDialog.dismiss()
                         }
                     }
                 }
