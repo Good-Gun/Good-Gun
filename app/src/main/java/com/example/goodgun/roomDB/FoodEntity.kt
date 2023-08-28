@@ -29,3 +29,11 @@ data class FoodEntity(
 
     constructor(name: String, calory: Double, carbohydrates: Double, sugar: Double, protein: Double, fat: Double, trans_fat: Double, saturated_fat: Double, cholesterol: Double) : this(0, name, calory, carbohydrates, sugar, protein, fat, trans_fat, saturated_fat, cholesterol, LocalDate.now().toString(), LocalTime.now().toString())
 }
+
+@Entity(tableName="solution")
+data class Solution(
+    val id:Int = 0,
+    val str:String = ""
+){
+    constructor(str:String) : this(0, str)
+}

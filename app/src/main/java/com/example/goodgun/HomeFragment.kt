@@ -1,5 +1,6 @@
 package com.example.goodgun
 
+import android.animation.ValueAnimator
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
@@ -108,6 +109,7 @@ class HomeFragment : Fragment() {
                 startActivity(intent)
             }
         }
+
     }
 
     private fun initRV() {
@@ -144,16 +146,19 @@ class HomeFragment : Fragment() {
 
     /*프로그래스 및 기타 정보 수정*/
     private fun setData() {
+
+
         val max = ApplicationClass.maxNutrition
         val nutrition = nutritionResponse.nutrition
         binding!!.apply {
             /*tvHomeName.text = ApplicationClass.uname*/
 
-            pbHomeCalorie.setProgress((nutrition.calorie / 2000.0 * 100.0).toInt())
-            tvHomeCalorie.text = nutrition.calorie.toString() + "/" + max.calorie.toString()
-            tvHomeCarbohydrates.text = nutrition.carbohydrates.toString() + "/" + max.carbohydrates.toString()
-            tvHomeProteins.text = nutrition.protein.toString() + "/" + max.protein.toString()
-            tvHomeFat.text = nutrition.fat.toString() + "/" + max.fat.toString()
+            //pbHomeCalorie.progress = (nutrition.calorie / 2000.0 * 100.0).toFloat()
+            tvHomeCalorie1.text = nutrition.calorie.toString()
+            tvHomeCalorie2.text = "/" + max.calorie.toString()
+            tvHomeCarbohydrates.text = nutrition.carbohydrates.toString() + " / " + max.carbohydrates.toString()
+            tvHomeProteins.text = nutrition.protein.toString() + " / " + max.protein.toString()
+            tvHomeFat.text = nutrition.fat.toString() + " / " + max.fat.toString()
         }
         loadingDialog.dismiss()
     }
