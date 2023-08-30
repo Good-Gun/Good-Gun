@@ -19,6 +19,8 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.GenericTypeIndicator
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import okhttp3.internal.notify
+import okhttp3.internal.notifyAll
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
@@ -34,9 +36,13 @@ class ProfileFragment : Fragment() {
     private lateinit var exFreqSpinnerAdapter: CustomSpinnerAdapter
     private lateinit var goalSpinnerAdapter: CustomSpinnerAdapter
 
-    private var selectedTypePosition :Int = 0
-    private var selectedFreqPosition :Int = 0
-    private var selectedGoalPosition :Int = 0
+    private var uExTypePos :Int = 1
+    private var uExFreqPos :Int = 1
+    private var uExGoalPos :Int = 1
+
+    private var selectedTypePosition :Int = 1
+    private var selectedFreqPosition :Int = 1
+    private var selectedGoalPosition :Int = 1
 
     private var exTypeList: List<String> = ArrayList()
     private var exFreqList: List<String> = ArrayList()
@@ -53,6 +59,8 @@ class ProfileFragment : Fragment() {
         initLayout()
         return binding.root
     }
+
+
 
     fun getAssetsTextArray(mContext: ProfileFragment, fileName: String): Array<String> {
         val lines = mutableListOf<String>()
@@ -93,10 +101,6 @@ class ProfileFragment : Fragment() {
         binding.profileFixBtn.setOnClickListener {
             uploadData(currentUser)
             Toast.makeText(this.requireContext(),"회원정보가 수정되었습니다.", Toast.LENGTH_SHORT).show()
-//            requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
-//            requireActivity().supportFragmentManager.popBackStack()
-            //프래그먼트 종료하는게 아닌가 보네?
-
         }
     }
 
@@ -145,10 +149,14 @@ class ProfileFragment : Fragment() {
     }
 
     private fun initSpinners(typePos: Int, freqPos: Int, goalPos: Int) {
+        println("==========" + typePos.toString()+ freqPos.toString()+ goalPos.toString())
         exTypeList = arrayListOf("무산소 운동", "유산소 운동", "둘 다")
         exTypeSpinnerAdapter = CustomSpinnerAdapter(this.requireContext(), exTypeList)
         exTypeSpinner = binding.profileExTypeSpinner
+
+        selectedTypePosition = typePos
         exTypeSpinner.adapter = exTypeSpinnerAdapter
+        exTypeSpinner.setSelection(typePos)
         exTypeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -163,10 +171,12 @@ class ProfileFragment : Fragment() {
                 exTypeSpinner.setSelection(typePos)
             }
         }
+
         exFreqList = arrayListOf("거의 안함", "1회 이하", "2 ~ 3회", "4 ~ 5 회", "6회 이상")
         exFreqSpinnerAdapter = CustomSpinnerAdapter(this.requireContext(), exFreqList)
         exFreqSpinner = binding.profileExFreqSpinner
         exFreqSpinner.adapter = exFreqSpinnerAdapter
+        exFreqSpinner.setSelection(freqPos)
         exFreqSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -187,6 +197,7 @@ class ProfileFragment : Fragment() {
         goalSpinnerAdapter = CustomSpinnerAdapter(this.requireContext(), goalList)
         goalSpinner = binding.profileGoalSpinner
         goalSpinner.adapter = goalSpinnerAdapter
+        goalSpinner.setSelection(goalPos)
         goalSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -210,7 +221,6 @@ class ProfileFragment : Fragment() {
             userRef.get().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val dataSnapshot = task.result
-
                     val uName = dataSnapshot.child("u_name").getValue(String::class.java)
                     val uEmail = dataSnapshot.child("u_email").getValue(String::class.java)
                     val uPW = dataSnapshot.child("u_password").getValue(String::class.java)
@@ -230,9 +240,9 @@ class ProfileFragment : Fragment() {
                             }
                         }
                     }
-                    val uExTypePos = dataSnapshot.child("u_exercise_type").getValue(String::class.java)!!.toInt()
-                    val uExFreqPos = dataSnapshot.child("u_exercise_freq").getValue(String::class.java)!!.toInt()
-                    val uExGoalPos = dataSnapshot.child("u_physical_goals").getValue(String::class.java)!!.toInt()
+                    uExTypePos = dataSnapshot.child("u_exercise_type").getValue(String::class.java)!!.toInt()
+                    uExFreqPos = dataSnapshot.child("u_exercise_freq").getValue(String::class.java)!!.toInt()
+                    uExGoalPos = dataSnapshot.child("u_physical_goals").getValue(String::class.java)!!.toInt()
 
                     binding.profileNameInput.setText(uName)
                     binding.profileIdInput.setText(uEmail)
@@ -241,7 +251,7 @@ class ProfileFragment : Fragment() {
                     binding.profileWeightInput.setText(uWeight)
                     binding.profileAgeInput.setText(uAge)
                     binding.profileAllergy.setText(result)
-                    initSpinners(uExTypePos, uExFreqPos, uExGoalPos)
+                    initSpinners(uExTypePos-1, uExFreqPos-1, uExGoalPos-1)
 
                 }
             }
