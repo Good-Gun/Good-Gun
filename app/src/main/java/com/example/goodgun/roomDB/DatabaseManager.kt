@@ -15,7 +15,7 @@ object DatabaseManager {
                 FoodDatabase::class.java,
                 "food.db",
             )
-                .addMigrations(FoodDatabase.migration_4_to_5)
+                .addMigrations(FoodDatabase.migration_3_to_4)
                 .build()
             databaseMap[userId] = newDatabase
             newDatabase
