@@ -25,7 +25,7 @@ import com.google.firebase.ktx.Firebase
 
 class LoginActivity : AppCompatActivity() {
 
-    private lateinit var auth: FirebaseAuth
+    lateinit var auth: FirebaseAuth
     private var googleSignInClient: GoogleSignInClient ? = null
     var GOOGLE_LOGIN_CODE = 9001
     val database: DatabaseReference = Firebase.database("https://goodgun-4740f-default-rtdb.firebaseio.com/").reference
@@ -126,16 +126,16 @@ class LoginActivity : AppCompatActivity() {
                             val dataSnapshot = task.result
                             if (dataSnapshot.exists()) {
                                 println("uid가 user_list에 포함되어 있습니다.")
+                                startActivity(Intent(this, MainActivity::class.java))
                             } else {
                                 userRef.child(userId).setValue(User(account?.email.toString(), account?.familyName.toString() + account?.givenName.toString()))
+                                startActivity(Intent(this, AdditionalInfoActivity::class.java))
                                 println("uid가 user_list에 포함되어 있지 않습니다.")
                             }
                         } else {
                             println("데이터 가져오기 실패: ${task.exception}")
                         }
                     }
-                    startActivity(Intent(this, AdditionalInfoActivity::class.java))
-
                     finish() // 로그인 엑티비티는 종료
                 } else {
                     // 로그인 실패 시
@@ -145,6 +145,7 @@ class LoginActivity : AppCompatActivity() {
     } // firebaseAuthWithGoogle
 
     private fun signIn(ID: String, password: String) {
+
         if (ID.isNotEmpty() && password.isNotEmpty()) {
             auth?.signInWithEmailAndPassword(ID, password)
                 ?.addOnCompleteListener(this) { task ->
