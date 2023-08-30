@@ -3,7 +3,6 @@ package com.example.goodgun
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.goodgun.camera.CameraActivity
 import com.example.goodgun.databinding.ActivityMainBinding
@@ -26,8 +25,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-
         binding.apply {
             bubbleTabBar.addBubbleListener(object : OnBubbleClickListener {
                 override fun onBubbleClick(id: Int) {
@@ -45,7 +42,6 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             })
-
         }
         binding.ivAdd.setOnClickListener {
             startActivity(Intent(this, CameraActivity::class.java))

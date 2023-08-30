@@ -27,15 +27,14 @@ data class FoodEntity(
     constructor() : this(0, "기본 생성자", 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, LocalDate.now().toString(), LocalTime.now().toString())
     constructor(name: String) : this(0, name, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, LocalDate.now().toString(), LocalTime.now().toString())
 
-    constructor(name: String, calory: Double?, carbohydrates: Double?, sugar: Double?, protein: Double?, fat: Double?, trans_fat: Double?, saturated_fat: Double?, cholesterol: Double?)
-            : this(0, name, calory, carbohydrates, sugar, protein, fat, trans_fat, saturated_fat, cholesterol, LocalDate.now().toString(), LocalTime.now().toString())
-
+    constructor(name: String, calory: Double?, carbohydrates: Double?, sugar: Double?, protein: Double?, fat: Double?, trans_fat: Double?, saturated_fat: Double?, cholesterol: Double?) :
+        this(0, name, calory, carbohydrates, sugar, protein, fat, trans_fat, saturated_fat, cholesterol, LocalDate.now().toString(), LocalTime.now().toString())
 }
 
-@Entity(tableName="solution")
+@Entity(tableName = "solution")
 data class Solution(
-    val id:Int = 0,
-    val str:String = ""
-){
-    constructor(str:String) : this(0, str)
+    val id: Int = 0,
+    val str: String = "",
+) {
+    constructor(str: String) : this(0, str)
 }

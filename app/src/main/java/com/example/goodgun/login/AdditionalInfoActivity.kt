@@ -150,7 +150,6 @@ class AdditionalInfoActivity : AppCompatActivity() {
         }
     }
 
-
     private fun loadAdditionalInfo(currentUser: FirebaseUser?) {
         if (currentUser != null) {
             val uid = currentUser.uid

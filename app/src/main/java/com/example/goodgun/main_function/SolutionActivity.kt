@@ -33,7 +33,6 @@ class SolutionActivity : AppCompatActivity() {
     private val fragmentTexts = mutableListOf<String>()
     private var response: String = ""
 
-
     lateinit var roomdb: FoodDatabase
     private lateinit var auth: FirebaseAuth
     var currentUser: FirebaseUser? = null
@@ -57,7 +56,7 @@ class SolutionActivity : AppCompatActivity() {
         window.statusBarColor = statusBarColor
 
         initLayout()
-        //initFr()
+        // initFr()
         init()
     }
     fun initLayout() {
@@ -72,7 +71,6 @@ class SolutionActivity : AppCompatActivity() {
 
     fun init() {
         CoroutineScope(Dispatchers.Main).launch {
-
             /*val solution = roomdb.foodDao().getSolution()
             if(solution.str.isBlank()){
                 fragmentTexts.add("솔루션이 준비되지 않았습니다:음식을 등록하고 드신 음식을 기반으로 건강 솔루션을 받아보세요")
@@ -83,7 +81,6 @@ class SolutionActivity : AppCompatActivity() {
                 adapter.setFragmentTexts(fragmentTexts)
                 loadingDialog.dismiss()
             }*/
-
 
             val solution = ApplicationClass.sharedPreferences.getString("solution", null)
             if (solution.isNullOrBlank()) {

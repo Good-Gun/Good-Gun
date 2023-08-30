@@ -64,7 +64,7 @@ class FoodPhotoCheck : AppCompatActivity() {
         binding.apply {
             recyclerView.layoutManager = LinearLayoutManager(this@FoodPhotoCheck, LinearLayoutManager.VERTICAL, false)
             Log.i("FoodLens", data.size.toString())
-            adapter = FoodListAdapter(data)
+            adapter = FoodListAdapter(data, isChecked)
             adapter.itemClickListener = object : FoodListAdapter.OnItemClickListener {
                 override fun onItemClick(holder: FoodListAdapter.ViewHolder, position: Int) {
                     isChecked[position] = !isChecked[position]
@@ -81,6 +81,11 @@ class FoodPhotoCheck : AppCompatActivity() {
                 startActivity(Intent(this@FoodPhotoCheck, ScanInfomation::class.java))
             }
             cancelButton.setOnClickListener {
+                finish()
+            }
+
+            textButton.setOnClickListener {
+                startActivity(Intent(this@FoodPhotoCheck, ScanInfomation::class.java))
                 finish()
             }
         }
