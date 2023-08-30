@@ -3,7 +3,6 @@ package com.example.goodgun.add_food.direct_add
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.app.ProgressDialog
 import android.content.ContentValues
 import android.content.DialogInterface
 import android.os.Bundle
@@ -77,14 +76,14 @@ class DirectInputFragment : DialogFragment() {
                 GlobalScope.launch(Dispatchers.IO) {
                     val selectFood = FoodEntity(
                         data.foodName,
-                        data.calory?.toDoubleOrNull()?:0.0,
-                        data.carbohydrates?.toDoubleOrNull()?:0.0,
-                        data.sugar?.toDoubleOrNull()?:0.0,
-                        data.protein?.toDoubleOrNull()?:0.0,
-                        data.fat?.toDoubleOrNull()?:0.0,
-                        data.trans_fat?.toDoubleOrNull()?:0.0,
-                        data.saturated_fat?.toDoubleOrNull()?:0.0,
-                        data.cholesterol?.toDoubleOrNull()?:0.0,
+                        data.calory?.toDoubleOrNull() ?: 0.0,
+                        data.carbohydrates?.toDoubleOrNull() ?: 0.0,
+                        data.sugar?.toDoubleOrNull() ?: 0.0,
+                        data.protein?.toDoubleOrNull() ?: 0.0,
+                        data.fat?.toDoubleOrNull() ?: 0.0,
+                        data.trans_fat?.toDoubleOrNull() ?: 0.0,
+                        data.saturated_fat?.toDoubleOrNull() ?: 0.0,
+                        data.cholesterol?.toDoubleOrNull() ?: 0.0,
                     )
                     model.setfood(selectFood)
                     withContext(Dispatchers.Main) {
