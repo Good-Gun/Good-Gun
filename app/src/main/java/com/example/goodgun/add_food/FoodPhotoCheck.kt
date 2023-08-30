@@ -83,6 +83,11 @@ class FoodPhotoCheck : AppCompatActivity() {
             cancelButton.setOnClickListener {
                 finish()
             }
+
+            textButton.setOnClickListener {
+                startActivity(Intent(this@FoodPhotoCheck, ScanInfomation::class.java))
+                finish()
+            }
         }
     }
 

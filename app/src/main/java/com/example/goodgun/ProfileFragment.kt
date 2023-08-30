@@ -34,9 +34,9 @@ class ProfileFragment : Fragment() {
     private lateinit var exFreqSpinnerAdapter: CustomSpinnerAdapter
     private lateinit var goalSpinnerAdapter: CustomSpinnerAdapter
 
-    private var selectedTypePosition :Int = 0
-    private var selectedFreqPosition :Int = 0
-    private var selectedGoalPosition :Int = 0
+    private var selectedTypePosition: Int = 0
+    private var selectedFreqPosition: Int = 0
+    private var selectedGoalPosition: Int = 0
 
     private var exTypeList: List<String> = ArrayList()
     private var exFreqList: List<String> = ArrayList()
@@ -92,11 +92,10 @@ class ProfileFragment : Fragment() {
         }
         binding.profileFixBtn.setOnClickListener {
             uploadData(currentUser)
-            Toast.makeText(this.requireContext(),"회원정보가 수정되었습니다.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this.requireContext(), "회원정보가 수정되었습니다.", Toast.LENGTH_SHORT).show()
 //            requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
 //            requireActivity().supportFragmentManager.popBackStack()
-            //프래그먼트 종료하는게 아닌가 보네?
-
+            // 프래그먼트 종료하는게 아닌가 보네?
         }
     }
 
@@ -242,7 +241,6 @@ class ProfileFragment : Fragment() {
                     binding.profileAgeInput.setText(uAge)
                     binding.profileAllergy.setText(result)
                     initSpinners(uExTypePos, uExFreqPos, uExGoalPos)
-
                 }
             }
         } else {

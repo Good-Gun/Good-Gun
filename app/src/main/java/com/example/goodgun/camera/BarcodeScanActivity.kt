@@ -162,14 +162,14 @@ class BarcodeScanActivity : AppCompatActivity() {
                                 val data = foodList[0]
                                 val selectFood = FoodEntity(
                                     data.foodName,
-                                    data.calory.toDouble(),
-                                    data.carbohydrates.toDouble(),
-                                    data.sugar.toDouble(),
-                                    data.protein.toDouble(),
-                                    data.fat.toDouble(),
-                                    data.trans_fat.toDouble(),
-                                    data.saturated_fat.toDouble(),
-                                    data.cholesterol.toDouble(),
+                                    data.calory!!.toDouble(),
+                                    data.carbohydrates!!.toDouble(),
+                                    data.sugar!!.toDouble(),
+                                    data.protein!!.toDouble(),
+                                    data.fat!!.toDouble(),
+                                    data.trans_fat!!.toDouble(),
+                                    data.saturated_fat!!.toDouble(),
+                                    data.cholesterol!!.toDouble(),
                                 )
                                 CoroutineScope(Dispatchers.IO).launch {
                                     roomdb.foodDao().saveFood(selectFood)
