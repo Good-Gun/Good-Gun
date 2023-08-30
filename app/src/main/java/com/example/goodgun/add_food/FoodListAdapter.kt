@@ -7,8 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.goodgun.databinding.FoodlistItemBinding
 import com.example.goodgun.roomDB.FoodEntity
 
-class FoodListAdapter(val items: ArrayList<FoodEntity>) : RecyclerView.Adapter<FoodListAdapter.ViewHolder>() {
-
+class FoodListAdapter(val items: ArrayList<FoodEntity>, val isChecked: ArrayList<Boolean>) : RecyclerView.Adapter<FoodListAdapter.ViewHolder>() {
     var itemClickListener: OnItemClickListener? = null
     interface OnItemClickListener {
         fun onItemClick(holder: ViewHolder, position: Int)
@@ -32,5 +31,6 @@ class FoodListAdapter(val items: ArrayList<FoodEntity>) : RecyclerView.Adapter<F
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.foodName.text = items[position].name
+        holder.binding.checkBox.isChecked = isChecked[position]
     }
 }
