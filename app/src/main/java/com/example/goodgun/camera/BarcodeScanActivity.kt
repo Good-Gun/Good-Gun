@@ -171,7 +171,7 @@ class BarcodeScanActivity : AppCompatActivity() {
                                     data.trans_fat!!.toDouble(),
                                     data.saturated_fat!!.toDouble(),
                                     data.cholesterol!!.toDouble(),
-
+                                    true,
                                 )
                                 CoroutineScope(Dispatchers.IO).launch {
                                     roomdb.foodDao().saveFood(selectFood)

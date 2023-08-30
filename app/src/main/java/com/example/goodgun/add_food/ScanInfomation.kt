@@ -161,7 +161,7 @@ class ScanInfomation : AppCompatActivity() {
                 roomdb.foodDao().deleteSumFood()
                 val foods: List<FoodEntity> = roomdb.foodDao().getAll()
                 for (food in foods) {
-                    database.child("user_list").child(userid).child(food.registerDate)
+                    database.child("user_list").child(userid).child("food_list").child(food.registerDate)
                         .child(food.name)
                         .setValue(food)
                 }
@@ -212,12 +212,13 @@ class ScanInfomation : AppCompatActivity() {
                 adapter.itemadd = object : FoodAddAdapter.OnItemClickListener {
                     override fun onItemClick(data: FoodEntity, position: Int) {
                         GlobalScope.launch(Dispatchers.IO) {
+                            data.inroomdb=true
                             roomdb.foodDao().saveFood(data)
                             updateSumFoodEntity()
                         }
                         binding.recyclerView.findViewHolderForAdapterPosition(position)?.itemView?.findViewById<ImageButton>(
                             R.id.food_add,
-                        )?.visibility = View.GONE
+                        )?.visibility = View.INVISIBLE
                     }
                 }
                 adapter.itemdelete = object : FoodAddAdapter.OnItemClickListener {

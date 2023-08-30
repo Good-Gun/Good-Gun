@@ -85,7 +85,8 @@
             android:exported="false" />
         <activity
             android:name=".add_food.ScanInfomation"
-            android:exported="false" />
+            android:exported="false" >
+        </activity>
     </application>
 
 </manifest>
