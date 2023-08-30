@@ -212,12 +212,13 @@ class ScanInfomation : AppCompatActivity() {
                 adapter.itemadd = object : FoodAddAdapter.OnItemClickListener {
                     override fun onItemClick(data: FoodEntity, position: Int) {
                         GlobalScope.launch(Dispatchers.IO) {
+                            data.inroomdb=true
                             roomdb.foodDao().saveFood(data)
                             updateSumFoodEntity()
                         }
                         binding.recyclerView.findViewHolderForAdapterPosition(position)?.itemView?.findViewById<ImageButton>(
                             R.id.food_add,
-                        )?.visibility = View.GONE
+                        )?.visibility = View.INVISIBLE
                     }
                 }
                 adapter.itemdelete = object : FoodAddAdapter.OnItemClickListener {
