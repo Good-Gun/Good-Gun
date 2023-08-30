@@ -1,6 +1,8 @@
 package com.example.goodgun
 
 import android.R
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,9 +12,13 @@ import android.widget.ArrayAdapter
 import android.widget.MultiAutoCompleteTextView
 import android.widget.Spinner
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import com.example.goodgun.databinding.FragmentProfileBinding
 import com.example.goodgun.login.CustomSpinnerAdapter
+import com.example.goodgun.login.LoginActivity
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
@@ -29,13 +35,14 @@ class ProfileFragment : Fragment() {
     private val auth = Firebase.auth
     val currentUser = auth.currentUser
 
+    private lateinit var callback: OnBackPressedCallback
+
     private lateinit var exTypeSpinner: Spinner
     private lateinit var exFreqSpinner: Spinner
     private lateinit var goalSpinner: Spinner
     private lateinit var exTypeSpinnerAdapter: CustomSpinnerAdapter
     private lateinit var exFreqSpinnerAdapter: CustomSpinnerAdapter
     private lateinit var goalSpinnerAdapter: CustomSpinnerAdapter
-
 
     private var selectedTypePosition: Int = 0
     private var selectedFreqPosition: Int = 0
@@ -60,8 +67,24 @@ class ProfileFragment : Fragment() {
         return binding.root
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                (requireActivity() as MainActivity).binding.bubbleTabBar.setSelected(com.example.goodgun.R.id.nav_home)
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(com.example.goodgun.R.id.frame_main, HomeFragment())
+                    .commitAllowingStateLoss()
+                requireActivity().supportFragmentManager.popBackStack()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
 
-
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
+    }
     fun getAssetsTextArray(mContext: ProfileFragment, fileName: String): Array<String> {
         val lines = mutableListOf<String>()
         val reader: BufferedReader
@@ -98,12 +121,28 @@ class ProfileFragment : Fragment() {
         binding.apply {
             loadProfileInfo(currentUser)
         }
+        //로그아웃
+        binding.profileLogoutBtn.setOnClickListener {
+            auth.signOut()
+
+
+            var logoutIntent = Intent(this.context, LoginActivity::class.java)
+            logoutIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(logoutIntent)
+        }
+
         binding.profileFixBtn.setOnClickListener {
             uploadData(currentUser)
-
             Toast.makeText(this.requireContext(),"회원정보가 수정되었습니다.", Toast.LENGTH_SHORT).show()
-
         }
+        binding.backBtn.setOnClickListener {
+            requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
+            requireActivity().supportFragmentManager.popBackStack()
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(com.example.goodgun.R.id.frame_main, HomeFragment())
+                .commitAllowingStateLoss()
+        }
+
     }
 
     fun isStringConvertibleToInt(input: String): Boolean {
