@@ -40,7 +40,9 @@ class ProfileFragment : Fragment() {
     private var selectedTypePosition: Int = 0
     private var selectedFreqPosition: Int = 0
     private var selectedGoalPosition: Int = 0
-
+    private var uExTypePos = 0
+    private var uExFreqPos = 0
+    private var uExGoalPos = 0
 
     private var exTypeList: List<String> = ArrayList()
     private var exFreqList: List<String> = ArrayList()
