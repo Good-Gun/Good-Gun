@@ -40,8 +40,11 @@ class LoginActivity : AppCompatActivity() {
 //        myRef.setValue("Hello world")
 
         auth = Firebase.auth
-        val currentUser = auth.currentUser
+        var currentUser = auth.currentUser
         // 자동 로그인
+
+        val logoutFlag = intent.getIntExtra("logout", 0)
+
 
         if (currentUser != null) {
             Toast.makeText(this, currentUser.email + " 로 로그인", Toast.LENGTH_LONG).show()
@@ -67,6 +70,13 @@ class LoginActivity : AppCompatActivity() {
             .requestEmail()
             .build()
         googleSignInClient = GoogleSignIn.getClient(this, gso)
+
+        if (logoutFlag == 1) {
+            // 로그아웃 관련 작업을 수행하는 함수 호출
+            auth.signOut()
+            googleSignInClient?.signOut()
+            Toast.makeText(this, "로그아웃하자고", Toast.LENGTH_SHORT).show()
+        }
 
         // 회원가입으로 이동
         binding.regiBtn.setOnClickListener {
@@ -143,6 +153,7 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
     } // firebaseAuthWithGoogle
+
 
     private fun signIn(ID: String, password: String) {
         if (ID.isNotEmpty() && password.isNotEmpty()) {
