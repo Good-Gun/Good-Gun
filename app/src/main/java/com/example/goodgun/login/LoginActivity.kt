@@ -145,7 +145,6 @@ class LoginActivity : AppCompatActivity() {
     } // firebaseAuthWithGoogle
 
     private fun signIn(ID: String, password: String) {
-
         if (ID.isNotEmpty() && password.isNotEmpty()) {
             auth?.signInWithEmailAndPassword(ID, password)
                 ?.addOnCompleteListener(this) { task ->

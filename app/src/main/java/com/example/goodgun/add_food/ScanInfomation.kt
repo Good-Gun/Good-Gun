@@ -212,7 +212,7 @@ class ScanInfomation : AppCompatActivity() {
                 adapter.itemadd = object : FoodAddAdapter.OnItemClickListener {
                     override fun onItemClick(data: FoodEntity, position: Int) {
                         GlobalScope.launch(Dispatchers.IO) {
-                            data.inroomdb=true
+                            data.inroomdb = true
                             roomdb.foodDao().saveFood(data)
                             updateSumFoodEntity()
                         }

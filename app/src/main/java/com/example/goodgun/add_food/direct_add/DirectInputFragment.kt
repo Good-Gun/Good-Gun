@@ -7,12 +7,14 @@ import android.content.ContentValues
 import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
+import android.view.ContextThemeWrapper
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.goodgun.BuildConfig
+import com.example.goodgun.R
 import com.example.goodgun.add_food.FoodViewModel
 import com.example.goodgun.add_food.ScanInfomation
 import com.example.goodgun.databinding.FragmentDirectInputBinding
@@ -40,9 +42,8 @@ class DirectInputFragment : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         _binding = FragmentDirectInputBinding.inflate(layoutInflater)
         val view = binding.root
-
-        val dialogBuilder = AlertDialog.Builder(requireContext())
-            .setTitle("Search Dialog")
+        val themedContext = ContextThemeWrapper(context, R.style.CustomDialogTheme)
+        val dialogBuilder = AlertDialog.Builder(themedContext)
             .setView(view)
             .setPositiveButton("선택") {
                     dialog, _ ->

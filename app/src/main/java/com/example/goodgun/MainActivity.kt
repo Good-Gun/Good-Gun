@@ -17,9 +17,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-
-
-class MainActivity : AppCompatActivity()  {
+class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var loadingDialog: Dialog // 로딩창 클래스
@@ -86,5 +84,4 @@ class MainActivity : AppCompatActivity()  {
             }
         }
     }
-
 }

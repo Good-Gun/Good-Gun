@@ -29,7 +29,7 @@ data class FoodEntity(
     constructor() : this(0, "기본 생성자", 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, LocalDate.now().toString(), LocalTime.now().toString(), false)
     constructor(name: String) : this(0, name, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, LocalDate.now().toString(), LocalTime.now().toString(), false)
 
-    constructor(name: String, calory: Double?, carbohydrates: Double?, sugar: Double?, protein: Double?, fat: Double?, trans_fat: Double?, saturated_fat: Double?, cholesterol: Double?, inroomdb:Boolean) :
+    constructor(name: String, calory: Double?, carbohydrates: Double?, sugar: Double?, protein: Double?, fat: Double?, trans_fat: Double?, saturated_fat: Double?, cholesterol: Double?, inroomdb: Boolean) :
         this(
             0,
             name,
@@ -43,7 +43,7 @@ data class FoodEntity(
             ((cholesterol?.times(100.0))?.roundToInt() ?: 0) / 100.0,
             LocalDate.now().toString(),
             LocalTime.now().toString(),
-            inroomdb
+            inroomdb,
         )
 }
 

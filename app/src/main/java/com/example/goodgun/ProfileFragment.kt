@@ -17,16 +17,12 @@ import androidx.fragment.app.Fragment
 import com.example.goodgun.databinding.FragmentProfileBinding
 import com.example.goodgun.login.CustomSpinnerAdapter
 import com.example.goodgun.login.LoginActivity
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.GenericTypeIndicator
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import okhttp3.internal.notify
-import okhttp3.internal.notifyAll
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
@@ -121,10 +117,9 @@ class ProfileFragment : Fragment() {
         binding.apply {
             loadProfileInfo(currentUser)
         }
-        //로그아웃
+        // 로그아웃
         binding.profileLogoutBtn.setOnClickListener {
             auth.signOut()
-
 
             var logoutIntent = Intent(this.context, LoginActivity::class.java)
             logoutIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
@@ -133,7 +128,7 @@ class ProfileFragment : Fragment() {
 
         binding.profileFixBtn.setOnClickListener {
             uploadData(currentUser)
-            Toast.makeText(this.requireContext(),"회원정보가 수정되었습니다.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this.requireContext(), "회원정보가 수정되었습니다.", Toast.LENGTH_SHORT).show()
         }
         binding.backBtn.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
@@ -142,7 +137,6 @@ class ProfileFragment : Fragment() {
                 .replace(com.example.goodgun.R.id.frame_main, HomeFragment())
                 .commitAllowingStateLoss()
         }
-
     }
 
     fun isStringConvertibleToInt(input: String): Boolean {
@@ -190,7 +184,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun initSpinners(typePos: Int, freqPos: Int, goalPos: Int) {
-        println("==========" + typePos.toString()+ freqPos.toString()+ goalPos.toString())
+        println("==========" + typePos.toString() + freqPos.toString() + goalPos.toString())
         exTypeList = arrayListOf("무산소 운동", "유산소 운동", "둘 다")
         exTypeSpinnerAdapter = CustomSpinnerAdapter(this.requireContext(), exTypeList)
         exTypeSpinner = binding.profileExTypeSpinner
@@ -293,9 +287,7 @@ class ProfileFragment : Fragment() {
                     binding.profileAgeInput.setText(uAge)
                     binding.profileAllergy.setText(result)
 
-                    initSpinners(uExTypePos-1, uExFreqPos-1, uExGoalPos-1)
-
-
+                    initSpinners(uExTypePos - 1, uExFreqPos - 1, uExGoalPos - 1)
                 }
             }
         } else {
