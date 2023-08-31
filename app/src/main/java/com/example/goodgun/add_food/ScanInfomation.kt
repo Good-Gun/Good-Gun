@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.aallam.openai.api.BetaOpenAI
 import com.doinglab.foodlens.sdk.ui.network.models.Nutrition
 import com.example.goodgun.ApplicationClass
-import com.example.goodgun.MainActivity
+import com.example.goodgun.main.MainActivity
 import com.example.goodgun.R
 import com.example.goodgun.add_food.direct_add.DirectInputFragment
 import com.example.goodgun.databinding.ActivityScanInfomationBinding

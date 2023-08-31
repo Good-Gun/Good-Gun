@@ -60,9 +60,8 @@
             android:exported="true"
             android:theme="@style/SplashTheme" /> <!-- Splash Activity -->
         <activity
-            android:name=".MainActivity"
-            android:exported="false"
-            />
+            android:name=".main.MainActivity"
+            android:exported="false" />
         <activity
             android:name=".login.LoginActivity"
             android:exported="true">

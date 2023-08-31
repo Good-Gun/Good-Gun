@@ -1,10 +1,12 @@
-package com.example.goodgun
+package com.example.goodgun.main
 
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.goodgun.ApplicationClass
+import com.example.goodgun.R
 import com.example.goodgun.camera.CameraActivity
 import com.example.goodgun.databinding.ActivityMainBinding
 import com.example.goodgun.network.NetworkManager
@@ -37,7 +39,6 @@ class MainActivity : AppCompatActivity() {
         binding.apply {
             bubbleTabBar.addBubbleListener(object : OnBubbleClickListener {
                 override fun onBubbleClick(id: Int) {
-                    Toast.makeText(this@MainActivity, id.toString(), Toast.LENGTH_SHORT).show()
                     when (id) {
                         R.id.nav_home -> {
                             supportFragmentManager.beginTransaction()
@@ -54,6 +55,8 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             })
+            bubbleTabBar.setSelected(1)
+
         }
         binding.ivAdd.setOnClickListener {
             startActivity(Intent(this, CameraActivity::class.java))

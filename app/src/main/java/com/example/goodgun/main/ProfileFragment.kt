@@ -1,4 +1,4 @@
-package com.example.goodgun
+package com.example.goodgun.main
 
 import android.R
 import android.content.Context
@@ -14,6 +14,7 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import com.example.goodgun.ApplicationClass
 import com.example.goodgun.databinding.FragmentProfileBinding
 import com.example.goodgun.login.CustomSpinnerAdapter
 import com.example.goodgun.login.LoginActivity
