@@ -3,6 +3,7 @@ package com.example.goodgun
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.goodgun.camera.CameraActivity
 import com.example.goodgun.databinding.ActivityMainBinding
@@ -20,6 +21,14 @@ class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var loadingDialog: Dialog // 로딩창 클래스
+
+    override fun onBackPressed() {
+        if (supportFragmentManager.backStackEntryCount > 0) {
+            supportFragmentManager.popBackStack()
+        } else {
+            super.onBackPressed()
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -28,6 +37,7 @@ class MainActivity : AppCompatActivity() {
         binding.apply {
             bubbleTabBar.addBubbleListener(object : OnBubbleClickListener {
                 override fun onBubbleClick(id: Int) {
+                    Toast.makeText(this@MainActivity, id.toString(), Toast.LENGTH_SHORT).show()
                     when (id) {
                         R.id.nav_home -> {
                             supportFragmentManager.beginTransaction()
@@ -38,6 +48,8 @@ class MainActivity : AppCompatActivity() {
                             supportFragmentManager.beginTransaction()
                                 .replace(R.id.frame_main, ProfileFragment())
                                 .commitAllowingStateLoss()
+                            supportFragmentManager.beginTransaction().addToBackStack(null)
+                            supportFragmentManager.beginTransaction().commit()
                         }
                     }
                 }

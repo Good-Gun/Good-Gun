@@ -1,6 +1,7 @@
 package com.example.goodgun.add_food
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.goodgun.databinding.AddFoodRowBinding
@@ -37,5 +38,8 @@ class FoodAddAdapter(var items: List<FoodEntity>) : RecyclerView.Adapter<FoodAdd
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.foodName.text = items[position].name
+        if (items[position].inroomdb) {
+            holder.binding.foodAdd.visibility = View.INVISIBLE
+        }
     }
 }

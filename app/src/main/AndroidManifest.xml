@@ -24,6 +24,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GoodGun"
         android:usesCleartextTraffic="true"
+        android:enableOnBackInvokedCallback="true"
         tools:targetApi="31">
         <activity
             android:name=".camera.BarcodeScanActivity"
@@ -60,7 +61,8 @@
             android:theme="@style/SplashTheme" /> <!-- Splash Activity -->
         <activity
             android:name=".MainActivity"
-            android:exported="false" />
+            android:exported="false"
+            />
         <activity
             android:name=".login.LoginActivity"
             android:exported="true">
@@ -77,15 +79,14 @@
         <activity
             android:name=".login.AdditionalInfoActivity"
             android:exported="true" />
-        <activity
-            android:name=".login.ProfileActivity"
-            android:exported="false" />
+
         <activity
             android:name=".add_food.FoodPhotoCheck"
             android:exported="false" />
         <activity
             android:name=".add_food.ScanInfomation"
-            android:exported="false" />
+            android:exported="false" >
+        </activity>
     </application>
 
 </manifest>
