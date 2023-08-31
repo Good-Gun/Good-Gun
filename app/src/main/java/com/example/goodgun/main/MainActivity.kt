@@ -3,7 +3,6 @@ package com.example.goodgun.main
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.goodgun.ApplicationClass
 import com.example.goodgun.R
@@ -55,7 +54,6 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             })
-
         }
         binding.ivAdd.setOnClickListener {
             startActivity(Intent(this, CameraActivity::class.java))
@@ -87,7 +85,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun changeNav(id:Int) {
+    fun changeNav(id: Int) {
         binding.bubbleTabBar.setSelected(0)
     }
 }

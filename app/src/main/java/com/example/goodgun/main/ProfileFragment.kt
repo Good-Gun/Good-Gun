@@ -33,7 +33,7 @@ class ProfileFragment : Fragment() {
     val currentUser = auth.currentUser
 
     private lateinit var callback: OnBackPressedCallback
-    private lateinit var mContext:Context
+    private lateinit var mContext: Context
 
     private lateinit var exTypeSpinner: Spinner
     private lateinit var exFreqSpinner: Spinner
