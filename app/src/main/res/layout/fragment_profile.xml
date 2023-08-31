@@ -85,7 +85,7 @@
             android:ems="10"
             android:inputType="text"
             android:gravity="center"
-            android:text="천성필" />
+            android:text="" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -111,7 +111,7 @@
             android:ems="10"
             android:inputType="text"
             android:gravity="center"
-            android:text="CSP0412" />
+            android:text="" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -137,7 +137,7 @@
             android:ems="10"
             android:inputType="text"
             android:gravity="center"
-            android:text="CSP2140*" />
+            android:text="" />
     </LinearLayout>
 
     <TextView
@@ -177,7 +177,7 @@
             android:ems="10"
             android:inputType="text"
             android:gravity="center"
-            android:text="198 cm" />
+            android:text="" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -203,7 +203,7 @@
             android:ems="10"
             android:inputType="text"
             android:gravity="center"
-            android:text="144 kg" />
+            android:text="" />
     </LinearLayout>
 
     <LinearLayout

@@ -161,7 +161,7 @@ class ScanInfomation : AppCompatActivity() {
                 roomdb.foodDao().deleteSumFood()
                 val foods: List<FoodEntity> = roomdb.foodDao().getAll()
                 for (food in foods) {
-                    database.child("user_list").child(userid).child(food.registerDate)
+                    database.child("user_list").child(userid).child("food_list").child(food.registerDate)
                         .child(food.name)
                         .setValue(food)
                 }
@@ -169,9 +169,9 @@ class ScanInfomation : AppCompatActivity() {
                 roomdb.foodDao().saveFood(FoodEntity())
 
                 val nutrition = NetworkManager.getNutritionData(
-                        LocalDateTime.now().minusWeeks(1)
-                            .format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),
-                    )
+                    LocalDateTime.now().minusWeeks(1)
+                        .format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),
+                )
 
                 Log.d("Managing Network from ScanInfo", "${nutrition.calorie}, ${Nutrition.ColumnInfo.sugar}")
 
@@ -184,7 +184,7 @@ class ScanInfomation : AppCompatActivity() {
 
                 Log.d("Managing Network from ScanInfo", answer!!)
                 ApplicationClass.pref_edit.putString("solution", answer).apply()
-                //roomdb.foodDao().saveSolution(Solution(answer))
+                // roomdb.foodDao().saveSolution(Solution(answer))
                 // 영양소 합계 저장할 foodentity 생성
             }
             startActivity(Intent(this, MainActivity::class.java))
@@ -212,12 +212,13 @@ class ScanInfomation : AppCompatActivity() {
                 adapter.itemadd = object : FoodAddAdapter.OnItemClickListener {
                     override fun onItemClick(data: FoodEntity, position: Int) {
                         GlobalScope.launch(Dispatchers.IO) {
+                            data.inroomdb = true
                             roomdb.foodDao().saveFood(data)
                             updateSumFoodEntity()
                         }
                         binding.recyclerView.findViewHolderForAdapterPosition(position)?.itemView?.findViewById<ImageButton>(
                             R.id.food_add,
-                        )?.visibility = View.GONE
+                        )?.visibility = View.INVISIBLE
                     }
                 }
                 adapter.itemdelete = object : FoodAddAdapter.OnItemClickListener {

@@ -1,6 +1,8 @@
 package com.example.goodgun.main
 
 import android.R
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,10 +12,12 @@ import android.widget.ArrayAdapter
 import android.widget.MultiAutoCompleteTextView
 import android.widget.Spinner
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import com.example.goodgun.ApplicationClass
 import com.example.goodgun.databinding.FragmentProfileBinding
 import com.example.goodgun.login.CustomSpinnerAdapter
+import com.example.goodgun.login.LoginActivity
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
@@ -28,6 +32,8 @@ class ProfileFragment : Fragment() {
     private val auth = Firebase.auth
     val currentUser = auth.currentUser
 
+    private lateinit var callback: OnBackPressedCallback
+
     private lateinit var exTypeSpinner: Spinner
     private lateinit var exFreqSpinner: Spinner
     private lateinit var goalSpinner: Spinner
@@ -35,9 +41,12 @@ class ProfileFragment : Fragment() {
     private lateinit var exFreqSpinnerAdapter: CustomSpinnerAdapter
     private lateinit var goalSpinnerAdapter: CustomSpinnerAdapter
 
-    private var selectedTypePosition :Int = 0
-    private var selectedFreqPosition :Int = 0
-    private var selectedGoalPosition :Int = 0
+    private var selectedTypePosition: Int = 0
+    private var selectedFreqPosition: Int = 0
+    private var selectedGoalPosition: Int = 0
+    private var uExTypePos = 0
+    private var uExFreqPos = 0
+    private var uExGoalPos = 0
 
     private var exTypeList: List<String> = ArrayList()
     private var exFreqList: List<String> = ArrayList()
@@ -55,6 +64,24 @@ class ProfileFragment : Fragment() {
         return binding.root
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                (requireActivity() as MainActivity).binding.bubbleTabBar.setSelected(com.example.goodgun.R.id.nav_home)
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(com.example.goodgun.R.id.frame_main, HomeFragment())
+                    .commitAllowingStateLoss()
+                requireActivity().supportFragmentManager.popBackStack()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
+    }
     fun getAssetsTextArray(mContext: ProfileFragment, fileName: String): Array<String> {
         val lines = mutableListOf<String>()
         val reader: BufferedReader
@@ -91,12 +118,25 @@ class ProfileFragment : Fragment() {
         binding.apply {
             loadProfileInfo(currentUser)
         }
+        // 로그아웃
+        binding.profileLogoutBtn.setOnClickListener {
+            auth.signOut()
+
+            var logoutIntent = Intent(this.context, LoginActivity::class.java)
+            logoutIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(logoutIntent)
+        }
+
         binding.profileFixBtn.setOnClickListener {
             uploadData(currentUser)
-            Toast.makeText(this.requireContext(),"회원정보가 수정되었습니다.", Toast.LENGTH_SHORT).show()
-//            requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
-//            requireActivity().supportFragmentManager.popBackStack()
-            //프래그먼트 종료하는게 아닌가 보네?
+            Toast.makeText(this.requireContext(), "회원정보가 수정되었습니다.", Toast.LENGTH_SHORT).show()
+        }
+        binding.backBtn.setOnClickListener {
+            requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
+            requireActivity().supportFragmentManager.popBackStack()
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(com.example.goodgun.R.id.frame_main, HomeFragment())
+                .commitAllowingStateLoss()
         }
     }
 
@@ -145,10 +185,14 @@ class ProfileFragment : Fragment() {
     }
 
     private fun initSpinners(typePos: Int, freqPos: Int, goalPos: Int) {
+        println("==========" + typePos.toString() + freqPos.toString() + goalPos.toString())
         exTypeList = arrayListOf("무산소 운동", "유산소 운동", "둘 다")
         exTypeSpinnerAdapter = CustomSpinnerAdapter(this.requireContext(), exTypeList)
         exTypeSpinner = binding.profileExTypeSpinner
+
+        selectedTypePosition = typePos
         exTypeSpinner.adapter = exTypeSpinnerAdapter
+        exTypeSpinner.setSelection(typePos)
         exTypeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -163,10 +207,12 @@ class ProfileFragment : Fragment() {
                 exTypeSpinner.setSelection(typePos)
             }
         }
+
         exFreqList = arrayListOf("거의 안함", "1회 이하", "2 ~ 3회", "4 ~ 5 회", "6회 이상")
         exFreqSpinnerAdapter = CustomSpinnerAdapter(this.requireContext(), exFreqList)
         exFreqSpinner = binding.profileExFreqSpinner
         exFreqSpinner.adapter = exFreqSpinnerAdapter
+        exFreqSpinner.setSelection(freqPos)
         exFreqSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -187,6 +233,7 @@ class ProfileFragment : Fragment() {
         goalSpinnerAdapter = CustomSpinnerAdapter(this.requireContext(), goalList)
         goalSpinner = binding.profileGoalSpinner
         goalSpinner.adapter = goalSpinnerAdapter
+        goalSpinner.setSelection(goalPos)
         goalSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -210,7 +257,6 @@ class ProfileFragment : Fragment() {
             userRef.get().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val dataSnapshot = task.result
-
                     val uName = dataSnapshot.child("u_name").getValue(String::class.java)
                     val uEmail = dataSnapshot.child("u_email").getValue(String::class.java)
                     val uPW = dataSnapshot.child("u_password").getValue(String::class.java)
@@ -230,9 +276,9 @@ class ProfileFragment : Fragment() {
                             }
                         }
                     }
-                    val uExTypePos = dataSnapshot.child("u_exercise_type").getValue(String::class.java)!!.toInt()
-                    val uExFreqPos = dataSnapshot.child("u_exercise_freq").getValue(String::class.java)!!.toInt()
-                    val uExGoalPos = dataSnapshot.child("u_physical_goals").getValue(String::class.java)!!.toInt()
+                    uExTypePos = dataSnapshot.child("u_exercise_type").getValue(String::class.java)!!.toInt()
+                    uExFreqPos = dataSnapshot.child("u_exercise_freq").getValue(String::class.java)!!.toInt()
+                    uExGoalPos = dataSnapshot.child("u_physical_goals").getValue(String::class.java)!!.toInt()
 
                     binding.profileNameInput.setText(uName)
                     binding.profileIdInput.setText(uEmail)
@@ -241,8 +287,8 @@ class ProfileFragment : Fragment() {
                     binding.profileWeightInput.setText(uWeight)
                     binding.profileAgeInput.setText(uAge)
                     binding.profileAllergy.setText(result)
-                    initSpinners(uExTypePos, uExFreqPos, uExGoalPos)
 
+                    initSpinners(uExTypePos - 1, uExFreqPos - 1, uExGoalPos - 1)
                 }
             }
         } else {

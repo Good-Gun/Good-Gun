@@ -3,17 +3,18 @@ package com.example.goodgun.add_food.direct_add
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.app.ProgressDialog
 import android.content.ContentValues
 import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
+import android.view.ContextThemeWrapper
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.goodgun.BuildConfig
+import com.example.goodgun.R
 import com.example.goodgun.add_food.FoodViewModel
 import com.example.goodgun.add_food.ScanInfomation
 import com.example.goodgun.databinding.FragmentDirectInputBinding
@@ -41,9 +42,8 @@ class DirectInputFragment : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         _binding = FragmentDirectInputBinding.inflate(layoutInflater)
         val view = binding.root
-
-        val dialogBuilder = AlertDialog.Builder(requireContext())
-            .setTitle("Search Dialog")
+        val themedContext = ContextThemeWrapper(context, R.style.CustomDialogTheme)
+        val dialogBuilder = AlertDialog.Builder(themedContext)
             .setView(view)
             .setPositiveButton("선택") {
                     dialog, _ ->
@@ -77,14 +77,15 @@ class DirectInputFragment : DialogFragment() {
                 GlobalScope.launch(Dispatchers.IO) {
                     val selectFood = FoodEntity(
                         data.foodName,
-                        data.calory?.toDoubleOrNull()?:0.0,
-                        data.carbohydrates?.toDoubleOrNull()?:0.0,
-                        data.sugar?.toDoubleOrNull()?:0.0,
-                        data.protein?.toDoubleOrNull()?:0.0,
-                        data.fat?.toDoubleOrNull()?:0.0,
-                        data.trans_fat?.toDoubleOrNull()?:0.0,
-                        data.saturated_fat?.toDoubleOrNull()?:0.0,
-                        data.cholesterol?.toDoubleOrNull()?:0.0,
+                        data.calory?.toDoubleOrNull() ?: 0.0,
+                        data.carbohydrates?.toDoubleOrNull() ?: 0.0,
+                        data.sugar?.toDoubleOrNull() ?: 0.0,
+                        data.protein?.toDoubleOrNull() ?: 0.0,
+                        data.fat?.toDoubleOrNull() ?: 0.0,
+                        data.trans_fat?.toDoubleOrNull() ?: 0.0,
+                        data.saturated_fat?.toDoubleOrNull() ?: 0.0,
+                        data.cholesterol?.toDoubleOrNull() ?: 0.0,
+                        false,
                     )
                     model.setfood(selectFood)
                     withContext(Dispatchers.Main) {

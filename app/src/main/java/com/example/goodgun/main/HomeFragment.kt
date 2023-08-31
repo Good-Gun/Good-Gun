@@ -178,8 +178,6 @@ class HomeFragment : Fragment() {
 
     /*프로그래스 및 기타 정보 수정*/
     private fun setData() {
-
-
         val max = ApplicationClass.maxNutrition
         val nutrition = nutritionResponse.nutrition
         binding!!.apply {

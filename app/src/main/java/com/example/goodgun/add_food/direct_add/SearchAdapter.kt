@@ -51,7 +51,7 @@ class SearchAdapter(private var foodList: List<FoodItem>) : RecyclerView.Adapter
             // 선택되지 않은 아이템의 테두리 설정 제거
             holder.binding.searchLayout.background = null
         }
-        holder.binding.num.text = foodList[position].number
+//        holder.binding.num.text = foodList[position].number
         holder.binding.searchName.text = foodList[position].foodName
     }
 }
