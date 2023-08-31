@@ -34,7 +34,7 @@ import kotlin.collections.ArrayList
 class HomeFragment : Fragment() {
 
     private lateinit var loadingDialog: Dialog // 로딩창 클래스
-    //lateinit var todayAdapter: TodayRVAdapter // 오늘 섭취한 음식정보 recyclerView
+    // lateinit var todayAdapter: TodayRVAdapter // 오늘 섭취한 음식정보 recyclerView
 
     private lateinit var todayVP: ViewPager2
     private lateinit var adapter: FoodVPAdapter
@@ -60,7 +60,6 @@ class HomeFragment : Fragment() {
         initLayout()
         initVP()
 
-
         return binding!!.root
     }
 
@@ -76,7 +75,6 @@ class HomeFragment : Fragment() {
                 tvHomeDate.text = LocalDate.parse(date.trim()).format(DateTimeFormatter.ofPattern("yyyy/MM/dd"))
                 getNutrition(date)
             }
-
 
             /*날짜 탐색 (다음 날짜)*/
             ivHomeRight.setOnClickListener {
@@ -114,7 +112,6 @@ class HomeFragment : Fragment() {
                 startActivity(intent)
             }
         }
-
     }
 
     /*private fun initRV() {
@@ -138,7 +135,6 @@ class HomeFragment : Fragment() {
 
     private val PERIOD_MS: Long = 5000 // 페이지 전환 주기 (5초)
 
-
     private val handler = Handler(Looper.getMainLooper())
     private val runnable = java.lang.Runnable {
         if (currentPage == todayVP.adapter?.itemCount) {
@@ -153,9 +149,9 @@ class HomeFragment : Fragment() {
             nutritionResponse = NetworkManager.getFoodByDate(date)
             fragmentFood.apply {
                 clear()
-                //todayAdapter.notifyItemRangeRemoved(0, num)
+                // todayAdapter.notifyItemRangeRemoved(0, num)
                 addAll(nutritionResponse.food_list)
-                //todayAdapter.notifyItemRangeInserted(0, nutritionResponse.food_list.size)
+                // todayAdapter.notifyItemRangeInserted(0, nutritionResponse.food_list.size)
             }
 
             adapter.setFragmentFood(fragmentFood)
@@ -166,11 +162,15 @@ class HomeFragment : Fragment() {
                     binding!!.tvNoFood.visibility = View.GONE
 
                     val timer = Timer()
-                    timer.schedule(object : TimerTask() {
-                        override fun run() {
-                            handler.post(runnable)
-                        }
-                    }, DELAY_MS, PERIOD_MS)
+                    timer.schedule(
+                        object : TimerTask() {
+                            override fun run() {
+                                handler.post(runnable)
+                            }
+                        },
+                        DELAY_MS,
+                        PERIOD_MS,
+                    )
                 }
             }
             setData()
@@ -190,7 +190,7 @@ class HomeFragment : Fragment() {
             pvHomeProtein.progress = (nutrition.protein / max.protein.toFloat() * 100.0).toFloat()
 
             tvHomeCalorie1.text = nutrition.calorie.toString()
-            tvHomeCalorie2.text = "/ " + max.calorie.toString()+" kcal"
+            tvHomeCalorie2.text = "/ " + max.calorie.toString() + " kcal"
             tvHomeCarbohydrates.text = nutrition.carbohydrates.toString() + " / " + max.carbohydrates.toString()
             tvHomeProteins.text = nutrition.protein.toString() + " / " + max.protein.toString()
             tvHomeFat.text = nutrition.fat.toString() + " / " + max.fat.toString()

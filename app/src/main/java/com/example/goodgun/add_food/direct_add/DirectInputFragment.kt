@@ -1,14 +1,14 @@
 
 package com.example.goodgun.add_food.direct_add
 
-import android.app.AlertDialog
 import android.app.Dialog
 import android.content.ContentValues
+import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
-import android.view.ContextThemeWrapper
 import android.view.View
+import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
@@ -23,6 +23,7 @@ import com.example.goodgun.openAPI.FoodItem
 import com.example.goodgun.openAPI.FoodList
 import com.example.goodgun.roomDB.FoodEntity
 import com.example.goodgun.util.LoadingDialog
+import com.example.goodgun.util.ScreenUtil
 import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -32,7 +33,7 @@ class DirectInputFragment : DialogFragment() {
     private var _binding: FragmentDirectInputBinding? = null
     private val binding get() = _binding!!
 
-    lateinit var dialog: AlertDialog
+    lateinit var searchDialog: Dialog
     val model: FoodViewModel by activityViewModels()
 
     lateinit var adapter: SearchAdapter
@@ -42,29 +43,45 @@ class DirectInputFragment : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         _binding = FragmentDirectInputBinding.inflate(layoutInflater)
         val view = binding.root
-        val themedContext = ContextThemeWrapper(context, R.style.CustomDialogTheme)
-        val dialogBuilder = AlertDialog.Builder(themedContext)
-            .setView(view)
-            .setPositiveButton("선택") {
-                    dialog, _ ->
-                // model 값 넣기
-            }
-            .setNegativeButton("취소") {
-                    dialog, _ ->
-                dialog.dismiss()
-            }
+        val layoutParams = WindowManager.LayoutParams()
+        val screenSize = ScreenUtil.getScreenSize(requireActivity())
+        val screenWidth = screenSize.first
+        val screenHeight = screenSize.second
+        val screenDensity = ScreenUtil.getScreenDensity(requireActivity())
 
-        dialog = dialogBuilder.create()
-        dialog.setOnShowListener {
-            dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.isEnabled = false
-        }
+//        val dialogBuilder = AlertDialog.Builder(requireActivity())
+//            .setView(view)
+//            .setPositiveButton("선택") {
+//                    dialog, _ ->
+//                // model 값 넣기
+//            }
+//            .setNegativeButton("취소") {
+//                    dialog, _ ->
+//                dialog.dismiss()
+//            }
+//
+//        dialog = dialogBuilder.create()
+//        dialog.setOnShowListener {
+//            dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.isEnabled = false
+//        }
+
+        searchDialog = Dialog(requireActivity(), R.style.CustomDialogTheme)
+        searchDialog.setContentView(view)
+        layoutParams.copyFrom(searchDialog.window?.attributes)
+        layoutParams.width = screenWidth - 200 // 원하는 너비
+//        layoutParams.height = 600 // 원하는 높이
+        layoutParams.height = dpToPx(requireContext(), 150)
+//        resizeDialog(150)
+        searchDialog.window?.attributes = layoutParams
+        searchDialog.create()
+        searchDialog.show()
 
         initRecyclerView()
         initBtn()
 
         loadingDialog = LoadingDialog(requireContext())
 
-        return dialog
+        return searchDialog
     }
 
     private fun initRecyclerView() {
@@ -91,7 +108,8 @@ class DirectInputFragment : DialogFragment() {
                     withContext(Dispatchers.Main) {
                         adapter.selectedItemPosition = position
                         adapter.notifyDataSetChanged()
-                        dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.isEnabled = true
+//                        dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.isEnabled = true
+                        searchDialog.dismiss()
                     }
                 }
             }
@@ -132,12 +150,13 @@ class DirectInputFragment : DialogFragment() {
 
     private fun performSearch() {
         val searchtext = binding.editTextSearch.text.toString()
-        dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.isEnabled = false
+//        dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.isEnabled = false
         adapter.selectedItemPosition = -1
         if (searchtext == "") {
             binding.emptyTextView.visibility = View.VISIBLE
             binding.searchRecyclerView.visibility = View.GONE
             loadingDialog.dismiss()
+            resizeDialog(150)
         } else {
             CoroutineScope(Dispatchers.IO).launch {
                 FoodName(searchtext)
@@ -160,6 +179,7 @@ class DirectInputFragment : DialogFragment() {
                             adapter.setData(foodList)
                             checkRecyclerViewIsEmpty()
                             loadingDialog.dismiss()
+                            resizeDialog(if (foodList.isNotEmpty()) 600 else 150)
                         }
                     }
                 }
@@ -171,6 +191,27 @@ class DirectInputFragment : DialogFragment() {
             })
     }
 
+    private fun resizeDialog(dp: Int) {
+        val dialog = searchDialog
+        val window = searchDialog.window
+        val layoutParams = window?.attributes
+
+        val totalItemHeight = binding.searchRecyclerView.height ?: 0
+        Log.i("height", totalItemHeight.toString())
+        // 원하는 추가 여백을 고려하여 Dialog 크기 설정
+        val desiredDialogHeight = /* additional padding */ dpToPx(requireContext(), dp)
+
+        layoutParams?.apply {
+            height = desiredDialogHeight
+        }
+
+        window?.attributes = layoutParams
+    }
+
+    private fun dpToPx(context: Context, dp: Int): Int {
+        val density = context.resources.displayMetrics.density
+        return (dp * density).toInt()
+    }
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
 

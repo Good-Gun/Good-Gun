@@ -11,8 +11,8 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.goodgun.ApplicationClass
-import com.example.goodgun.main.MainActivity
 import com.example.goodgun.databinding.AdditionalInfoLayoutBinding
+import com.example.goodgun.main.MainActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth

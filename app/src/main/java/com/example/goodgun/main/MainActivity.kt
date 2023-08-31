@@ -48,7 +48,6 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             })
-
         }
         binding.ivAdd.setOnClickListener {
             startActivity(Intent(this, CameraActivity::class.java))
@@ -80,8 +79,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-    fun changeNav(id:Int) {
+    fun changeNav(id: Int) {
         binding.bubbleTabBar.setSelected(0)
     }
 

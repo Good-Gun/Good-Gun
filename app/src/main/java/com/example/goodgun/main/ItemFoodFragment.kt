@@ -1,15 +1,12 @@
 package com.example.goodgun.main
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.goodgun.R
+import androidx.fragment.app.Fragment
 import com.example.goodgun.databinding.FragmentItemFoodBinding
-import com.example.goodgun.databinding.FragmentSolutionBinding
 import com.example.goodgun.network.model.Food
-
 
 class ItemFoodFragment : Fragment() {
 

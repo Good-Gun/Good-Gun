@@ -33,7 +33,7 @@ class ProfileFragment : Fragment() {
     val currentUser = auth.currentUser
 
     private lateinit var callback: OnBackPressedCallback
-    private lateinit var mContext:Context
+    private lateinit var mContext: Context
 
     private lateinit var exTypeSpinner: Spinner
     private lateinit var exFreqSpinner: Spinner
@@ -119,11 +119,14 @@ class ProfileFragment : Fragment() {
         // 로그아웃
         binding.profileLogoutBtn.setOnClickListener {
             auth.signOut()
-
             var logoutIntent = Intent(this.context, LoginActivity::class.java)
+            logoutIntent.putExtra("logout", 1)
             logoutIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(logoutIntent)
         }
+
+
+
 
         binding.profileFixBtn.setOnClickListener {
             uploadData(currentUser)
