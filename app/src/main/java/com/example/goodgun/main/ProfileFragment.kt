@@ -1,4 +1,4 @@
-package com.example.goodgun
+package com.example.goodgun.main
 
 import android.R
 import android.os.Bundle
@@ -11,6 +11,7 @@ import android.widget.MultiAutoCompleteTextView
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.goodgun.ApplicationClass
 import com.example.goodgun.databinding.FragmentProfileBinding
 import com.example.goodgun.login.CustomSpinnerAdapter
 import com.google.firebase.auth.FirebaseUser
@@ -96,7 +97,6 @@ class ProfileFragment : Fragment() {
 //            requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
 //            requireActivity().supportFragmentManager.popBackStack()
             //프래그먼트 종료하는게 아닌가 보네?
-
         }
     }
 

@@ -1,10 +1,11 @@
-package com.example.goodgun
+package com.example.goodgun.main
 
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.example.goodgun.ApplicationClass
+import com.example.goodgun.R
 import com.example.goodgun.camera.CameraActivity
 import com.example.goodgun.databinding.ActivityMainBinding
 import com.example.goodgun.network.NetworkManager
@@ -26,8 +27,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-
         binding.apply {
             bubbleTabBar.addBubbleListener(object : OnBubbleClickListener {
                 override fun onBubbleClick(id: Int) {
@@ -40,11 +39,15 @@ class MainActivity : AppCompatActivity() {
                         R.id.nav_option -> {
                             supportFragmentManager.beginTransaction()
                                 .replace(R.id.frame_main, ProfileFragment())
+                                .addToBackStack(null)
                                 .commitAllowingStateLoss()
                         }
                     }
                 }
+
+
             })
+            bubbleTabBar.setSelected(1)
 
         }
         binding.ivAdd.setOnClickListener {
@@ -76,4 +79,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+
 }

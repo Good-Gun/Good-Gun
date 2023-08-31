@@ -10,10 +10,8 @@ import android.widget.MultiAutoCompleteTextView.CommaTokenizer
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.startActivity
-import androidx.core.view.get
 import com.example.goodgun.ApplicationClass
-import com.example.goodgun.MainActivity
+import com.example.goodgun.main.MainActivity
 import com.example.goodgun.databinding.AdditionalInfoLayoutBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser

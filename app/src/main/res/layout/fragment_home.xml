@@ -4,18 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeFragment">
+    android:background="#f9f9f9"
+    tools:context=".main.HomeFragment">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/view1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/theme1"
-            android:elevation="10dp">
+            android:elevation="10dp"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/tv_home_text1"
@@ -97,31 +99,30 @@
 
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/view2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="20dp"
-            android:backgroundTint="@color/theme1_1"
-            android:outlineSpotShadowColor="@color/theme1"
-            app:cardCornerRadius="20dp">
+            android:background="@color/white"
+            app:cardCornerRadius="20dp"
+            app:layout_constraintTop_toBottomOf="@id/view1"
+            tools:layout_editor_absoluteX="20dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:elevation="10dp"
-                android:paddingTop="15dp"
-                android:paddingHorizontal="15dp"
+                android:padding="15dp"
                 app:layout_constraintCircleRadius="10dp">
 
                 <TextView
                     android:id="@+id/tv_home_nut_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/baseline_medication_24"
-                    android:drawableTint="@color/black"
-                    android:fontFamily="@font/goodgun"
                     android:text="영양 정보"
-                    android:textColor="@color/black"
+                    android:fontFamily="@font/goodgun"
+                    android:textColor="@color/extra_grey"
                     android:textSize="17sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
@@ -131,34 +132,19 @@
                     android:id="@+id/view_calorie"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="20dp"
+                    android:layout_marginTop="10dp"
                     android:gravity="center"
                     android:orientation="vertical"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:paddingBottom="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_home_nut_title"
-                    app:layout_constraintWidth_percent="0.5">
-
-                    <TextView
-                        android:id="@+id/title_home_calorie"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginVertical="10dp"
-                        android:text="@string/calorie"
-                        android:textAlignment="center"
-                        android:textColor="@color/black"
-                        android:textSize="17sp"
-                        android:textStyle="bold"
-                        app:layout_constraintTop_toTopOf="parent" />
-
+                    app:layout_constraintTop_toBottomOf="@+id/tv_home_nut_title">
 
                     <com.mikhaellopez.circularprogressbar.CircularProgressBar
                         android:id="@+id/pb_home_calorie"
-                        android:layout_width="130dp"
-                        android:layout_height="130dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="20dp"
-                        app:cpb_background_progressbar_color="@color/theme4"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        app:cpb_background_progressbar_color="@color/theme1_1"
                         app:cpb_background_progressbar_width="8dp"
                         app:cpb_progress="10"
                         app:cpb_progress_direction="to_right"
@@ -169,7 +155,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/title_home_calorie" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -180,6 +166,7 @@
                         app:layout_constraintEnd_toEndOf="@id/pb_home_calorie"
                         app:layout_constraintStart_toStartOf="@id/pb_home_calorie"
                         app:layout_constraintTop_toTopOf="@id/pb_home_calorie">
+
 
                         <TextView
                             android:id="@+id/tv_home_calorie1"
@@ -204,123 +191,155 @@
 
                 <LinearLayout
                     android:id="@+id/view_carbo"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    android:layout_marginStart="10dp"
-                    android:gravity="left"
-                    android:orientation="horizontal"
-                    app:layout_constraintBottom_toTopOf="@+id/view_fat"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/view_calorie">
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/view_fat"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view_calorie">
+
 
                     <TextView
                         style="@style/foodTitle"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        android:text="@string/carbohydrate"
-                        app:drawableTint="@color/theme1"
-                        app:drawableStartCompat="@drawable/baseline_bookmark_24" />
+                        android:gravity="center"
+                        android:text="@string/carbohydrate" />
+
+                    <com.skydoves.progressview.ProgressView
+                        android:id="@+id/pv_home_carbo"
+                        android:layout_width="80dp"
+                        android:layout_height="10dp"
+                        android:layout_marginVertical="5dp"
+                        app:progressView_autoAnimate="true"
+                        app:progressView_borderWidth="1dp"
+                        app:progressView_colorBackground="@color/theme1_1"
+                        app:progressView_colorProgress="@color/theme1"
+                        app:progressView_max="100"
+                        app:progressView_min="0"
+                        app:progressView_padding="1dp"
+                        app:progressView_progressFromPrevious="true"
+                        app:progressView_radius="12dp" />
 
                     <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="4"
-                        android:layout_marginStart="5dp"
                         android:id="@+id/tv_home_carbohydrates"
-                        style="@style/foodText"/>
+                        style="@style/foodTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/view_fat"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:gravity="left"
-                    android:orientation="horizontal"
-                    app:layout_constraintBottom_toBottomOf="@+id/view_calorie"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/view_calorie"
-                    app:layout_constraintTop_toTopOf="@+id/view_calorie">
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view_calorie">
 
                     <TextView
                         style="@style/foodTitle"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        android:text="@string/fat"
-                        app:drawableTint="@color/theme1"
-                        app:drawableStartCompat="@drawable/baseline_bookmark_24" />
+                        android:gravity="center"
+                        android:text="@string/fat" />
 
+                    <com.skydoves.progressview.ProgressView
+                        android:id="@+id/pv_home_fat"
+                        android:layout_width="80dp"
+                        android:layout_height="10dp"
+                        android:layout_marginVertical="5dp"
+                        app:progressView_autoAnimate="true"
+                        app:progressView_borderWidth="1dp"
+                        app:progressView_colorBackground="@color/theme1_1"
+                        app:progressView_colorProgress="@color/theme1"
+                        app:progressView_max="100"
+                        app:progressView_min="0"
+                        app:progressView_padding="1dp"
+                        app:progressView_progressFromPrevious="true"
+                        app:progressView_radius="12dp" />
 
                     <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="4"
-                        android:layout_marginStart="5dp"
                         android:id="@+id/tv_home_fat"
-                        style="@style/foodText" />
+                        style="@style/foodTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/view_protein"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginStart="10dp"
-                    android:gravity="left"
-                    android:orientation="horizontal"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toEndOf="@id/view_calorie"
-                    app:layout_constraintTop_toBottomOf="@+id/view_fat">
+                    app:layout_constraintStart_toEndOf="@+id/view_fat"
+                    app:layout_constraintTop_toBottomOf="@+id/view_calorie">
 
                     <TextView
                         style="@style/foodTitle"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        android:text="@string/protein"
-                        app:drawableTint="@color/theme1"
-                        app:drawableStartCompat="@drawable/baseline_bookmark_24"  />
+                        android:gravity="center"
+                        android:text="@string/protein" />
 
+                    <com.skydoves.progressview.ProgressView
+                        android:id="@+id/pv_home_protein"
+                        android:layout_width="80dp"
+                        android:layout_height="10dp"
+                        android:layout_marginVertical="5dp"
+                        app:progressView_autoAnimate="true"
+                        app:progressView_borderWidth="1dp"
+                        app:progressView_colorBackground="@color/theme1_1"
+                        app:progressView_colorProgress="@color/theme1"
+                        app:progressView_max="100"
+                        app:progressView_min="0"
+                        app:progressView_padding="1dp"
+                        app:progressView_progressFromPrevious="true"
+                        app:progressView_radius="12dp" />
 
                     <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="4"
-                        android:layout_marginStart="5dp"
                         android:id="@+id/tv_home_proteins"
-                        style="@style/foodText"/>
+                        style="@style/foodTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
-
-
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
+            android:id="@+id/view3"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            app:layout_constraintWidth_percent="0.43"
             android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
             android:background="@color/white"
-            android:outlineSpotShadowColor="@color/theme1"
-            app:cardCornerRadius="20dp">
+            app:cardCornerRadius="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view2">
+
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="15dp">
+                android:layout_height="match_parent">
 
                 <TextView
                     android:id="@+id/tv_home_info_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/baseline_food_bank_24"
-                    android:fontFamily="@font/goodgun"
                     android:text="식단 정보"
-                    android:textColor="@color/black"
+                    android:layout_margin="15dp"
+                    android:fontFamily="@font/goodgun"
+                    android:textColor="@color/extra_grey"
                     android:textSize="17sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
@@ -347,158 +366,171 @@
                     android:layout_marginTop="20dp"
                     android:padding="10dp"
                     android:text="@string/no_food_today"
+                    android:textSize="14sp"
                     android:textAlignment="center"
                     android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_home_info_title"
-                    tools:layout_editor_absoluteX="15dp" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_home_today"
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/vp_home_today"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingVertical="10dp"
+                    android:layout_height="0dp"
+                    android:paddingTop="10dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_home_info_title"
-                    tools:layout_editor_absoluteX="15dp" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_home_info_title" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:elevation="10dp"
-            android:orientation="horizontal">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/home_btn1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="20dp"
-                android:layout_weight="1"
-                android:outlineSpotShadowColor="@color/red"
-                app:cardCornerRadius="20dp">
+        <androidx.cardview.widget.CardView
+            android:id="@+id/home_btn1"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_marginVertical="20dp"
+            android:layout_marginStart="20dp"
+            app:cardCornerRadius="20dp"
+            app:layout_constraintWidth_percent="0.43"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/home_btn3">
 
-                <LinearLayout
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="15dp">
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/red"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:paddingHorizontal="10dp"
-                    android:paddingVertical="15dp">
+                    android:fontFamily="@font/goodgun"
+                    android:text="국건 솔루션"
+                    android:textColor="@color/red"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
 
-                    <ImageView
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:background="@drawable/circle_outline"
-                        android:clipToOutline="true"
-                        android:scaleType="centerCrop"
-                        android:src="@mipmap/ic_good_gun_round" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/goodgun"
-                        android:text="국건 솔루션"
-                        android:textColor="@color/white"
-                        android:textSize="17sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/home_btn2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="20dp"
-                android:layout_weight="1"
-                android:outlineSpotShadowColor="@color/theme1"
-                app:cardCornerRadius="20dp">
-
-                <LinearLayout
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="vertical"
+                    android:text="식습관을 기반으로 추천하는 생활습관"
+                    android:textColor="@color/dark_grey"
+                    android:textSize="8sp"
+                    android:textStyle="bold"/>
+
+
+
+                <ImageView
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_gravity="end|bottom"
                     android:paddingHorizontal="10dp"
-                    android:paddingVertical="15dp">
+                    android:paddingTop="10dp"
+                    android:paddingBottom="15dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/logo"/>
 
-                    <ImageView
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:background="@drawable/circle_outline"
-                        android:backgroundTint="@color/theme1_1"
-                        android:clipToOutline="true"
-                        android:paddingHorizontal="15dp"
-                        android:paddingTop="15dp"
-                        android:paddingBottom="20dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/baseline_fastfood_24"
-                        app:tint="@color/theme1" />
+            </LinearLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/goodgun"
-                        android:text="식단 추천"
-                        android:textColor="@color/theme1"
-                        android:textSize="17sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
-            </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/home_btn2"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_marginVertical="20dp"
+            android:layout_marginEnd="20dp"
+            app:cardCornerRadius="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/home_btn3"
+            app:layout_constraintWidth_percent="0.43">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/home_btn3"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="20dp"
-                android:layout_weight="1"
-                android:outlineSpotShadowColor="@color/theme3"
-                app:cardCornerRadius="20dp">
-
-                <LinearLayout
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="15dp">
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="vertical"
+                    android:fontFamily="@font/goodgun"
+                    android:text="식단 추천"
+                    android:textColor="@color/extra_grey"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="식습관을 기반으로 추천하는 식단"
+                    android:textColor="@color/dark_grey"
+                    android:textSize="8sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_gravity="end|bottom"
                     android:paddingHorizontal="10dp"
-                    android:paddingVertical="15dp">
+                    android:paddingTop="10dp"
+                    android:paddingBottom="15dp"
+                    android:src="@drawable/ic_food"
+                    app:tint="@color/theme3"  />
 
-                    <ImageView
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:background="@drawable/circle_outline"
-                        android:backgroundTint="@color/theme3_1"
-                        android:clipToOutline="true"
-                        android:paddingHorizontal="10dp"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="15dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/baseline_bar_chart_24"
-                        app:tint="@color/theme3" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/goodgun"
-                        android:text="통계 보기"
-                        android:textColor="@color/theme3"
-                        android:textSize="17sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
+            </LinearLayout>
 
-            </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-        </LinearLayout>
-    </LinearLayout>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/home_btn3"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            app:cardCornerRadius="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view2"
+            app:layout_constraintWidth_percent="0.43">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="15dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/goodgun"
+                    android:text="통계 보기"
+                    android:textColor="@color/extra_grey"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="기간별 평균 영양소 섭취량"
+                    android:textColor="@color/dark_grey"
+                    android:textSize="8sp"
+                    android:textStyle="bold"/>
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_gravity="end|bottom"
+                    android:paddingHorizontal="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="15dp"
+                    android:src="@drawable/ic_graph"
+                    app:tint="@color/theme3" />
+
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

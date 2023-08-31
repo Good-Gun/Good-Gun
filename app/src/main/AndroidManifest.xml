@@ -59,7 +59,7 @@
             android:exported="true"
             android:theme="@style/SplashTheme" /> <!-- Splash Activity -->
         <activity
-            android:name=".MainActivity"
+            android:name=".main.MainActivity"
             android:exported="false" />
         <activity
             android:name=".login.LoginActivity"
@@ -77,9 +77,6 @@
         <activity
             android:name=".login.AdditionalInfoActivity"
             android:exported="true" />
-        <activity
-            android:name=".login.ProfileActivity"
-            android:exported="false" />
         <activity
             android:name=".add_food.FoodPhotoCheck"
             android:exported="false" />
