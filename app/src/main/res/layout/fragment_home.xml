@@ -123,7 +123,7 @@
                     android:text="영양 정보"
                     android:fontFamily="@font/goodgun"
                     android:textColor="@color/extra_grey"
-                    android:textSize="17sp"
+                    android:textSize="15sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -340,7 +340,7 @@
                     android:layout_margin="15dp"
                     android:fontFamily="@font/goodgun"
                     android:textColor="@color/extra_grey"
-                    android:textSize="17sp"
+                    android:textSize="15sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -405,7 +405,7 @@
                     android:fontFamily="@font/goodgun"
                     android:text="국건 솔루션"
                     android:textColor="@color/red"
-                    android:textSize="17sp"
+                    android:textSize="15sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -456,7 +456,7 @@
                     android:fontFamily="@font/goodgun"
                     android:text="식단 추천"
                     android:textColor="@color/extra_grey"
-                    android:textSize="17sp"
+                    android:textSize="15sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -505,7 +505,7 @@
                     android:fontFamily="@font/goodgun"
                     android:text="통계 보기"
                     android:textColor="@color/extra_grey"
-                    android:textSize="17sp"
+                    android:textSize="15sp"
                     android:textStyle="bold" />
 
                 <TextView

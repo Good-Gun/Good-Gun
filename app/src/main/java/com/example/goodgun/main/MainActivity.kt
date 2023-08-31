@@ -3,6 +3,8 @@ package com.example.goodgun.main
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.goodgun.ApplicationClass
 import com.example.goodgun.R
@@ -23,13 +25,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var loadingDialog: Dialog // 로딩창 클래스
 
-    override fun onBackPressed() {
-        if (supportFragmentManager.backStackEntryCount > 0) {
-            supportFragmentManager.popBackStack()
-        } else {
-            super.onBackPressed()
-        }
-    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -42,14 +37,13 @@ class MainActivity : AppCompatActivity() {
                         R.id.nav_home -> {
                             supportFragmentManager.beginTransaction()
                                 .replace(R.id.frame_main, HomeFragment())
-                                .commitAllowingStateLoss()
+                                .commitNowAllowingStateLoss()
                         }
                         R.id.nav_option -> {
                             supportFragmentManager.beginTransaction()
                                 .replace(R.id.frame_main, ProfileFragment())
-                                .commitAllowingStateLoss()
-                            supportFragmentManager.beginTransaction().addToBackStack(null)
-                            supportFragmentManager.beginTransaction().commit()
+                                .addToBackStack(null)
+                                .commitNowAllowingStateLoss()
                         }
                     }
                 }
@@ -88,4 +82,6 @@ class MainActivity : AppCompatActivity() {
     fun changeNav(id: Int) {
         binding.bubbleTabBar.setSelected(0)
     }
+
+
 }
