@@ -92,6 +92,7 @@ class HomeFragment : Fragment() {
 
             homeBtn1.setOnClickListener {
                 val intent = Intent(activity, SolutionActivity::class.java)
+                (activity as MainActivity).
                 startActivity(intent)
             }
 
@@ -128,7 +129,7 @@ class HomeFragment : Fragment() {
 
     fun initVP() {
         todayVP = binding!!.vpHomeToday
-        adapter = FoodVPAdapter(requireActivity().supportFragmentManager, lifecycle)
+        adapter = FoodVPAdapter(childFragmentManager, lifecycle)
         todayVP.adapter = adapter
     }
 
@@ -197,19 +198,6 @@ class HomeFragment : Fragment() {
         loadingDialog.dismiss()
     }
 
-    /*리사이클러뷰에서 아이템 간격 조정*/
-    inner class VerticalSpaceItemDecoration(private val verticalSpaceHeight: Int) :
-        RecyclerView.ItemDecoration() {
-        override fun getItemOffsets(
-            outRect: Rect,
-            view: View,
-            parent: RecyclerView,
-            state: RecyclerView.State,
-        ) {
-            outRect.bottom = verticalSpaceHeight
-        }
-    }
-
     override fun onResume() {
         super.onResume()
 
@@ -224,15 +212,5 @@ class HomeFragment : Fragment() {
             }
         }
     }
-    inner class LinearLayoutManagerWrapper : LinearLayoutManager {
-        constructor(context: Context) : super(context) {}
 
-        constructor(context: Context, orientation: Int, reverseLayout: Boolean) : super(context, orientation, reverseLayout) {}
-
-        constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {}
-
-        override fun supportsPredictiveItemAnimations(): Boolean {
-            return false
-        }
-    }
 }
