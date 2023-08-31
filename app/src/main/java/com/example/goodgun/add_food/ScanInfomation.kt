@@ -166,7 +166,7 @@ class ScanInfomation : AppCompatActivity() {
                         .setValue(food)
                 }
                 roomdb.foodDao().deleteAll()
-                roomdb.foodDao().saveFood(FoodEntity())
+                roomdb.foodDao().saveFood(FoodEntity("is_sum_entity"))
 
                 val nutrition = NetworkManager.getNutritionData(
                     LocalDateTime.now().minusWeeks(1)
