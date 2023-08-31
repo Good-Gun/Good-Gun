@@ -55,7 +55,6 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             })
-            bubbleTabBar.setSelected(1)
 
         }
         binding.ivAdd.setOnClickListener {
@@ -86,5 +85,9 @@ class MainActivity : AppCompatActivity() {
                 loadingDialog.dismiss()
             }
         }
+    }
+
+    fun changeNav(id:Int) {
+        binding.bubbleTabBar.setSelected(0)
     }
 }

@@ -33,6 +33,7 @@ class ProfileFragment : Fragment() {
     val currentUser = auth.currentUser
 
     private lateinit var callback: OnBackPressedCallback
+    private lateinit var mContext:Context
 
     private lateinit var exTypeSpinner: Spinner
     private lateinit var exFreqSpinner: Spinner
@@ -66,13 +67,10 @@ class ProfileFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        mContext = context
         callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                (activity as MainActivity).binding.bubbleTabBar.setSelected(com.example.goodgun.R.id.nav_home)
-                requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(com.example.goodgun.R.id.frame_main, HomeFragment())
-                    .commitAllowingStateLoss()
-                requireActivity().supportFragmentManager.popBackStack()
+                (activity as MainActivity).changeNav(com.example.goodgun.R.id.nav_home)
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(this, callback)
@@ -187,7 +185,7 @@ class ProfileFragment : Fragment() {
     private fun initSpinners(typePos: Int, freqPos: Int, goalPos: Int) {
         println("==========" + typePos.toString() + freqPos.toString() + goalPos.toString())
         exTypeList = arrayListOf("무산소 운동", "유산소 운동", "둘 다")
-        exTypeSpinnerAdapter = CustomSpinnerAdapter(this.requireContext(), exTypeList)
+        exTypeSpinnerAdapter = CustomSpinnerAdapter(mContext, exTypeList)
         exTypeSpinner = binding.profileExTypeSpinner
 
         selectedTypePosition = typePos
@@ -209,7 +207,7 @@ class ProfileFragment : Fragment() {
         }
 
         exFreqList = arrayListOf("거의 안함", "1회 이하", "2 ~ 3회", "4 ~ 5 회", "6회 이상")
-        exFreqSpinnerAdapter = CustomSpinnerAdapter(this.requireContext(), exFreqList)
+        exFreqSpinnerAdapter = CustomSpinnerAdapter(mContext, exFreqList)
         exFreqSpinner = binding.profileExFreqSpinner
         exFreqSpinner.adapter = exFreqSpinnerAdapter
         exFreqSpinner.setSelection(freqPos)
@@ -230,7 +228,7 @@ class ProfileFragment : Fragment() {
         }
 
         goalList = arrayListOf("다이어트", "밸런스", "벌크 업")
-        goalSpinnerAdapter = CustomSpinnerAdapter(this.requireContext(), goalList)
+        goalSpinnerAdapter = CustomSpinnerAdapter(mContext, goalList)
         goalSpinner = binding.profileGoalSpinner
         goalSpinner.adapter = goalSpinnerAdapter
         goalSpinner.setSelection(goalPos)
