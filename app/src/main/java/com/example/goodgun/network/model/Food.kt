@@ -5,7 +5,7 @@ import java.time.LocalDate
 data class Food(
     var id: Int,
     var name: String,
-    var calorie: Int,
+    var calory: Int,
     var carbohydrates: Int,
     var sugar: Int,
     var protein: Int,
