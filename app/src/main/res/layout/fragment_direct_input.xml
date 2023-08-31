@@ -3,11 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:padding="20dp"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:orientation="horizontal">
 
         <EditText
@@ -15,16 +17,23 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Search..."
+            android:layout_marginRight="20dp"
+            android:hint="음식 검색"
             android:inputType="text"
             android:maxLines="1"
             android:imeOptions="actionSearch"
-            android:padding="16dp"/>
-        <Button
+            android:background="@drawable/rectangle_eef1f4_10dp"
+            android:drawableLeft="@drawable/search_icon"
+            android:drawablePadding="10dp"
+            android:padding="16dp" />
+        <TextView
             android:id="@+id/searchBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="검색하기"/>
+            android:layout_gravity="center"
+            android:text="검색"
+            android:textColor="#545F71"
+            android:textSize="20sp"/>
 
     </LinearLayout>
 
