@@ -25,12 +25,14 @@ import kotlin.time.Duration.Companion.seconds
 object NetworkManager : NetworkInterface {
     private val userId = ApplicationClass.uid
     private val database = FirebaseDatabase.getInstance()
+    private val path_user = "user_list"
+    private val path_food = "food_list"
 
     /*firebase에서 date부터 오늘까지의 음식 정보들 가져오기*/
     override suspend fun getFoodByDate(date: String): NutritionResponse = withContext(Dispatchers.IO) {
         val response = NutritionResponse()
         val datesRef: DatabaseReference =
-            database.getReference("user_list").child(userId).child("food")
+            database.getReference(path_user).child(userId).child(path_food)
         val outerSnapshot: DataSnapshot = datesRef.get().await()
         for (dateSnapshot in outerSnapshot.children) {
             if (dateSnapshot.value != null) {
@@ -47,7 +49,7 @@ object NetworkManager : NetworkInterface {
                         )
                         response.food_list.add(food)
                         response.nutrition.apply {
-                            calorie += food.calorie
+                            calorie += food.calory
                             carbohydrates += food.carbohydrates
                             fat += food.fat
                             saturated_fat += food.saturated_fat
@@ -70,7 +72,7 @@ object NetworkManager : NetworkInterface {
         val nutrition = Nutrition()
         var days = 0
         val datesRef: DatabaseReference =
-            database.getReference("user_list").child(userId).child("food")
+            database.getReference(path_user).child(userId).child(path_food)
         val outerSnapshot: DataSnapshot = datesRef.get().await()
         for (dateSnapshot in outerSnapshot.children) {
             if (dateSnapshot.value != null) {
@@ -88,7 +90,7 @@ object NetworkManager : NetworkInterface {
                     for (foodSnapshot in innerSnapshot.children) {
                         val food = foodSnapshot.getValue(Food::class.java)!!
                         nutrition.apply {
-                            calorie += food.calorie
+                            calorie += food.calory
                             carbohydrates += food.carbohydrates
                             fat += food.fat
                             saturated_fat += food.saturated_fat
@@ -123,14 +125,14 @@ object NetworkManager : NetworkInterface {
         val nutrition = Nutrition()
 
         val datesRef: DatabaseReference =
-            database.getReference("user_list").child(userId).child("food").child(date.trim())
+            database.getReference(path_user).child(userId).child(path_food).child(date.trim())
 
         val dataSnapshot: DataSnapshot = datesRef.get().await()
         for (snapshot in dataSnapshot.children) {
             Log.d("Firebase Communication", "in day Nutrition, ${snapshot.key}")
             val food = snapshot.getValue(Food::class.java)!!
             nutrition.apply {
-                calorie += food.calorie
+                calorie += food.calory
                 carbohydrates += food.carbohydrates
                 fat += food.fat
                 saturated_fat += food.saturated_fat
@@ -146,7 +148,7 @@ object NetworkManager : NetworkInterface {
 
     override suspend fun getUserData(): User = withContext(Dispatchers.IO) {
         val dataRef: DatabaseReference =
-            database.getReference("user_list").child(ApplicationClass.uid)
+            database.getReference(path_user).child(ApplicationClass.uid)
         val dataSnapshot: DataSnapshot = dataRef.get().await()
         val user = dataSnapshot.getValue(User::class.java)!!
 
@@ -156,7 +158,7 @@ object NetworkManager : NetworkInterface {
     /*임시로 만들어둔 음식 등록용 함수*/
     override fun postFoodData(date: String, food: Food) {
         val foodRef =
-            FirebaseDatabase.getInstance().getReference("user_list").child(userId).child("food").child(date.trim()).push()
+            FirebaseDatabase.getInstance().getReference(path_user).child(userId).child(path_food).child(date.trim()).push()
         foodRef.setValue(food)
             .addOnSuccessListener {
                 // 성공적으로 데이터가 저장된 경우 실행될 코드

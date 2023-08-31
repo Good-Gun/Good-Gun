@@ -68,7 +68,7 @@ class ProfileFragment : Fragment() {
         super.onAttach(context)
         callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                (requireActivity() as MainActivity).binding.bubbleTabBar.setSelected(com.example.goodgun.R.id.nav_home)
+                (activity as MainActivity).binding.bubbleTabBar.setSelected(com.example.goodgun.R.id.nav_home)
                 requireActivity().supportFragmentManager.beginTransaction()
                     .replace(com.example.goodgun.R.id.frame_main, HomeFragment())
                     .commitAllowingStateLoss()
