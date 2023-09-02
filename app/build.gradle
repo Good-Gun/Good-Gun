@@ -96,6 +96,7 @@ dependencies {
     implementation "com.github.skydoves:progressview:1.1.3"
     implementation 'com.github.ybq:Android-SpinKit:1.4.0'
     implementation 'io.ak1:bubbletabbar:1.0.8'
+    implementation 'com.github.thellmund:ViewPager2Indicator:0.8.1'
 
     //카메라
     implementation 'androidx.camera:camera-view:1.2.3'

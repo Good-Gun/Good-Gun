@@ -42,7 +42,6 @@ class MainActivity : AppCompatActivity() {
                         R.id.nav_option -> {
                             supportFragmentManager.beginTransaction()
                                 .replace(R.id.frame_main, ProfileFragment())
-                                .addToBackStack(null)
                                 .commitNowAllowingStateLoss()
                         }
                     }

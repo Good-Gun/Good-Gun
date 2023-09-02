@@ -11,6 +11,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.aallam.openai.api.BetaOpenAI
 import com.aallam.openai.api.chat.*
 import com.example.goodgun.ApplicationClass
@@ -30,11 +31,14 @@ import java.time.format.DateTimeFormatter
 
 /*오늘의 정보만 다루는 액티비티*/
 class FoodActivity : AppCompatActivity() {
-    private lateinit var client: OkHttpClient
+    private lateinit var question:String
     private lateinit var loadingDialog: Dialog
     lateinit var binding: ActivityFoodBinding
     lateinit var todayAdapter: TodayRVAdapter
-    lateinit var foodAdapter: FoodRVAdapter
+
+
+    private lateinit var viewPager: ViewPager2
+    private lateinit var foodAdapter: FoodVPAdapter
 
     private var food_list: ArrayList<Food> = arrayListOf()
     private var recommend_list: ArrayList<String> = arrayListOf()
@@ -70,13 +74,10 @@ class FoodActivity : AppCompatActivity() {
         val spaceDecoration = this.VerticalSpaceItemDecoration(20)
         binding.rvFoodToday.addItemDecoration(spaceDecoration)
 
-        foodAdapter = FoodRVAdapter(this, recommend_list, 5)
-        binding.rvFoodRecommend.adapter = foodAdapter
-        binding.rvFoodRecommend.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        // 간격 20으로
-        val foodSpaceDecoration = this.VerticalSpaceItemDecoration(5)
-        binding.rvFoodRecommend.addItemDecoration(foodSpaceDecoration)
+        viewPager = binding.vpFoodRecommend
+        foodAdapter = FoodVPAdapter(supportFragmentManager, lifecycle)
+        viewPager.adapter = foodAdapter
+        binding.indicator.attachTo(viewPager)
     }
 
     inner class VerticalSpaceItemDecoration(private val verticalSpaceHeight: Int) :
@@ -92,7 +93,6 @@ class FoodActivity : AppCompatActivity() {
         }
     }
 
-    @OptIn(BetaOpenAI::class)
     private fun getDataFromFirebase() {
         var response: NutritionResponse?
         val today = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
@@ -113,15 +113,16 @@ class FoodActivity : AppCompatActivity() {
 
             response?.nutrition?.let {
                 setNutrition(it)
-                val question = it.getQuestion(1)
-
-                if (question != null) {
-                    completion = NetworkManager.callAI(question)
-                    Log.d("Checking OPENAI", completion!!)
-                    tokenizeString(completion!!)
-                }
+                question = it.getQuestion(1)!!
+                getSolution()
             }
         }
+    }
+
+    suspend fun getSolution() {
+        completion = NetworkManager.callAI(question)
+        Log.d("Checking OPENAI", completion!!)
+        tokenizeString(completion!!)
     }
 
     private fun setNutrition(nutrition: Nutrition) {
@@ -143,11 +144,21 @@ class FoodActivity : AppCompatActivity() {
 
     @SuppressLint("NotifyDataSetChanged")
     fun tokenizeString(str: String) {
-        str.split("1.", "2.", "3.", "4.", "5.", "6.", "7.").toCollection(recommend_list)
-        recommend_list.removeAt(0)
-        Log.d("Checking OPENAI", "${recommend_list[0]}, ${recommend_list[1]}")
-        Handler(Looper.getMainLooper()).post {
-            foodAdapter.notifyDataSetChanged()
+        var flag = true
+        while(flag) {
+            try {
+                str.split("1.", "2.", "3.", "4.", "5.").toCollection(recommend_list)
+                recommend_list.removeAt(0)
+                foodAdapter.setFragmentTexts(recommend_list)
+                Handler(Looper.getMainLooper()).post {
+                    binding.tvWait.visibility = View.GONE
+                }
+                flag = false
+            } catch (e: Exception) {
+                CoroutineScope(Dispatchers.Main).launch {
+                    getSolution()
+                }
+            }
         }
         /*for(i in recommend_list){
             Log.d("Checking OPENAI", "tokenized result: ${i.trim()}")
