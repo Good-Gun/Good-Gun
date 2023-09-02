@@ -1,5 +1,8 @@
 package com.example.goodgun.network
 
+import android.annotation.SuppressLint
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import com.aallam.openai.api.BetaOpenAI
 import com.aallam.openai.api.chat.ChatCompletionRequest
@@ -8,6 +11,7 @@ import com.aallam.openai.api.chat.ChatRole
 import com.aallam.openai.api.http.Timeout
 import com.aallam.openai.api.model.ModelId
 import com.aallam.openai.client.OpenAI
+import com.doinglab.foodlens.sdk.ui.util.UnitTokenizer.tokenizeString
 import com.example.goodgun.ApplicationClass
 import com.example.goodgun.BuildConfig
 import com.example.goodgun.network.model.Food
@@ -171,6 +175,7 @@ object NetworkManager : NetworkInterface {
 
     @OptIn(BetaOpenAI::class)
     override suspend fun callAI(question: String): String = withContext(Dispatchers.IO) {
+        var str = ""
         val openAI = OpenAI(
             token = BuildConfig.SAMPLE_API_KEY,
             timeout = Timeout(socket = 200.seconds),
@@ -186,12 +191,21 @@ object NetworkManager : NetworkInterface {
                 ),
             ),
         )
-        val completion = openAI.chatCompletion(chatCompletionRequest)
 
-        /*Log.d("Checking OPENAI", str)
-        tokenizeString(str)*/
+        var flag = true
+        while(flag) {
+            try {
+                val completion = openAI.chatCompletion(chatCompletionRequest)
 
-        val str = completion.choices[0].message?.content.toString()
+                str = completion.choices[0].message?.content.toString()
+                Log.d("Check OpenAI from NetworkManager", str)
+
+                val check = arrayListOf<String>()
+                str.split("1.", "2.", "3.", "4.", "5.").toCollection(check)
+                flag = false
+            } catch(_:Exception){}
+        }
         str
     }
+
 }

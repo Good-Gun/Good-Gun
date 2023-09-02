@@ -2,13 +2,15 @@ package com.example.goodgun.main_function
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
+import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
-import com.doinglab.foodlens.sdk.ui.util.FoodLensDBManager.init
-import com.doinglab.foodlens.sdk.ui.util.UnitTokenizer.tokenizeString
 import com.example.goodgun.ApplicationClass
 import com.example.goodgun.R
 import com.example.goodgun.databinding.ActivitySolutionBinding
@@ -24,6 +26,8 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class SolutionActivity : AppCompatActivity() {
     private lateinit var viewPager: ViewPager2
@@ -32,6 +36,7 @@ class SolutionActivity : AppCompatActivity() {
     private lateinit var loadingDialog: Dialog
     private val fragmentTexts = mutableListOf<String>()
     private var response: String = ""
+    lateinit var nutrition: Nutrition
 
     lateinit var roomdb: FoodDatabase
     private lateinit var auth: FirebaseAuth
@@ -63,7 +68,7 @@ class SolutionActivity : AppCompatActivity() {
         viewPager = binding.vpSolution
         adapter = SolutionVPAdapter(supportFragmentManager, lifecycle)
         viewPager.adapter = adapter
-
+        binding.indicator.attachTo(viewPager)
         binding.backBtn.setOnClickListener {
             finish()
         }
@@ -81,6 +86,9 @@ class SolutionActivity : AppCompatActivity() {
                 adapter.setFragmentTexts(fragmentTexts)
                 loadingDialog.dismiss()
             }*/
+            nutrition = NetworkManager.getNutritionData(LocalDateTime.now().minusDays(3).format(
+                DateTimeFormatter.ofPattern(" yyyy-MM-dd")))
+            setViewColor()
 
             val solution = ApplicationClass.sharedPreferences.getString("solution", null)
             if (solution.isNullOrBlank()) {
@@ -90,25 +98,70 @@ class SolutionActivity : AppCompatActivity() {
             } else {
                 tokenizeString(solution)
                 adapter.setFragmentTexts(fragmentTexts)
+
+
+
                 loadingDialog.dismiss()
             }
         }
     }
 
-    fun initFr() {
-        val question = Nutrition().getQuestion(2)!!
-        CoroutineScope(Dispatchers.Main).launch {
-            response = NetworkManager.callAI(question)
-            tokenizeString(response)
-            adapter.setFragmentTexts(fragmentTexts)
-            loadingDialog.dismiss()
-        }
-    }
+
 
     @SuppressLint("NotifyDataSetChanged")
     fun tokenizeString(str: String) {
-        str.split("1.", "2.", "3.", "4.", "5.", "6.", "7.").toCollection(fragmentTexts)
+        str.split("1.", "2.", "3.", "4.", "5.").toCollection(fragmentTexts)
         fragmentTexts.removeAt(0)
         Log.d("Checking OPENAI", "Hi from SolutionActivity: $str")
     }
+
+    private fun setViewColor() {
+        val arr1: List<String> = listOf("탄수화물", "당류", "지방", "트랜스지방", "포화지방", "단백질", "나트륨", "콜레스테롤")
+        val arr2: List<String> = listOf(
+            "carbohydrates",
+            "sugar",
+            "fats",
+            "trans_fat",
+            "saturated_fat",
+            "proteins",
+            "sodium",
+            "cholesterol",
+        )
+
+        val arr4: List<TextView> = listOf(
+            binding.tvFoodCarbo,
+            binding.tvFoodSugar,
+            binding.tvFoodFat,
+            binding.tvFoodTrans,
+            binding.tvFoodSaturated,
+            binding.tvFoodProtein,
+            binding.tvFoodSodium,
+            binding.tvFoodCholesterol,
+        )
+        for (i in arr1.indices) {
+            when (nutrition.calculateNutrientIntake(arr2[i])) {
+                2 -> {
+                    arr4[i].text = "과다"
+                    arr4[i].backgroundTintList = ColorStateList.valueOf(ResourcesCompat.getColor(resources, R.color.red, null))
+                }
+                1 -> {
+                    arr4[i].text = "주의"
+                    arr4[i].backgroundTintList = ColorStateList.valueOf(ResourcesCompat.getColor(resources, R.color.yellow, null))
+                }
+                0 -> {
+                    arr4[i].text = "정상"
+                    arr4[i].backgroundTintList = ColorStateList.valueOf(ResourcesCompat.getColor(resources, R.color.green, null))
+                }
+                -1 -> {
+                    arr4[i].text = "주의"
+                    arr4[i].backgroundTintList = ColorStateList.valueOf(ResourcesCompat.getColor(resources, R.color.yellow, null))
+                }
+                -2 -> {
+                    arr4[i].text = "부족"
+                    arr4[i].backgroundTintList = ColorStateList.valueOf(ResourcesCompat.getColor(resources, R.color.red, null))
+                }
+            }
+        }
+    }
+
 }
