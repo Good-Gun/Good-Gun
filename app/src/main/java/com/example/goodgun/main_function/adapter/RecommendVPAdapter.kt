@@ -1,11 +1,15 @@
-package com.example.goodgun.main_function
-
+package com.example.goodgun.main_function.adapter
+/*
+음식 추천을 위한 ViewPager2 어댑터
+*/
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.example.goodgun.main_function.FoodFragment
 
-class FoodVPAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
+class RecommendVPAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
     FragmentStateAdapter(fragmentManager, lifecycle) {
 
     private val fragmentTexts = mutableListOf<String>()

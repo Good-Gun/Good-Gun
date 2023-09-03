@@ -6,7 +6,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.goodgun.network.model.Food
 
-class FoodVPAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
+class HomeVPAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
     FragmentStateAdapter(fragmentManager, lifecycle) {
 
     private val fragmentFood = mutableListOf<Food>()
@@ -20,7 +20,7 @@ class FoodVPAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
     override fun getItemCount(): Int = fragmentFood.size
 
     override fun createFragment(position: Int): Fragment {
-        val fragment = ItemFoodFragment()
+        val fragment = HomeFoodFragment()
         fragment.setFood(fragmentFood[position])
         return fragment
     }
