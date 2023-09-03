@@ -97,6 +97,8 @@ dependencies {
     implementation 'com.github.ybq:Android-SpinKit:1.4.0'
     implementation 'io.ak1:bubbletabbar:1.0.8'
     implementation 'com.github.thellmund:ViewPager2Indicator:0.8.1'
+    implementation 'com.aminography:primedatepicker:3.6.0'
+    implementation 'com.aminography:primecalendar:1.7.0'
 
     //카메라
     implementation 'androidx.camera:camera-view:1.2.3'
