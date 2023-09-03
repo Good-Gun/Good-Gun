@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         R.id.nav_option -> {
                             supportFragmentManager.beginTransaction()
-                                .replace(R.id.frame_main, ProfileFragment())
+                                .replace(R.id.frame_main, CopyProfileFragment())
                                 .commitNowAllowingStateLoss()
                         }
                     }
