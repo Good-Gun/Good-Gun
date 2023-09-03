@@ -1,6 +1,5 @@
 package com.example.goodgun.main
 /*
-2023.09.03 in HomeFragment - Date Picker 추가
 2023.09.03 in FoodActivity - RV to VP
  */
 
@@ -16,7 +15,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
-import com.aminography.primecalendar.PrimeCalendar
 import com.aminography.primecalendar.civil.CivilCalendar
 import com.aminography.primedatepicker.picker.PrimeDatePicker
 import com.aminography.primedatepicker.picker.callback.SingleDayPickCallback

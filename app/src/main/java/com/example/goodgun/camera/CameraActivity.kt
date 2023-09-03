@@ -48,6 +48,7 @@ class CameraActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.statusBarColor = getColor(R.color.black)
         setContentView(binding.root)
         setListener()
         initLayout()

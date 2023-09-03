@@ -50,6 +50,7 @@ class ScanInfomation : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.statusBarColor = getColor(R.color.theme1)
         binding = ActivityScanInfomationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
