@@ -59,6 +59,10 @@ class GraphActivity : AppCompatActivity() {
             spinner1.setSelection(0)
 
             spinner1.onItemSelectedListener = SpinnerItemSelectListener()
+
+            backBtn.setOnClickListener {
+                finish()
+            }
         }
     }
 

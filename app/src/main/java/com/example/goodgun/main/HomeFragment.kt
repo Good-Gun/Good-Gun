@@ -1,20 +1,25 @@
 package com.example.goodgun.main
+/*
+2023.09.03 in HomeFragment - Date Picker 추가
+2023.09.03 in FoodActivity - RV to VP
+ */
+
 
 import android.app.Dialog
-import android.content.Context
 import android.content.Intent
-import android.graphics.Rect
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.aminography.primecalendar.PrimeCalendar
+import com.aminography.primecalendar.civil.CivilCalendar
+import com.aminography.primedatepicker.picker.PrimeDatePicker
+import com.aminography.primedatepicker.picker.callback.SingleDayPickCallback
 import com.example.goodgun.ApplicationClass
 import com.example.goodgun.add_food.ScanInfomation
 import com.example.goodgun.databinding.FragmentHomeBinding
@@ -55,7 +60,6 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
         date = today
         loadingDialog = LoadingDialog(requireContext())
-        loadingDialog.show()
 
         initLayout()
         initVP()
@@ -72,6 +76,7 @@ class HomeFragment : Fragment() {
             ivHomeLeft.setOnClickListener {
                 loadingDialog.show()
                 date = LocalDate.parse(date.trim()).minusDays(1).toString()
+                Log.d("Checking OpenAI", date)
                 tvHomeDate.text = LocalDate.parse(date.trim()).format(DateTimeFormatter.ofPattern("yyyy/MM/dd"))
                 getNutrition(date)
             }
@@ -88,6 +93,26 @@ class HomeFragment : Fragment() {
                 }
             }
 
+            /*날짜 텍스트 클릭시 DatePicker 작동*/
+            tvHomeDate.setOnClickListener{
+                val callback = SingleDayPickCallback { day ->
+                    val str = String.format("%04d", day.year) + "/"+ String.format("%02d", day.month+1) +"/"+ String.format("%02d", day.date)
+                    date = String.format("%04d", day.year) + "-"+ String.format("%02d", day.month+1) +"-"+ String.format("%02d", day.date)
+                    binding!!.tvHomeDate.text = str
+                    getNutrition(date)
+                }
+
+                val today = CivilCalendar()
+
+                val datePicker = PrimeDatePicker.bottomSheetWith(today)
+                    .pickSingleDay(callback)
+                    .initiallyPickedSingleDay(today)
+                    .maxPossibleDate(today)
+                    .build()
+                datePicker.show(childFragmentManager, "SOME_TAG")
+            }
+
+            /*국건 솔루션 창으로 이동*/
             homeBtn1.setOnClickListener {
                 val intent = Intent(activity, SolutionActivity::class.java)
                 (activity as MainActivity).
@@ -145,6 +170,7 @@ class HomeFragment : Fragment() {
 
     /*날짜를 바꿀 시 파이어베이스 요청*/
     private fun getNutrition(date: String) {
+        loadingDialog.show()
         CoroutineScope(Dispatchers.Main).launch {
             nutritionResponse = NetworkManager.getFoodByDate(date)
             fragmentFood.apply {
