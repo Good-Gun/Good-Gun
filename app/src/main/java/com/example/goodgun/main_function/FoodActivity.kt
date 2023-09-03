@@ -9,13 +9,14 @@ import android.os.Looper
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
-import com.aallam.openai.api.BetaOpenAI
 import com.aallam.openai.api.chat.*
 import com.example.goodgun.ApplicationClass
 import com.example.goodgun.databinding.ActivityFoodBinding
+import com.example.goodgun.main.HomeVPAdapter
+import com.example.goodgun.main_function.adapter.RecommendVPAdapter
+import com.example.goodgun.main_function.adapter.TodayVPAdapter
 import com.example.goodgun.network.NetworkManager
 import com.example.goodgun.network.model.Food
 import com.example.goodgun.network.model.Nutrition
@@ -25,23 +26,24 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import okhttp3.OkHttpClient
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.Collections.addAll
 
 /*오늘의 정보만 다루는 액티비티*/
 class FoodActivity : AppCompatActivity() {
     private lateinit var question:String
     private lateinit var loadingDialog: Dialog
     lateinit var binding: ActivityFoodBinding
-    lateinit var todayAdapter: TodayRVAdapter
 
 
     private lateinit var viewPager: ViewPager2
-    private lateinit var foodAdapter: FoodVPAdapter
-
-    private var food_list: ArrayList<Food> = arrayListOf()
+    private lateinit var recommendAdapter: RecommendVPAdapter
     private var recommend_list: ArrayList<String> = arrayListOf()
+
+    private lateinit var todayVP: ViewPager2
+    private lateinit var todayAdapter: TodayVPAdapter
+    private var fragmentToday = mutableListOf<Food>()
 
     var completion: String ? = null
 
@@ -66,49 +68,34 @@ class FoodActivity : AppCompatActivity() {
     }
 
     private fun initTodayRV() {
-        todayAdapter = TodayRVAdapter(this, food_list, 5)
-        binding.rvFoodToday.adapter = todayAdapter
-        binding.rvFoodToday.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        // 간격 20으로
-        val spaceDecoration = this.VerticalSpaceItemDecoration(20)
-        binding.rvFoodToday.addItemDecoration(spaceDecoration)
 
+        /*오늘 먹은 음식 리스트*/
+        todayVP = binding.vpFoodToday
+        todayAdapter = TodayVPAdapter(supportFragmentManager, lifecycle)
+        todayVP.adapter = todayAdapter
+        binding.indicatorFood.attachTo(todayVP)
+
+        /*식사 추천 리스트*/
         viewPager = binding.vpFoodRecommend
-        foodAdapter = FoodVPAdapter(supportFragmentManager, lifecycle)
-        viewPager.adapter = foodAdapter
+        recommendAdapter = RecommendVPAdapter(supportFragmentManager, lifecycle)
+        viewPager.adapter = recommendAdapter
         binding.indicator.attachTo(viewPager)
-    }
-
-    inner class VerticalSpaceItemDecoration(private val verticalSpaceHeight: Int) :
-        RecyclerView.ItemDecoration() {
-
-        override fun getItemOffsets(
-            outRect: Rect,
-            view: View,
-            parent: RecyclerView,
-            state: RecyclerView.State,
-        ) {
-            outRect.bottom = verticalSpaceHeight
-        }
     }
 
     private fun getDataFromFirebase() {
         var response: NutritionResponse?
         val today = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
         CoroutineScope(Dispatchers.Main).launch {
-            withContext(Dispatchers.IO) {
-                response = NetworkManager.getFoodByDate(today)
-                food_list.apply {
-                    addAll(response!!.food_list)
-                }
+            response = NetworkManager.getFoodByDate(today)
+            fragmentToday.apply {
+                clear()
+                addAll(response!!.food_list)
             }
-            if (response?.food_list?.size == 0) {
+            todayAdapter.setFragmentFood(fragmentToday)
+            if (fragmentToday.size == 0) {
                 Handler(Looper.getMainLooper()).post {
                     binding.tvNoFood.visibility = View.VISIBLE
                 }
-            } else {
-                todayAdapter.notifyItemRangeInserted(0, response!!.food_list.size)
             }
 
             response?.nutrition?.let {
@@ -149,7 +136,7 @@ class FoodActivity : AppCompatActivity() {
             try {
                 str.split("1.", "2.", "3.", "4.", "5.").toCollection(recommend_list)
                 recommend_list.removeAt(0)
-                foodAdapter.setFragmentTexts(recommend_list)
+                recommendAdapter.setFragmentTexts(recommend_list)
                 Handler(Looper.getMainLooper()).post {
                     binding.tvWait.visibility = View.GONE
                 }

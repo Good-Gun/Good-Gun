@@ -40,7 +40,7 @@ class HomeFragment : Fragment() {
     // lateinit var todayAdapter: TodayRVAdapter // 오늘 섭취한 음식정보 recyclerView
 
     private lateinit var todayVP: ViewPager2
-    private lateinit var adapter: FoodVPAdapter
+    private lateinit var adapter: HomeVPAdapter
     private val fragmentFood = mutableListOf<Food>()
 
     lateinit var nutritionResponse: NutritionResponse // 영양 정보 저장을 위한 클래스
@@ -149,7 +149,7 @@ class HomeFragment : Fragment() {
 
     fun initVP() {
         todayVP = binding!!.vpHomeToday
-        adapter = FoodVPAdapter(childFragmentManager, lifecycle)
+        adapter = HomeVPAdapter(childFragmentManager, lifecycle)
         todayVP.adapter = adapter
     }
 

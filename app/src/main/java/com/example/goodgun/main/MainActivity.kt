@@ -3,8 +3,6 @@ package com.example.goodgun.main
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.goodgun.ApplicationClass
 import com.example.goodgun.R
@@ -41,7 +39,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         R.id.nav_option -> {
                             supportFragmentManager.beginTransaction()
-                                .replace(R.id.frame_main, CopyProfileFragment())
+                                .replace(R.id.frame_main, ProfileFragment())
                                 .commitNowAllowingStateLoss()
                         }
                     }

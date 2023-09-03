@@ -9,11 +9,11 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
-import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.example.goodgun.ApplicationClass
 import com.example.goodgun.R
 import com.example.goodgun.databinding.ActivitySolutionBinding
+import com.example.goodgun.main_function.adapter.SolutionVPAdapter
 import com.example.goodgun.network.NetworkManager
 import com.example.goodgun.network.model.Nutrition
 import com.example.goodgun.roomDB.DatabaseManager

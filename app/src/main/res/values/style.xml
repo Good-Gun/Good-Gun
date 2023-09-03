@@ -14,8 +14,8 @@
 
     <!--식단 추천 메뉴에서 쓰이는 텍스트 스타일-->
     <style name="foodText">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/extra_grey</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/black</item>
         <item name="android:textStyle">bold</item>
     </style>
     <style name="foodTitle">

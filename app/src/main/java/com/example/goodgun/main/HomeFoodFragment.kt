@@ -5,12 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.goodgun.databinding.FragmentItemFoodBinding
+import com.example.goodgun.databinding.FragmentHomeFoodBinding
 import com.example.goodgun.network.model.Food
 
-class ItemFoodFragment : Fragment() {
+class HomeFoodFragment : Fragment() {
 
-    var binding: FragmentItemFoodBinding? = null
+    var binding: FragmentHomeFoodBinding? = null
     private var food: Food? = null
 
     override fun onCreateView(
@@ -19,7 +19,7 @@ class ItemFoodFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentItemFoodBinding.inflate(layoutInflater, container, false)
+        binding = FragmentHomeFoodBinding.inflate(layoutInflater, container, false)
         binding?.apply {
             tvName.text = food?.name
             tvCal.text = food?.calory.toString()
