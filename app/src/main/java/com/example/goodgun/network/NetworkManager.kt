@@ -1,8 +1,5 @@
 package com.example.goodgun.network
 
-import android.annotation.SuppressLint
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import com.aallam.openai.api.BetaOpenAI
 import com.aallam.openai.api.chat.ChatCompletionRequest
@@ -11,7 +8,6 @@ import com.aallam.openai.api.chat.ChatRole
 import com.aallam.openai.api.http.Timeout
 import com.aallam.openai.api.model.ModelId
 import com.aallam.openai.client.OpenAI
-import com.doinglab.foodlens.sdk.ui.util.UnitTokenizer.tokenizeString
 import com.example.goodgun.ApplicationClass
 import com.example.goodgun.BuildConfig
 import com.example.goodgun.network.model.Food
@@ -193,7 +189,7 @@ object NetworkManager : NetworkInterface {
         )
 
         var flag = true
-        while(flag) {
+        while (flag) {
             try {
                 val completion = openAI.chatCompletion(chatCompletionRequest)
 
@@ -203,9 +199,8 @@ object NetworkManager : NetworkInterface {
                 val check = arrayListOf<String>()
                 str.split("1.", "2.", "3.", "4.", "5.").toCollection(check)
                 flag = false
-            } catch(_:Exception){}
+            } catch (_: Exception) {}
         }
         str
     }
-
 }

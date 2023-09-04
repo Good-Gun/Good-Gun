@@ -3,7 +3,6 @@ package com.example.goodgun.main
 2023.09.03 in FoodActivity - RV to VP
  */
 
-
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
@@ -92,10 +91,10 @@ class HomeFragment : Fragment() {
             }
 
             /*날짜 텍스트 클릭시 DatePicker 작동*/
-            tvHomeDate.setOnClickListener{
+            tvHomeDate.setOnClickListener {
                 val callback = SingleDayPickCallback { day ->
-                    val str = String.format("%04d", day.year) + "/"+ String.format("%02d", day.month+1) +"/"+ String.format("%02d", day.date)
-                    date = String.format("%04d", day.year) + "-"+ String.format("%02d", day.month+1) +"-"+ String.format("%02d", day.date)
+                    val str = String.format("%04d", day.year) + "/" + String.format("%02d", day.month + 1) + "/" + String.format("%02d", day.date)
+                    date = String.format("%04d", day.year) + "-" + String.format("%02d", day.month + 1) + "-" + String.format("%02d", day.date)
                     binding!!.tvHomeDate.text = str
                     getNutrition(date)
                 }
@@ -113,8 +112,8 @@ class HomeFragment : Fragment() {
             /*국건 솔루션 창으로 이동*/
             homeBtn1.setOnClickListener {
                 val intent = Intent(activity, SolutionActivity::class.java)
-                (activity as MainActivity).
-                startActivity(intent)
+                (activity as MainActivity)
+                    .startActivity(intent)
             }
 
             /*식단 추천 창으로 이동*/
@@ -236,5 +235,4 @@ class HomeFragment : Fragment() {
             }
         }
     }
-
 }

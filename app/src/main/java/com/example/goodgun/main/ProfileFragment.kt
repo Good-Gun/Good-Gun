@@ -15,7 +15,6 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import com.example.goodgun.ApplicationClass
-import com.example.goodgun.databinding.FragmentFoodTodayBinding
 import com.example.goodgun.databinding.FragmentProfileBinding
 import com.example.goodgun.login.CustomSpinnerAdapter
 import com.example.goodgun.login.LoginActivity
@@ -125,9 +124,6 @@ class ProfileFragment : Fragment() {
             logoutIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(logoutIntent)
         }
-
-
-
 
         binding.profileFixBtn.setOnClickListener {
             uploadData(currentUser)

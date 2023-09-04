@@ -79,6 +79,4 @@ class MainActivity : AppCompatActivity() {
     fun changeNav(id: Int) {
         binding.bubbleTabBar.setSelected(0)
     }
-
-
 }

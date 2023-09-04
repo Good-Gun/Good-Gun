@@ -2,7 +2,6 @@ package com.example.goodgun.main_function.adapter
 /*
 음식 추천을 위한 ViewPager2 어댑터
 */
-import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle

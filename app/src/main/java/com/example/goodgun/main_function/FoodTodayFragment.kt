@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.goodgun.databinding.FragmentFoodTodayBinding
-import com.example.goodgun.databinding.FragmentHomeFoodBinding
 import com.example.goodgun.network.model.Food
 
 class FoodTodayFragment : Fragment() {

@@ -86,8 +86,11 @@ class SolutionActivity : AppCompatActivity() {
                 adapter.setFragmentTexts(fragmentTexts)
                 loadingDialog.dismiss()
             }*/
-            nutrition = NetworkManager.getNutritionData(LocalDateTime.now().minusDays(3).format(
-                DateTimeFormatter.ofPattern(" yyyy-MM-dd")))
+            nutrition = NetworkManager.getNutritionData(
+                LocalDateTime.now().minusDays(3).format(
+                    DateTimeFormatter.ofPattern(" yyyy-MM-dd"),
+                ),
+            )
             setViewColor()
 
             val solution = ApplicationClass.sharedPreferences.getString("solution", null)
@@ -99,14 +102,10 @@ class SolutionActivity : AppCompatActivity() {
                 tokenizeString(solution)
                 adapter.setFragmentTexts(fragmentTexts)
 
-
-
                 loadingDialog.dismiss()
             }
         }
     }
-
-
 
     @SuppressLint("NotifyDataSetChanged")
     fun tokenizeString(str: String) {
@@ -163,5 +162,4 @@ class SolutionActivity : AppCompatActivity() {
             }
         }
     }
-
 }

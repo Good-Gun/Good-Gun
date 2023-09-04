@@ -33,6 +33,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import kotlin.math.roundToInt
 
 class ScanInfomation : AppCompatActivity() {
 
@@ -100,14 +101,14 @@ class ScanInfomation : AppCompatActivity() {
             val sumfood = roomdb.foodDao().getSumFood()
             withContext(Dispatchers.Main) {
                 binding.apply {
-                    calory.text = sumfood.calory.toString()
-                    carbohydrates.text = sumfood.carbohydrates.toString()
-                    sugar.text = sumfood.sugar.toString()
-                    protein.text = sumfood.protein.toString()
-                    fat.text = sumfood.fat.toString()
-                    transFat.text = sumfood.trans_fat.toString()
-                    saturatedFat.text = sumfood.saturated_fat.toString()
-                    cholesterol.text = sumfood.cholesterol.toString()
+                    calory.text = ((sumfood.calory!! * 10.0).roundToInt() / 10.0).toString()
+                    carbohydrates.text = ((sumfood.carbohydrates!! * 10.0).roundToInt() / 10.0).toString()
+                    sugar.text = ((sumfood.sugar!! * 10.0).roundToInt() / 10.0).toString()
+                    protein.text = ((sumfood.protein!! * 10.0).roundToInt() / 10.0).toString()
+                    fat.text = ((sumfood.fat!! * 10.0).roundToInt() / 10.0).toString()
+                    transFat.text = ((sumfood.trans_fat!! * 10.0).roundToInt() / 10.0).toString()
+                    saturatedFat.text = ((sumfood.saturated_fat!! * 10.0).roundToInt() / 10.0).toString()
+                    cholesterol.text = ((sumfood.cholesterol!! * 10.0).roundToInt() / 10.0).toString()
                 }
             }
         }
@@ -219,7 +220,6 @@ class ScanInfomation : AppCompatActivity() {
                         binding.recyclerView.findViewHolderForAdapterPosition(position)?.itemView?.findViewById<ImageButton>(
                             R.id.food_add,
                         )?.visibility = View.GONE
-
                     }
                 }
                 adapter.itemdelete = object : FoodAddAdapter.OnItemClickListener {

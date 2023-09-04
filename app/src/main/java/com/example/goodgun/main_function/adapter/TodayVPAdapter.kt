@@ -2,12 +2,9 @@ package com.example.goodgun.main_function.adapter
 
 import android.util.Log
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.goodgun.databinding.FragmentFoodTodayBinding
-import com.example.goodgun.main.HomeFoodFragment
 import com.example.goodgun.main_function.FoodTodayFragment
 import com.example.goodgun.network.model.Food
 

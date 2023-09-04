@@ -2,19 +2,16 @@ package com.example.goodgun.main_function
 
 import android.annotation.SuppressLint
 import android.app.Dialog
-import android.graphics.Rect
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.aallam.openai.api.chat.*
 import com.example.goodgun.ApplicationClass
 import com.example.goodgun.databinding.ActivityFoodBinding
-import com.example.goodgun.main.HomeVPAdapter
 import com.example.goodgun.main_function.adapter.RecommendVPAdapter
 import com.example.goodgun.main_function.adapter.TodayVPAdapter
 import com.example.goodgun.network.NetworkManager
@@ -25,17 +22,15 @@ import com.example.goodgun.util.LoadingDialog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Collections.addAll
 
 /*오늘의 정보만 다루는 액티비티*/
 class FoodActivity : AppCompatActivity() {
-    private lateinit var question:String
+    private lateinit var question: String
     private lateinit var loadingDialog: Dialog
     lateinit var binding: ActivityFoodBinding
-
 
     private lateinit var viewPager: ViewPager2
     private lateinit var recommendAdapter: RecommendVPAdapter
@@ -68,7 +63,6 @@ class FoodActivity : AppCompatActivity() {
     }
 
     private fun initTodayRV() {
-
         /*오늘 먹은 음식 리스트*/
         todayVP = binding.vpFoodToday
         todayAdapter = TodayVPAdapter(supportFragmentManager, lifecycle)
@@ -132,7 +126,7 @@ class FoodActivity : AppCompatActivity() {
     @SuppressLint("NotifyDataSetChanged")
     fun tokenizeString(str: String) {
         var flag = true
-        while(flag) {
+        while (flag) {
             try {
                 str.split("1.", "2.", "3.", "4.", "5.").toCollection(recommend_list)
                 recommend_list.removeAt(0)

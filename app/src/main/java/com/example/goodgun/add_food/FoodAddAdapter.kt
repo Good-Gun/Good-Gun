@@ -20,7 +20,6 @@ class FoodAddAdapter(var items: List<FoodEntity>) : RecyclerView.Adapter<FoodAdd
         init {
             binding.foodAdd.setOnClickListener {
                 itemadd?.onItemClick(items[adapterPosition], adapterPosition)
-
             }
             binding.foodDelete.setOnClickListener {
                 itemdelete?.onItemClick(items[adapterPosition], adapterPosition)
