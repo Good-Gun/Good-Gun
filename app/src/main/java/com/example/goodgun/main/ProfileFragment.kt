@@ -280,7 +280,7 @@ class ProfileFragment : Fragment() {
 
                     binding.profileNameInput.setText(uName)
                     binding.profileIdInput.setText(uEmail)
-                    binding.profilePwInput.setText(uPW)
+                    binding.profilePwInput.setText("********")
                     binding.profileHeightInput.setText(uHeight)
                     binding.profileWeightInput.setText(uWeight)
                     binding.profileAgeInput.setText(uAge)

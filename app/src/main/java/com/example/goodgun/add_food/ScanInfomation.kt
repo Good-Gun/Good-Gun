@@ -71,7 +71,6 @@ class ScanInfomation : AppCompatActivity() {
         initBtn()
         initRecyclerView()
         initDirectAdd()
-
         init()
     }
 
@@ -220,7 +219,7 @@ class ScanInfomation : AppCompatActivity() {
                         }
                         binding.recyclerView.findViewHolderForAdapterPosition(position)?.itemView?.findViewById<ImageButton>(
                             R.id.food_add,
-                        )?.visibility = View.INVISIBLE
+                        )?.visibility = View.GONE
                     }
                 }
                 adapter.itemdelete = object : FoodAddAdapter.OnItemClickListener {
