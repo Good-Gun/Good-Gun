@@ -38,7 +38,6 @@ object NetworkManager : NetworkInterface {
             if (dateSnapshot.value != null) {
                 val date1 = LocalDate.parse(dateSnapshot.key.toString().trim()) // 파이어베이스에 저장된 날짜
                 val date2 = LocalDate.parse(date.trim()) // 찾는 날짜
-
                 if (date1 == date2) {
                     val innerSnapshot = datesRef.child(dateSnapshot.key!!).get().await()
                     for (foodSnapshot in innerSnapshot.children) {
