@@ -148,7 +148,7 @@ class HomeFragment : Fragment() {
 
     fun initVP() {
         todayVP = binding!!.vpHomeToday
-        adapter = HomeVPAdapter(childFragmentManager, lifecycle)
+        adapter = HomeVPAdapter(fragmentFood, childFragmentManager, lifecycle)
         todayVP.adapter = adapter
     }
 
@@ -176,8 +176,10 @@ class HomeFragment : Fragment() {
                 addAll(nutritionResponse.food_list)
                 // todayAdapter.notifyItemRangeInserted(0, nutritionResponse.food_list.size)
             }
-            initVP()
-            adapter.setFragmentFood(fragmentFood)
+            if (isAdded()) {
+                adapter = HomeVPAdapter(fragmentFood, childFragmentManager, lifecycle)
+                todayVP.adapter = adapter
+            }
             Handler(Looper.getMainLooper()).post {
                 if (fragmentFood.size == 0) {
                     binding!!.tvNoFood.visibility = View.VISIBLE
