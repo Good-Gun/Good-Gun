@@ -176,7 +176,7 @@ class HomeFragment : Fragment() {
                 addAll(nutritionResponse.food_list)
                 // todayAdapter.notifyItemRangeInserted(0, nutritionResponse.food_list.size)
             }
-
+            initVP()
             adapter.setFragmentFood(fragmentFood)
             Handler(Looper.getMainLooper()).post {
                 if (fragmentFood.size == 0) {

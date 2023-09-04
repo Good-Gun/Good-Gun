@@ -18,6 +18,7 @@ class RegistrationActivity : AppCompatActivity() {
     lateinit var binding: RegistrationLayoutBinding
     private var PWValid = false
     private var PWChecked = false
+    private var emailValid = false
     val database: DatabaseReference = Firebase.database("https://goodgun-4740f-default-rtdb.firebaseio.com/").reference
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,6 +44,24 @@ class RegistrationActivity : AppCompatActivity() {
                 PWChecked = false
             }
         }
+        binding.registrationIdInput.doAfterTextChanged {
+            if (isValidEmail(binding.registrationIdInput.text.toString())) {
+                binding.emailValid.setTextColor(Color.GREEN)
+            } else {
+                binding.emailValid.setTextColor(Color.BLACK)
+            }
+        }
+        binding.duplicateCheckButton.setOnClickListener {
+            checkEmailDuplicate(
+                binding.registrationIdInput.text.toString(),
+                onSuccess = {
+                    Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+                },
+                onFailure = {
+                    Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+                },
+            )
+        }
         binding.backBtn.setOnClickListener {
             finish()
         }
@@ -60,6 +79,11 @@ class RegistrationActivity : AppCompatActivity() {
             }
     }
 
+    fun isValidEmail(email: String): Boolean {
+        val emailPattern = Regex("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}")
+        return emailPattern.matches(email)
+    }
+
     fun isValidPassword(password: String): Boolean {
         // 최소 길이 체크
         if (password.length < 6) {
@@ -70,26 +94,46 @@ class RegistrationActivity : AppCompatActivity() {
         return regex.matches(password)
     }
 
+    fun checkEmailDuplicate(email: String, onSuccess: (String) -> Unit, onFailure: (String) -> Unit) {
+        auth?.fetchSignInMethodsForEmail(email)
+            ?.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val signInMethods = task.result?.signInMethods ?: emptyList()
+                    if (signInMethods.isEmpty()) {
+                        // 이메일이 중복되지 않음
+                        onSuccess.invoke("사용 가능한 이메일 주소입니다.")
+                    } else {
+                        // 이메일이 이미 사용 중
+                        onFailure.invoke("이미 사용 중인 이메일 주소입니다.")
+                    }
+                } else {
+                    onFailure.invoke("중복 확인 중 오류가 발생했습니다.")
+                }
+            }
+    }
+
     private fun createAccount(ID: String, password: String, name: String) {
-        if (ID.isNotEmpty() && password.isNotEmpty() && PWChecked && PWValid) {
+        if (ID.isNotEmpty() && password.isNotEmpty() && PWChecked && PWValid && isValidEmail(ID)) {
             auth?.createUserWithEmailAndPassword(ID, password)
                 ?.addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         Toast.makeText(
                             this,
-                            "계정 생성 완료.",
+                            "계정이 생성되었습니다!",
                             Toast.LENGTH_SHORT,
                         ).show()
-                        database.child("user_list").child(ID).setValue(User(ID, password, name))
+                        database.child("user_list").child(auth!!.uid!!).setValue(User(ID, password, name))
                         finish() // 가입창 종료
                     } else {
                         Toast.makeText(
                             this,
-                            "계정 생성 실패",
+                            "계정 생성에 실패했습니다.",
                             Toast.LENGTH_SHORT,
                         ).show()
                     }
                 }
+        } else {
+            Toast.makeText(this, "아직 조건이 만족하지 않은 입력창이 존재합니다.", Toast.LENGTH_SHORT).show()
         }
     }
 }

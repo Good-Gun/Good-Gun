@@ -30,9 +30,6 @@
             android:name=".camera.BarcodeScanActivity"
             android:launchMode="singleInstance"
             android:exported="false" />
-        <activity
-            android:name=".camera.BarcodeResultActivity"
-            android:exported="false" />
 
         <activity
             android:name=".main_function.SolutionActivity"

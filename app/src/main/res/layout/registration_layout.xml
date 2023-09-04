@@ -87,8 +87,7 @@
         android:orientation="horizontal"
         android:gravity="end"
         android:layout_marginLeft="13dp"
-        android:layout_marginRight="13dp"
-        >
+        android:layout_marginRight="13dp">
 
         <EditText
             android:id="@+id/registrationIdInput"
@@ -115,6 +114,13 @@
             android:text="중복확인" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/emailValid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="13dp"
+        android:text="유효한 이메일 형식  ✓"
+        android:textSize="8sp"/>
     <TextView
         android:id="@+id/pwTextView"
         android:layout_width="wrap_content"
@@ -174,18 +180,17 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:text="비밀번호 확인  ✓"
-        android:textSize="8sp"
-        />
-
+        android:textSize="8sp" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/registrationButton"
-        android:layout_marginLeft="14dp"
-        android:layout_marginTop="49dp"
-        android:layout_gravity="center"
-
-        android:layout_width="140dp"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/profile_fragment_button"
+        android:background="@color/foodlens_blue_1000"
         android:textStyle="bold"
         android:textColor="@color/colorWhite"
 
