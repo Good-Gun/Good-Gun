@@ -20,6 +20,7 @@ class FoodAddAdapter(var items: List<FoodEntity>) : RecyclerView.Adapter<FoodAdd
         init {
             binding.foodAdd.setOnClickListener {
                 itemadd?.onItemClick(items[adapterPosition], adapterPosition)
+
             }
             binding.foodDelete.setOnClickListener {
                 itemdelete?.onItemClick(items[adapterPosition], adapterPosition)
@@ -39,7 +40,7 @@ class FoodAddAdapter(var items: List<FoodEntity>) : RecyclerView.Adapter<FoodAdd
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.foodName.text = items[position].name
         if (items[position].inroomdb) {
-            holder.binding.foodAdd.visibility = View.INVISIBLE
+            holder.binding.foodAdd.visibility = View.GONE
         }
     }
 }

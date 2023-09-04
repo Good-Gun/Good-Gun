@@ -415,7 +415,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:text="영양 정보를 기반으로 추천 식단을 준비 중 입니다.\잠시만 기달려주세요..."
+                    android:text="영양 정보를 기반으로 추천 식단을 준비 중 입니다.\n잠시만 기다려주세요."
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="12sp"
