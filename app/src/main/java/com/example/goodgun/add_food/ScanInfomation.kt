@@ -75,16 +75,16 @@ class ScanInfomation : AppCompatActivity() {
 
     private fun initDirectAdd() {
         // 임시 룸DB 확인
-        binding.dbCheck.setOnClickListener {
-            GlobalScope.launch(Dispatchers.IO) {
-                val tmp: List<FoodEntity> = roomdb.foodDao().getAll()
-                val message =
-                    tmp.joinToString("\n") { "FoodEntity(id=${it.id}, name=${it.name}), calory=${it.calory})" }
-                withContext(Dispatchers.Main) {
-                    Toast.makeText(this@ScanInfomation, message, Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
+//        binding.dbCheck.setOnClickListener {
+//            GlobalScope.launch(Dispatchers.IO) {
+//                val tmp: List<FoodEntity> = roomdb.foodDao().getAll()
+//                val message =
+//                    tmp.joinToString("\n") { "FoodEntity(id=${it.id}, name=${it.name}), calory=${it.calory})" }
+//                withContext(Dispatchers.Main) {
+//                    Toast.makeText(this@ScanInfomation, message, Toast.LENGTH_SHORT).show()
+//                }
+//            }
+//        }
         binding.directAdd.setOnClickListener {
             model.reset()
             val dialog = DirectInputFragment()

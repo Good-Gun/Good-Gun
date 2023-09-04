@@ -43,6 +43,9 @@ class RegistrationActivity : AppCompatActivity() {
                 PWChecked = false
             }
         }
+        binding.backBtn.setOnClickListener {
+            finish()
+        }
 
         setContentView(binding.root)
         // 계정 생성 버튼

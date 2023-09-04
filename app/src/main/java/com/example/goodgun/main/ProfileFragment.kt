@@ -125,9 +125,6 @@ class ProfileFragment : Fragment() {
             startActivity(logoutIntent)
         }
 
-
-
-
         binding.profileFixBtn.setOnClickListener {
             uploadData(currentUser)
             Toast.makeText(this.requireContext(), "회원정보가 수정되었습니다.", Toast.LENGTH_SHORT).show()

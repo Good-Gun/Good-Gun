@@ -45,7 +45,6 @@ class LoginActivity : AppCompatActivity() {
 
         val logoutFlag = intent.getIntExtra("logout", 0)
 
-
         if (currentUser != null) {
             Toast.makeText(this, currentUser.email + " 로 로그인", Toast.LENGTH_LONG).show()
             // database.child("user_list").child(currentUser.uid).setValue(User(currentUser.email.toString(), currentUser.displayName.toString()))
@@ -153,7 +152,6 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
     } // firebaseAuthWithGoogle
-
 
     private fun signIn(ID: String, password: String) {
         if (ID.isNotEmpty() && password.isNotEmpty()) {

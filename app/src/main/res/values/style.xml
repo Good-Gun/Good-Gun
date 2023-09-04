@@ -49,4 +49,8 @@
         <item name="android:padding">10dp</item>
     </style>
 
+    <style name="SpinnerTheme" parent="Widget.AppCompat.Spinner">
+        <item name="android:background">@drawable/spinner_border_layout</item>
+    </style>
+
 </resources>

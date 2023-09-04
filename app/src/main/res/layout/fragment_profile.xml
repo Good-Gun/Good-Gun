@@ -291,6 +291,7 @@
             android:background="@drawable/spinner_border_layout"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/foodlens_blue_1000"
             android:layout_marginRight="10dp"
             />
 
@@ -299,6 +300,7 @@
             android:background="@drawable/spinner_border_layout"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/foodlens_blue_1000"
             android:layout_marginLeft="10dp"
             />
     </LinearLayout>
@@ -315,10 +317,9 @@
         android:textStyle="bold"
         />
 
-    <Spinner
+    <androidx.appcompat.widget.AppCompatSpinner
         android:id="@+id/profile_GoalSpinner"
         android:layout_gravity="center"
-
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:layout_width="300dp"
@@ -345,6 +346,7 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:background="@drawable/purple_button"
+            android:backgroundTint="@color/foodlens_blue_1000"
             android:textStyle="bold"
             android:textColor="@color/colorWhite"
             android:gravity="center"
