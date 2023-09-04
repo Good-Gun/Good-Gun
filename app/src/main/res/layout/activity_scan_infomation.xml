@@ -76,13 +76,6 @@
 
 
                 <Button
-                    android:id="@+id/dbCheck"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="룸DB 아이템 확인"
-                    android:layout_gravity="center"/>
-
-                <Button
                     app:backgroundTint="@null"
                     android:id="@+id/directAdd"
                     android:layout_width="wrap_content"
