@@ -1,55 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".main_function.FoodActivity">
 
     <LinearLayout
+        android:id="@+id/view1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:background="@drawable/box_radius_bottom_20dp"
+        android:backgroundTint="@color/theme1"
+        android:elevation="10dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/backBtn"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/box_radius_bottom_20dp"
-            android:backgroundTint="@color/theme1"
-            android:elevation="10dp"
-            android:orientation="horizontal"
-            android:outlineSpotShadowColor="@color/theme1"
-            android:padding="20dp">
+            android:layout_gravity="center_vertical"
+            android:padding="20dp"
+            app:srcCompat="@drawable/baseline_arrow_back_24"
+            app:tint="@color/white" />
 
-            <ImageView
-                android:id="@+id/backBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                app:srcCompat="@drawable/baseline_arrow_back_24"
-                app:tint="@color/white" />
+        <TextView
+            android:id="@+id/registrationTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/goodgun"
+            android:paddingVertical="20dp"
+            android:paddingStart="10dp"
+            android:text="식사 추천"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
-            <TextView
-                android:id="@+id/registrationTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/goodgun"
-                android:paddingStart="10dp"
-                android:text="식사 추천"
-                android:textColor="@color/white"
-                android:textSize="20dp"
-                android:textStyle="bold" />
 
-            <ImageButton
-                android:id="@+id/addBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:background="@color/white"
-                android:visibility="invisible"
-                app:srcCompat="@drawable/baseline_arrow_back_24" />
-        </LinearLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view1">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/layout_food_today"
@@ -58,11 +54,12 @@
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="20dp"
             android:outlineSpotShadowColor="@color/theme1"
-            app:cardCornerRadius="20dp">
+            app:cardCornerRadius="20dp"
+            app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="15dp">
 
@@ -70,8 +67,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/goodgun"
-                    android:text="오늘 먹은 음식 리스트"
-                    android:textAlignment="center"
+                    android:text="오늘 먹은 음식"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -89,11 +85,21 @@
                     android:textAlignment="center"
                     android:visibility="gone" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_food_today"
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/vp_food_today"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp" />
+
+                <com.hellmund.viewpager2indicator.ViewPager2Indicator
+                    android:id="@+id/indicator_food"
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="10dp"
+                    app:radius="2dp"
+                    app:selectedFillColor="@color/theme1"
+                    app:spacing="6dp"
+                    app:unselectedFillColor="@color/theme1_1"/>
 
             </LinearLayout>
 
@@ -107,7 +113,8 @@
             android:layout_marginTop="20dp"
             android:backgroundTint="@color/white"
             android:outlineSpotShadowColor="@color/theme1"
-            app:cardCornerRadius="20dp">
+            app:cardCornerRadius="20dp"
+            app:layout_constraintTop_toBottomOf="@id/layout_food_today">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -118,10 +125,10 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="오늘 섭취한 영양 정보"
-                    android:textAlignment="center"
-                    android:textColor="@color/black"
                     android:fontFamily="@font/goodgun"
+                    android:padding="5dp"
+                    android:text="총 영양 정보"
+                    android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -377,50 +384,66 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/layout_food_recommend"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="20dp"
-            android:backgroundTint="@color/theme1"
-            app:cardCornerRadius="20dp">
+            android:layout_marginVertical="20dp"
+            android:backgroundTint="@color/theme1_2"
+            app:cardCornerRadius="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_food_nutrients">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:padding="10dp">
 
                 <TextView
+                    android:id="@+id/tv_rec_title"
+                    app:layout_constraintTop_toTopOf="parent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="국건이의 식사 추천!"
-                    android:textAlignment="center"
                     android:fontFamily="@font/goodgun"
+                    android:text="국건이의 음식 추천!"
+                    android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_gravity="end"
-                    android:background="@drawable/rectangle_125"
-                    android:paddingHorizontal="20dp"
-                    android:paddingTop="14dp"
-                    android:text="AI가 최적의 식사를 추천합니다!"
-                    android:textColor="@color/black"
-                    android:textSize="8sp"
-                    android:textStyle="bold" />
-
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_food_recommend"
+                    android:id="@+id/tv_wait"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:scrollbars="none"/>
+                    android:layout_marginTop="20dp"
+                    android:text="영양 정보를 기반으로 추천 식단을 준비 중 입니다.\잠시만 기달려주세요..."
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:layout_editor_absoluteX="10dp" />
 
-            </LinearLayout>
+
+
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/vp_food_recommend"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        app:layout_constraintBottom_toTopOf="@id/indicator"
+                        app:layout_constraintTop_toBottomOf="@id/tv_rec_title"/>
+
+                <com.hellmund.viewpager2indicator.ViewPager2Indicator
+                    android:id="@+id/indicator"
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:radius="4dp"
+                    app:selectedFillColor="@color/theme1_1"
+                    app:spacing="8dp"
+                    app:unselectedFillColor="@color/dark_grey"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
-    </LinearLayout>
-
-</ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

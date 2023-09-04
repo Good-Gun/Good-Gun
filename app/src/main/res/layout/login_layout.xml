@@ -32,7 +32,6 @@
         android:layout_width="match_parent"
         android:layout_height="49dp"
         android:layout_margin="13dp"
-        android:padding="10dp"
         android:background="@drawable/button_round_white"
         android:elevation="4dp"
         android:ems="10"
@@ -54,7 +53,6 @@
         android:id="@+id/pwInput"
         android:layout_margin="13dp"
         android:layout_width="match_parent"
-        android:padding="10dp"
         android:layout_height="49dp"
         android:background="@drawable/button_round_white"
         android:elevation="4dp"
@@ -67,7 +65,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="15dp"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp"
         >
 
         <com.google.android.gms.common.SignInButton
@@ -82,12 +81,11 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/loginBtn"
             android:layout_marginLeft="15dp"
-            android:layout_marginBottom="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_round_gray"
+            android:background="@drawable/profile_fragment_button"
             android:textStyle="bold"
-            android:textColor="@color/foodlens_blue_1000"
+            android:textColor="@color/colorWhite"
 
             android:text="로그인" />
     </LinearLayout>

@@ -6,7 +6,7 @@
     android:orientation="horizontal"
     android:layout_gravity="center"
     android:gravity="center"
-    android:background="@drawable/purple_button"
+    android:background="@drawable/profile_fragment_button"
     android:padding="16dp"
     >
 

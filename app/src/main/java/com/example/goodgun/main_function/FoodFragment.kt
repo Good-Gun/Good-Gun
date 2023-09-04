@@ -5,11 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.goodgun.databinding.FragmentSolutionBinding
+import com.example.goodgun.databinding.FragmentFoodBinding
 
-class SolutionFragment() : Fragment() {
+class FoodFragment() : Fragment() {
 
-    var binding: FragmentSolutionBinding? = null
+    var binding: FragmentFoodBinding? = null
     private var text: String? = null
 
     override fun onCreateView(
@@ -18,7 +18,7 @@ class SolutionFragment() : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentSolutionBinding.inflate(layoutInflater, container, false)
+        binding = FragmentFoodBinding.inflate(layoutInflater, container, false)
         binding?.apply {
             fragText.text = text?.trim()
         }

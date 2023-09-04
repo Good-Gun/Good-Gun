@@ -59,6 +59,10 @@ class GraphActivity : AppCompatActivity() {
             spinner1.setSelection(0)
 
             spinner1.onItemSelectedListener = SpinnerItemSelectListener()
+
+            backBtn.setOnClickListener {
+                finish()
+            }
         }
     }
 
@@ -119,9 +123,7 @@ class GraphActivity : AppCompatActivity() {
             binding.tvDate.text = (time.format(strFormatter) + "~" + LocalDateTime.now().format(strFormatter)).trim()
 
             CoroutineScope(Dispatchers.Main).launch {
-                withContext(Dispatchers.IO) {
-                    nutrition = NetworkManager.getNutritionData(formatted)
-                }
+                nutrition = NetworkManager.getNutritionData(formatted)
                 initChart()
                 setNutrition(nutrition)
             }

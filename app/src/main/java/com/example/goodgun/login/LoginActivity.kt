@@ -74,7 +74,6 @@ class LoginActivity : AppCompatActivity() {
             // 로그아웃 관련 작업을 수행하는 함수 호출
             auth.signOut()
             googleSignInClient?.signOut()
-            Toast.makeText(this, "로그아웃하자고", Toast.LENGTH_SHORT).show()
         }
 
         // 회원가입으로 이동
