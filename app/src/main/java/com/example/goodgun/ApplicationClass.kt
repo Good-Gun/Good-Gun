@@ -59,7 +59,7 @@ class ApplicationClass : Application() {
             Log.d("Calorie Check", "$calorie")
 
             maxNutrition.calorie = calorie.toInt()
-            maxNutrition.carbohydrates = (calorie * 0.65).toInt()
+            maxNutrition.carbohydrates = (calorie * 0.5).toInt()
             maxNutrition.protein = (calorie * 0.2).toInt()
             maxNutrition.fat = (calorie * 0.3).toInt()
             maxNutrition.trans_fat = (calorie * 0.01).toInt()
