@@ -17,6 +17,30 @@
         android:textStyle="bold"
         android:layout_weight="1"
         android:text="제품명"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="10dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:gravity="right"
+        android:text="x"
+        android:background="@null"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        />
+
+    <EditText
+        android:id="@+id/editTextNumber"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:gravity="left"
+        android:text="1"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        />
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

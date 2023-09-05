@@ -211,9 +211,19 @@ class ScanInfomation : AppCompatActivity() {
                     LinearLayoutManager(this@ScanInfomation, LinearLayoutManager.VERTICAL, false)
 
                 adapter.itemadd = object : FoodAddAdapter.OnItemClickListener {
-                    override fun onItemClick(data: FoodEntity, position: Int) {
+                    override fun onItemClick(data: FoodEntity, position: Int, amount:Double) {
                         GlobalScope.launch(Dispatchers.IO) {
                             data.inroomdb = true
+
+                            data.calory = data.calory?.times(amount)
+                            data.carbohydrates = data.carbohydrates?.times(amount)
+                            data.sugar = data.sugar?.times(amount)
+                            data.protein = data.protein?.times(amount)
+                            data.fat = data.fat?.times(amount)
+                            data.trans_fat = data.trans_fat?.times(amount)
+                            data.saturated_fat = data.saturated_fat?.times(amount)
+                            data.cholesterol = data.cholesterol?.times(amount)
+
                             roomdb.foodDao().saveFood(data)
                             updateSumFoodEntity()
                         }
@@ -224,7 +234,7 @@ class ScanInfomation : AppCompatActivity() {
                 }
                 adapter.itemdelete = object : FoodAddAdapter.OnItemClickListener {
                     // 2번째 onclick 이벤트리스너
-                    override fun onItemClick(data: FoodEntity, position: Int) {
+                    override fun onItemClick(data: FoodEntity, position: Int, amount:Double) {
                         tmpdata.removeAt(position)
                         GlobalScope.launch(Dispatchers.IO) {
                             roomdb.foodDao().deleteFood(data.name, data.registerDate)
