@@ -1,6 +1,5 @@
 package com.example.goodgun.main
 
-import android.os.Build.VERSION_CODES.N
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.goodgun.databinding.FragmentHomeFoodBinding
-import com.example.goodgun.network.NetworkManager
 import com.example.goodgun.network.model.Food
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
