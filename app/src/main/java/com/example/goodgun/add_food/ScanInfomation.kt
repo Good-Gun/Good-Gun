@@ -211,7 +211,7 @@ class ScanInfomation : AppCompatActivity() {
                     LinearLayoutManager(this@ScanInfomation, LinearLayoutManager.VERTICAL, false)
 
                 adapter.itemadd = object : FoodAddAdapter.OnItemClickListener {
-                    override fun onItemClick(data: FoodEntity, position: Int, amount:Double) {
+                    override fun onItemClick(data: FoodEntity, position: Int, amount: Double) {
                         GlobalScope.launch(Dispatchers.IO) {
                             data.inroomdb = true
 
@@ -234,7 +234,7 @@ class ScanInfomation : AppCompatActivity() {
                 }
                 adapter.itemdelete = object : FoodAddAdapter.OnItemClickListener {
                     // 2번째 onclick 이벤트리스너
-                    override fun onItemClick(data: FoodEntity, position: Int, amount:Double) {
+                    override fun onItemClick(data: FoodEntity, position: Int, amount: Double) {
                         tmpdata.removeAt(position)
                         GlobalScope.launch(Dispatchers.IO) {
                             roomdb.foodDao().deleteFood(data.name, data.registerDate)
