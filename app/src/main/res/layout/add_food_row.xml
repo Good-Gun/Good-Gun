@@ -13,9 +13,10 @@
         android:layout_margin="20dp"
         android:gravity="center_vertical"
         android:textSize="20dp"
+        android:layout_weight="1"
         android:background="@drawable/underline"
         android:textStyle="bold"
-        android:layout_weight="1"
+
         android:text="제품명"/>
 
     <TextView
@@ -31,11 +32,11 @@
         />
 
     <EditText
-        android:id="@+id/editTextNumber"
-        android:layout_width="30dp"
+        android:id="@+id/amount"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:gravity="left"
+        android:ems="2"
+        android:gravity="right"
         android:text="1"
         android:textSize="20dp"
         android:textStyle="bold"
