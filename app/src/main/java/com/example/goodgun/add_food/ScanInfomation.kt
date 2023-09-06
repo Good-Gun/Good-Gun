@@ -256,6 +256,7 @@ class ScanInfomation : AppCompatActivity() {
     fun onDialogDissmissed() {
         if (!model.is_blank()) {
             tmpdata.add(model.getfood())
+            updateSumFoodEntity()
             adapter.notifyDataSetChanged()
         }
     }
