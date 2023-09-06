@@ -119,7 +119,8 @@ class DirectInputFragment : DialogFragment() {
                         data.trans_fat?.toDoubleOrNull() ?: 0.0,
                         data.saturated_fat?.toDoubleOrNull() ?: 0.0,
                         data.cholesterol?.toDoubleOrNull() ?: 0.0,
-                        true,
+                        data.sodium?.toDoubleOrNull() ?: 0.0,
+                        true
                     )
                     CoroutineScope(Dispatchers.IO).launch {
                         roomdb.foodDao().saveFood(selectFood)

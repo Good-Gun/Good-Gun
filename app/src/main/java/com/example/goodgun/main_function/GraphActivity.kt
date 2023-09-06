@@ -16,7 +16,6 @@ import com.example.goodgun.ApplicationClass
 import com.example.goodgun.R
 import com.example.goodgun.databinding.ActivityGraphBinding
 import com.example.goodgun.network.NetworkManager
-import com.example.goodgun.network.model.Food
 import com.example.goodgun.network.model.Nutrition
 import com.example.goodgun.util.LoadingDialog
 import com.skydoves.progressview.ProgressView
@@ -24,6 +23,7 @@ import kotlinx.coroutines.*
 import java.time.LocalDateTime
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
+import kotlin.math.roundToInt
 
 class GraphActivity : AppCompatActivity() {
     private lateinit var loadingDialog: Dialog
@@ -69,15 +69,15 @@ class GraphActivity : AppCompatActivity() {
     private fun initChart() {
         val max = ApplicationClass.maxNutrition
         binding.apply {
-            pvCalorie.progress = nutrition.calorie.toFloat() / max.calorie * 100
-            pvCarbohydrates.progress = nutrition.carbohydrates.toFloat() / max.carbohydrates * 100
-            pvProteins.progress = nutrition.protein.toFloat() / max.protein * 100
-            pvFat.progress = nutrition.fat.toFloat() / max.fat * 100
-            pvTransFat.progress = nutrition.trans_fat.toFloat() / max.trans_fat * 100
-            pvSaturatedFat.progress = nutrition.saturated_fat.toFloat() / max.saturated_fat * 100
-            pvCholesterol.progress = nutrition.cholesterol.toFloat() / max.cholesterol * 100
-            pvSugar.progress = nutrition.sugar.toFloat() / max.sugar * 100
-            pvSodium.progress = nutrition.sodium.toFloat() / max.sodium * 100
+            pvCalorie.progress = (nutrition.calorie / max.calorie * 100).toFloat()
+            pvCarbohydrates.progress = (nutrition.carbohydrates / max.carbohydrates * 100).toFloat()
+            pvProteins.progress = (nutrition.protein / max.protein * 100).toFloat()
+            pvFat.progress = (nutrition.fat / max.fat * 100).toFloat()
+            pvTransFat.progress = (nutrition.trans_fat / max.trans_fat * 100).toFloat()
+            pvSaturatedFat.progress = (nutrition.saturated_fat / max.saturated_fat * 100).toFloat()
+            pvCholesterol.progress = (nutrition.cholesterol / max.cholesterol * 100).toFloat()
+            pvSugar.progress = (nutrition.sugar / max.sugar * 100).toFloat()
+            pvSodium.progress = (nutrition.sodium / max.sodium * 100).toFloat()
         }
         loadingDialog.dismiss()
     }
@@ -136,16 +136,16 @@ class GraphActivity : AppCompatActivity() {
     private fun setNutrition(nutrition: Nutrition) {
         val max = ApplicationClass.maxNutrition
         binding.apply {
-            tvFoodCalorie.text = nutrition.calorie.toString() + "/" + max.calorie
-            tvFoodCarbo.text = nutrition.carbohydrates.toString() + "/" + max.carbohydrates
-            tvFoodSugar.text = nutrition.sugar.toString() + "/" + max.sugar
-            tvFoodFat.text = nutrition.fat.toString() + "/" + max.fat
-            tvFoodTrans.text = nutrition.trans_fat.toString() + "/" + max.trans_fat
-            tvFoodSaturated.text = nutrition.saturated_fat.toString() + "/" + max.saturated_fat
-            tvFoodProtein.text = nutrition.protein.toString() + "/" + max.protein
-            tvFoodCholesterol.text = nutrition.cholesterol.toString() + "/" + max.cholesterol
-            tvFoodProtein.text = nutrition.protein.toString() + "/" + max.protein
-            tvFoodSodium.text = nutrition.sodium.toString() + "/" + max.sodium
+            tvFoodCalorie.text = nutrition.calorie.roundToInt().toString() + "/" + max.calorie.roundToInt()
+            tvFoodCarbo.text = nutrition.carbohydrates.roundToInt().toString() + "/" + max.carbohydrates.roundToInt()
+            tvFoodSugar.text = nutrition.sugar.roundToInt().toString() + "/" + max.sugar.roundToInt()
+            tvFoodFat.text = nutrition.fat.roundToInt().toString() + "/" + max.fat.roundToInt()
+            tvFoodTrans.text = nutrition.trans_fat.roundToInt().toString() + "/" + max.trans_fat.roundToInt()
+            tvFoodSaturated.text = nutrition.saturated_fat.roundToInt().toString() + "/" + max.saturated_fat.roundToInt()
+            tvFoodProtein.text = nutrition.protein.roundToInt().toString() + "/" + max.protein.roundToInt()
+            tvFoodCholesterol.text = nutrition.cholesterol.roundToInt().toString() + "/" + max.cholesterol.roundToInt()
+            tvFoodProtein.text = nutrition.protein.roundToInt().toString() + "/" + max.protein.roundToInt()
+            tvFoodSodium.text = nutrition.sodium.roundToInt().toString() + "/" + max.sodium.roundToInt()
         }
         loadingDialog.dismiss()
         setViewColor()
@@ -260,24 +260,4 @@ class GraphActivity : AppCompatActivity() {
         binding.tvWarning.text = spannableString
     }
 
-    /*temporary Addition of Data*/
-    private fun addData(date: String) {
-        for (i in 1..5) {
-            val food = Food(
-                0 + i,
-                "food" + (i + 1).toString(),
-                150 + i,
-                50 + i,
-                i,
-                20 + i,
-                30 + i,
-                1 + i,
-                3 + i,
-                3 + i,
-                100 + i,
-                date,
-            )
-            NetworkManager.postFoodData(date, food)
-        }
-    }
 }

@@ -1,10 +1,10 @@
 package com.example.goodgun.network
 
 import com.aallam.openai.api.BetaOpenAI
-import com.example.goodgun.network.model.Food
 import com.example.goodgun.network.model.Nutrition
 import com.example.goodgun.network.model.NutritionResponse
 import com.example.goodgun.network.model.User
+import com.example.goodgun.roomDB.FoodEntity
 
 interface NetworkInterface {
 
@@ -21,7 +21,7 @@ interface NetworkInterface {
     suspend fun getUserData(): User
 
     /*음식 정보 등록*/
-    fun postFoodData(date: String, food: Food)
+    fun postFoodData(date: String, food: FoodEntity)
 
     /*Chat GPT 답 받기*/
     @OptIn(BetaOpenAI::class)
