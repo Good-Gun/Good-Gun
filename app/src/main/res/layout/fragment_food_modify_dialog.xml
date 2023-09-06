@@ -63,7 +63,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20sp"
-                    android:text="칼로리"
+                    android:text="칼로리(kcal)"
                     android:textSize="18sp" />
 
                 <EditText
@@ -83,7 +83,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20sp"
-                    android:text="탄수화물"
+                    android:text="탄수화물(g)"
                     android:textSize="18sp"
                     android:inputType="numberDecimal"/>
 
@@ -103,7 +103,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20sp"
-                    android:text="당류"
+                    android:text="당류(g)"
                     android:textSize="18sp" />
 
                 <EditText
@@ -123,7 +123,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20sp"
-                    android:text="단백질"
+                    android:text="단백질(g)"
                     android:textSize="18sp" />
 
                 <EditText
@@ -143,7 +143,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20sp"
-                    android:text="지방"
+                    android:text="지방(g)"
                     android:textSize="18sp" />
 
                 <EditText
@@ -163,7 +163,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20sp"
-                    android:text="트랜스지방"
+                    android:text="트랜스지방(g)"
                     android:textSize="18sp" />
 
                 <EditText
@@ -183,7 +183,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20sp"
-                    android:text="포화지방"
+                    android:text="포화지방(g)"
                     android:textSize="18sp" />
 
                 <EditText
@@ -202,7 +202,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20sp"
-                    android:text="콜레스테롤"
+                    android:text="콜레스테롤(mg)"
                     android:textSize="18sp" />
 
                 <EditText
@@ -221,7 +221,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20sp"
-                    android:text="나트륨"
+                    android:text="나트륨(mg)"
                     android:textSize="18sp" />
 
                 <EditText

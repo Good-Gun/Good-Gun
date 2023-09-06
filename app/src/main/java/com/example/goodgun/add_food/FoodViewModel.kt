@@ -2,7 +2,6 @@ package com.example.goodgun.add_food
 
 import androidx.lifecycle.ViewModel
 import com.example.goodgun.roomDB.FoodEntity
-
 class FoodViewModel : ViewModel() {
     var food: FoodEntity = FoodEntity()
     var userid: String = ""

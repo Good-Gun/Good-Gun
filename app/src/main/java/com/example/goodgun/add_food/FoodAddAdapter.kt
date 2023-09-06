@@ -1,10 +1,9 @@
 package com.example.goodgun.add_food
 
 import android.content.Context
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import com.example.goodgun.databinding.AddFoodRowBinding
 import com.example.goodgun.roomDB.FoodEntity
@@ -17,10 +16,14 @@ class FoodAddAdapter(var items: List<FoodEntity>, var context: Context) : Recycl
     interface OnEditClickListener {
         fun onEditClick(data: FoodEntity, position: Int)
     }
+    interface OnTextChangeListener {
+        fun onTextChanged(data: FoodEntity, position: Int, amount: Double)
+    }
 
     // 하나의 data 에 대해 서로다른 이벤트리스너 등록가능
     var itemedit: OnEditClickListener? = null
     var itemdelete: OnItemClickListener? = null
+    var itemchange: OnTextChangeListener? = null
 
     fun isStringConvertibleToDouble(input: String): Boolean {
         return try {
@@ -33,30 +36,23 @@ class FoodAddAdapter(var items: List<FoodEntity>, var context: Context) : Recycl
 
     inner class ViewHolder(val binding: AddFoodRowBinding) : RecyclerView.ViewHolder(binding.root) {
         init {
-
-            var amt = 1.0
-            binding.amount.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(p0: Editable?) {
-                    if (isStringConvertibleToDouble(binding.amount.text.toString())) {
-                        amt = binding.amount.text.toString().toDouble()
-                        // amt를 db의 모든 영양소에 곱해서 db업데이트
-                        // ex) 칼로리 * amt
-                        // 탄수화물 * amt   ...
-                    }
-                }
-                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            })
-
             binding.foodEdit.setOnClickListener {
-                try {
-                    val amt = binding.amount.text.toString().toDouble()
-                    itemedit?.onEditClick(items[adapterPosition], adapterPosition)
-                } catch (e: Exception) {
-                }
+                itemedit?.onEditClick(items[adapterPosition], adapterPosition)
             }
             binding.foodDelete.setOnClickListener {
                 itemdelete?.onItemClick(items[adapterPosition], adapterPosition, 0.0)
+            }
+            binding.amount.addTextChangedListener {
+                if (isStringConvertibleToDouble(binding.amount.text.toString())) {
+                    var amt = binding.amount.text.toString().toDouble()
+                    itemchange?.onTextChanged(items[adapterPosition], adapterPosition, amt)
+                }
+//                if(isStringConvertibleToDouble(binding.amount.text.toString())){
+//                    amt =  binding.amount.text.toString().toDouble()
+//                    //amt를 db의 모든 영양소에 곱하기
+//                    //ex) 칼로리 * amt
+//                    // 탄수화물 * amt   ...
+//                }
             }
         }
     }
@@ -73,5 +69,6 @@ class FoodAddAdapter(var items: List<FoodEntity>, var context: Context) : Recycl
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.foodName.text = items[position].name
         holder.binding.foodName.isSelected = true
+        holder.binding.amount.setText(items[position].amount.toString())
     }
 }

@@ -4,7 +4,11 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.activityViewModels
+import com.example.goodgun.add_food.FoodViewModel
+import com.example.goodgun.add_food.ScanInfomation
 import com.example.goodgun.databinding.FragmentFoodModifyDialogBinding
 import com.example.goodgun.roomDB.DatabaseManager
 import com.example.goodgun.roomDB.FoodDatabase
@@ -23,6 +27,7 @@ class FoodModifyDialog(val food: FoodEntity) : DialogFragment() {
     private var auth: FirebaseAuth? = null
     private var currentUser: FirebaseUser? = null
     private var userId: String? = null
+    private val model: FoodViewModel by activityViewModels()
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         // 다이얼로그를 생성하고 설정합니다.
         binding = FragmentFoodModifyDialogBinding.inflate(layoutInflater)
@@ -47,8 +52,12 @@ class FoodModifyDialog(val food: FoodEntity) : DialogFragment() {
                         sodium = binding!!.sodium.text.toString().toDouble()
                     }
                     CoroutineScope(Dispatchers.IO).launch {
-                        roomDB!!.foodDao().saveFood(food)
+                        roomDB!!.foodDao().updateFood(food)
+                        Log.i("dialog", "update")
+                        (activity as ScanInfomation).onUpdateFood()
                     }
+                    Log.i("dialog", "setfood")
+                    dialog.dismiss()
                 } catch (e: Exception) {
                     val errorDialog = AlertDialog.Builder(this@FoodModifyDialog.context)
                         .setMessage("문자가 입력됐거나 작성하지 않은 칸이 있습니다.")
@@ -82,8 +91,7 @@ class FoodModifyDialog(val food: FoodEntity) : DialogFragment() {
         }
     }
 
-    override fun onCancel(dialog: DialogInterface) {
-        // 다이얼로그가 취소됐을 때 처리
-        super.onCancel(dialog)
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
     }
 }

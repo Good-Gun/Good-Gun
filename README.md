@@ -1,2 +1,33 @@
-# Good-Gun
-오픈 소스 소프트웨어 출품작 국건이(국민 건강 지킴이) – 바코드 스캔 및 직접 입력을 통한 식품정보 기록과 영양관리 애플리케이션
+# 국민 건강 지킴이 - 국건이
+
+바코드 스캔 및 직접 입력을 통한 식품정보 기록과 영양관리 애플리케이션
+
+### License
+
+**ProgressView by skydoves**
+- Apache 2.0
+- (https://github.com/skydoves/ProgressView/blob/main/LICENSE)
+
+**CircularProgressBar by lopspower**
+- Apache 2.0
+- (https://github.com/lopspower/CircularProgressBar/blob/master/LICENSE)
+
+**Android-SpinKit by ybq**
+- MIT License
+- (https://github.com/ybq/Android-SpinKit/blob/master/LICENSE)
+
+**BubbleTabBar by akshay2211**
+- Apache 2.0
+- (https://github.com/akshay2211/BubbleTabBar/blob/master/LICENSE)
+
+**ViewPagerTwoIndicator by thellmund**
+- Apache 2.0
+- (https://github.com/thellmund/ViewPagerTwoIndicator)
+
+**PrimeDatePicker by aminography**
+- Apache 2.0
+- (https://github.com/aminography/PrimeDatePicker/blob/master/LICENSE.md)
+
+**PrimeCalendar by aminography**
+- Apache 2.0
+- (https://github.com/aminography/PrimeCalendar/blob/master/LICENSE.md)

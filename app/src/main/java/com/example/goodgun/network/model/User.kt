@@ -7,7 +7,6 @@ class User(
     var u_gender: String,
     var u_height: String,
     var u_weight: String,
-    // var u_gender:String,
     var u_age: String,
     var u_allergy: List<String>,
     var u_exercise_type: String,
