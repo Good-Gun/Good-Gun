@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.goodgun.databinding.FragmentHomeFoodBinding
+import com.example.goodgun.main_function.FoodModifyDialog
 import com.example.goodgun.network.model.Food
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -53,10 +54,9 @@ class HomeFoodFragment : Fragment() {
                     .child(food!!.name).get().addOnCompleteListener {
                         if (it.isSuccessful) {
                             val dataSnapshot = it.result
-                            for (child in dataSnapshot.children) {
-                                val value = child.getValue(Food::class.java)
-                                Log.i("food", value.toString())
-                            }
+                            val food = dataSnapshot.getValue(Food::class.java)!!
+                            val dialog = FoodModifyDialog(food)
+                            dialog.show(requireActivity().supportFragmentManager, "FoodModifyDialog")
                         } else {
                             Log.e("food", "error")
                         }
