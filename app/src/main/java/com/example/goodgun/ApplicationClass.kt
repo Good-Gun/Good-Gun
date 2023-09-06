@@ -64,12 +64,12 @@ class ApplicationClass : Application() {
                 0
             }
 
-            /*BMR = if(user.u_gender == "m"){
+            BMR = if (user.u_gender == "M") {
                 88.362 + (13.397 * user.u_weight.toInt()) + (4.799 * user.u_height.toInt()) - (6.677 * user.u_age.toInt())
             } else {
                 447.593 + (9.247 * user.u_weight.toInt()) + (3.098 * user.u_height.toInt()) - (4.330 * user.u_age.toInt())
-            }*/
-            BMR = 88.362 + (13.397 * user.u_weight.toInt()) + (4.799 * user.u_height.toInt()) - (5.677 * user.u_age.toInt())
+            }
+            // BMR = 88.362 + (13.397 * user.u_weight.toInt()) + (4.799 * user.u_height.toInt()) - (5.677 * user.u_age.toInt())
 
             calorie = cal + if (user.u_exercise_freq.toInt() < 1) {
                 BMR * 1.2 // * 평소 운동 강도
@@ -81,15 +81,15 @@ class ApplicationClass : Application() {
 
             Log.d("Calorie Check", "$calorie")
 
-            maxNutrition.calorie = calorie.toInt()
-            maxNutrition.carbohydrates = (calorie * goal[0] / 4).toInt()
-            maxNutrition.protein = (calorie * goal[1] / 4).toInt()
-            maxNutrition.fat = (calorie * goal[2] / 9).toInt()
-            maxNutrition.trans_fat = (calorie * 0.01 / 9).toInt()
-            maxNutrition.saturated_fat = (calorie * (if (user.u_age.toInt() >= 19) 0.07 else 0.08) / 9).toInt()
-            maxNutrition.sugar = 25
-            maxNutrition.sodium = 2000
-            maxNutrition.cholesterol = 300
+            maxNutrition.calorie = calorie
+            maxNutrition.carbohydrates = (calorie * goal[0] / 4)
+            maxNutrition.protein = (calorie * goal[1] / 4)
+            maxNutrition.fat = (calorie * goal[2] / 9)
+            maxNutrition.trans_fat = (calorie * 0.01 / 9)
+            maxNutrition.saturated_fat = (calorie * (if (user.u_age.toInt() >= 19) 0.07 else 0.08) / 9)
+            maxNutrition.sugar = 25.0
+            maxNutrition.sodium = 2000.0
+            maxNutrition.cholesterol = 300.0
         }
     }
 

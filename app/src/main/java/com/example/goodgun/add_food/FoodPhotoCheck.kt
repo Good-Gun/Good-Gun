@@ -114,7 +114,7 @@ class FoodPhotoCheck : AppCompatActivity() {
                             Log.i("FoodLens", food.nutrition.calories.toString())
                             val nutrition = food.nutrition
                             nutrition.apply {
-                                val temp = FoodEntity(food.foodName, calories.toDouble(), carbonHydrate.toDouble(), sugar.toDouble(), protein.toDouble(), fat.toDouble(), transFat.toDouble(), saturatedFat.toDouble(), cholesterol.toDouble(), true)
+                                val temp = FoodEntity(food.foodName, calories.toDouble(), carbonHydrate.toDouble(), sugar.toDouble(), protein.toDouble(), fat.toDouble(), transFat.toDouble(), saturatedFat.toDouble(), cholesterol.toDouble(), sodium.toDouble(), true)
                                 data.add(temp)
                             }
                             isChecked.add(false)
