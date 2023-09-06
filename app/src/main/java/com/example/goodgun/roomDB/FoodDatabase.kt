@@ -12,7 +12,7 @@ abstract class FoodDatabase : RoomDatabase() {
 
     // Migration 코드
     companion object {
-        val migration_5_to_7 = object : Migration(5, 7) {
+        val migration_6_to_7 = object : Migration(6, 7) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("DROP TABLE IF EXISTS table_food")
                 // 새로운 테이블 생성 (새 스키마에 맞게)
