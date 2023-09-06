@@ -64,6 +64,10 @@ class AdditionalInfoActivity : AppCompatActivity() {
             multiAutoCompleteTextView.showDropDown()
         }
 
+        binding.backBtn.setOnClickListener {
+            finish()
+        }
+
         // 스피너들 초기화
         initSpinners()
         // 유저의 기존 데이터 불러오기
