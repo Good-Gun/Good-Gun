@@ -41,8 +41,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:layout_weight="1"
-        android:background="@drawable/box_radius_10dp"
-        android:backgroundTint="@color/C1_2"
+
+        android:background="@color/theme1_2"
+
         android:padding="10dp"></androidx.recyclerview.widget.RecyclerView>
 
     <LinearLayout
@@ -62,7 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:text="직접 입력"
-            android:textColor="@color/C1_2" />
+            android:textColor="@color/theme1" />
 
 
     </LinearLayout>
@@ -79,8 +80,10 @@
             android:id="@+id/cancel_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/box_radius_10dp"
-            android:backgroundTint="#D9D9D9"
+
+            android:background="@drawable/gray_button"
+            android:textStyle="bold"
+
             android:text="취소" />
         <View
             android:layout_width="100dp"
@@ -89,8 +92,11 @@
             android:id="@+id/ok_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/box_radius_10dp"
-            android:backgroundTint="@color/C1_2"
+
+            android:background="@drawable/blue_button"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+
             android:text="확인"/>
 
     </LinearLayout>
