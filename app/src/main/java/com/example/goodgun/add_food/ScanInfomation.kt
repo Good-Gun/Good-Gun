@@ -87,6 +87,7 @@ class ScanInfomation : AppCompatActivity() {
 //        }
         binding.directAdd.setOnClickListener {
             model.reset()
+            model.setuserid(userid)
             val dialog = DirectInputFragment()
             dialog.show(supportFragmentManager, "DirectInputFragment")
         }

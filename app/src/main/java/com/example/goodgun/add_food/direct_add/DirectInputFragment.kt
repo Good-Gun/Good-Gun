@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,9 +22,13 @@ import com.example.goodgun.databinding.FragmentDirectInputBinding
 import com.example.goodgun.openAPI.FoodClient
 import com.example.goodgun.openAPI.FoodItem
 import com.example.goodgun.openAPI.FoodList
+import com.example.goodgun.roomDB.DatabaseManager
+import com.example.goodgun.roomDB.FoodDatabase
 import com.example.goodgun.roomDB.FoodEntity
 import com.example.goodgun.util.LoadingDialog
 import com.example.goodgun.util.ScreenUtil
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -40,6 +45,8 @@ class DirectInputFragment : DialogFragment() {
 
     private lateinit var loadingDialog: Dialog // 로딩창 클래스
 
+    private lateinit var roomdb: FoodDatabase
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         _binding = FragmentDirectInputBinding.inflate(layoutInflater)
         val view = binding.root
@@ -48,6 +55,8 @@ class DirectInputFragment : DialogFragment() {
         val screenWidth = screenSize.first
         val screenHeight = screenSize.second
         val screenDensity = ScreenUtil.getScreenDensity(requireActivity())
+
+        initRoomDB()
 
 //        val dialogBuilder = AlertDialog.Builder(requireActivity())
 //            .setView(view)
@@ -84,6 +93,14 @@ class DirectInputFragment : DialogFragment() {
         return searchDialog
     }
 
+    private fun initRoomDB() {
+        val uid = model.getuserid()
+        if (uid==""){
+            Toast.makeText(requireContext(), "유효하지 않은 유저입니다.", Toast.LENGTH_SHORT).show()
+        }
+        roomdb = DatabaseManager.getDatabaseInstance(uid, requireContext())
+    }
+
     private fun initRecyclerView() {
         binding.searchRecyclerView.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
@@ -102,8 +119,11 @@ class DirectInputFragment : DialogFragment() {
                         data.trans_fat?.toDoubleOrNull() ?: 0.0,
                         data.saturated_fat?.toDoubleOrNull() ?: 0.0,
                         data.cholesterol?.toDoubleOrNull() ?: 0.0,
-                        false,
+                        true,
                     )
+                    CoroutineScope(Dispatchers.IO).launch {
+                        roomdb.foodDao().saveFood(selectFood)
+                    }
                     model.setfood(selectFood)
                     withContext(Dispatchers.Main) {
                         adapter.selectedItemPosition = position
