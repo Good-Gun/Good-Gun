@@ -50,12 +50,6 @@ class FoodAddAdapter(var items: List<FoodEntity>, var context: Context) : Recycl
                     var amt =  binding.amount.text.toString().toDouble()
                     itemchange?.onTextChanged(items[adapterPosition], adapterPosition, amt)
                 }
-//                if(isStringConvertibleToDouble(binding.amount.text.toString())){
-//                    amt =  binding.amount.text.toString().toDouble()
-//                    //amt를 db의 모든 영양소에 곱하기
-//                    //ex) 칼로리 * amt
-//                    // 탄수화물 * amt   ...
-//                }
             }
         }
     }

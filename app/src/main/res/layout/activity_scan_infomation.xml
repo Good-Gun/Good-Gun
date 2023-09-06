@@ -88,6 +88,19 @@
                     android:layout_gravity="center"
 
                     />
+<!--                <Button-->
+<!--                    app:backgroundTint="@null"-->
+<!--                    android:id="@+id/dbCheck"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:background="@drawable/button_round_gray"-->
+<!--                    android:textSize="15sp"-->
+<!--                    android:text="db 확인"-->
+<!--                    android:textColor="@color/colorBlack"-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:layout_gravity="center"-->
+
+<!--                    />-->
 
 
             </LinearLayout>
