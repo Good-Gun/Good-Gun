@@ -128,6 +128,7 @@ class ScanInfomation : AppCompatActivity() {
             var tmpsaturated_fat = 0.0
             var tmpcholesterol = 0.0
             for (food in allfood) {
+                val amt = food.amount
                 tmpcalory += food.calory ?: 0.0
                 tmpcarbohydrates += food.carbohydrates ?: 0.0
                 tmpsugar += food.sugar ?: 0.0
@@ -246,9 +247,28 @@ class ScanInfomation : AppCompatActivity() {
                         adapter.notifyItemRemoved(position)
                     }
                 }
+                adapter.itemchange = object : FoodAddAdapter.OnTextChangeListener {
+                    override fun onTextChanged(data: FoodEntity, position: Int, amount: Double) {
+                        val formattedValue = String.format("%.2f", amount).toDouble()
+                        if (data.amount!=formattedValue){
+                            data.amount=formattedValue
+                            updateSumFoodEntity()
+                        }
+                    }
+                }
                 binding.recyclerView.adapter = adapter
                 updateSumFoodEntity()
             }
+        }
+    }
+
+    // 해당 값이 double로 변환될 수 있는지
+    fun isStringConvertibleToDouble(input: String): Boolean {
+        return try {
+            input.toDouble()
+            true
+        } catch (e: NumberFormatException) {
+            false
         }
     }
 
