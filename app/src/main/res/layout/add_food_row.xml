@@ -16,6 +16,11 @@
         android:layout_weight="1"
         android:background="@drawable/underline"
         android:textStyle="bold"
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
 
         android:text="제품명"/>
 
