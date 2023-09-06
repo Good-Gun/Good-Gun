@@ -5,6 +5,7 @@ package com.example.goodgun.main
 
 import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -213,6 +214,9 @@ class HomeFragment : Fragment() {
             /*tvHomeName.text = ApplicationClass.uname*/
 
             pbHomeCalorie.progress = (nutrition.calorie / max.calorie.toFloat() * 100.0).toFloat()
+            if(pbHomeCalorie.progress >= 100.0){
+                pbHomeCalorie.progressBarColor = Color.RED
+            }
             pvHomeCarbo.progress = (nutrition.carbohydrates / max.carbohydrates.toFloat() * 100.0).toFloat()
             pvHomeFat.progress = (nutrition.fat / max.fat.toFloat() * 100.0).toFloat()
             pvHomeProtein.progress = (nutrition.protein / max.protein.toFloat() * 100.0).toFloat()
