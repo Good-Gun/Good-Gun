@@ -150,9 +150,13 @@ class ProfileFragment : Fragment() {
         val uid = currentUser!!.uid
         val userRef = database.child("user_list").child(uid)
 
+
         val height = binding.profileHeightInput.text.toString()
         val weight = binding.profileWeightInput.text.toString()
         val age = binding.profileAgeInput.text.toString()
+
+
+
 
         if (isStringConvertibleToInt(height)) {
             userRef.child("u_height").setValue(height)
@@ -257,6 +261,7 @@ class ProfileFragment : Fragment() {
                     val dataSnapshot = task.result
                     val uName = dataSnapshot.child("u_name").getValue(String::class.java)
                     val uEmail = dataSnapshot.child("u_email").getValue(String::class.java)
+                    val uGender = dataSnapshot.child("u_gender").getValue(String::class.java)
                     val uPW = dataSnapshot.child("u_password").getValue(String::class.java)
                     val uHeight = dataSnapshot.child("u_height").getValue(String::class.java)
                     val uWeight = dataSnapshot.child("u_weight").getValue(String::class.java)
@@ -279,6 +284,7 @@ class ProfileFragment : Fragment() {
                     uExGoalPos = dataSnapshot.child("u_physical_goals").getValue(String::class.java)!!.toInt()
 
                     binding.profileNameInput.setText(uName)
+                    binding.profileGender.setText(uGender)
                     binding.profileIdInput.setText(uEmail)
                     binding.profilePwInput.setText("********")
                     binding.profileHeightInput.setText(uHeight)
