@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.goodgun.databinding.FragmentFoodTodayBinding
 import com.example.goodgun.roomDB.FoodEntity
+import kotlin.math.roundToInt
 
 class FoodTodayFragment : Fragment() {
 
@@ -24,10 +25,10 @@ class FoodTodayFragment : Fragment() {
         Log.d("Check OpenAI", "from FoodTodayFragment${food?.name}")
         binding?.apply {
             tvName.text = food?.name
-            tvCal.text = food?.calory.toString()
-            tvC.text = food?.carbohydrates.toString()
-            tvF.text = food?.fat.toString()
-            tvP.text = food?.protein.toString()
+            tvCal.text = food?.calory!!.roundToInt().toString()
+            tvC.text = food?.carbohydrates!!.roundToInt().toString()
+            tvF.text = food?.fat!!.roundToInt().toString()
+            tvP.text = food?.protein!!.roundToInt().toString()
         }
         return binding!!.root
     }

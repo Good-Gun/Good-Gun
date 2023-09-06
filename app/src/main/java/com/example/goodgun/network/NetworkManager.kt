@@ -48,15 +48,15 @@ object NetworkManager : NetworkInterface {
                         )
                         response.food_list.add(food)
                         response.nutrition.apply {
-                            calorie += food.calory!!
-                            carbohydrates += food.carbohydrates!!
-                            fat += food.fat!!
-                            saturated_fat += food.saturated_fat!!
-                            trans_fat += food.trans_fat!!
-                            cholesterol += food.cholesterol!!
-                            protein += food.protein!!
-                            sodium += food.sodium!!
-                            sugar += food.sugar!!
+                            calorie += food.calory!! * food.amount!!
+                            carbohydrates += food.carbohydrates!! * food.amount!!
+                            fat += food.fat!! * food.amount!!
+                            saturated_fat += food.saturated_fat!! * food.amount!!
+                            trans_fat += food.trans_fat!! * food.amount!!
+                            cholesterol += food.cholesterol!! * food.amount!!
+                            protein += food.protein!! * food.amount!!
+                            sodium += food.sodium!! * food.amount!!
+                            sugar += food.sugar!! * food.amount!!
                         }
                     }
                 }
@@ -89,15 +89,15 @@ object NetworkManager : NetworkInterface {
                     for (foodSnapshot in innerSnapshot.children) {
                         val food = foodSnapshot.getValue(FoodEntity::class.java)!!
                         nutrition.apply {
-                            calorie += food.calory!!
-                            carbohydrates += food.carbohydrates!!
-                            fat += food.fat!!
-                            saturated_fat += food.saturated_fat!!
-                            trans_fat += food.trans_fat!!
-                            cholesterol += food.cholesterol!!
-                            protein += food.protein!!
-                            sodium += food.sodium!!
-                            sugar += food.sugar!!
+                            calorie += food.calory!! * food.amount!!
+                            carbohydrates += food.carbohydrates!! * food.amount!!
+                            fat += food.fat!! * food.amount!!
+                            saturated_fat += food.saturated_fat!! * food.amount!!
+                            trans_fat += food.trans_fat!! * food.amount!!
+                            cholesterol += food.cholesterol!!* food.amount!!
+                            protein += food.protein!! * food.amount!!
+                            sodium += food.sodium!! * food.amount!!
+                            sugar += food.sugar!! * food.amount!!
                         }
                     }
                 }
@@ -131,15 +131,15 @@ object NetworkManager : NetworkInterface {
             Log.d("Firebase Communication", "in day Nutrition, ${snapshot.key}")
             val food = snapshot.getValue(FoodEntity::class.java)!!
             nutrition.apply {
-                calorie += food.calory!!
-                carbohydrates += food.carbohydrates!!
-                fat += food.fat!!
-                saturated_fat += food.saturated_fat!!
-                trans_fat += food.trans_fat!!
-                cholesterol += food.cholesterol!!
-                protein += food.protein!!
-                sodium += food.sodium!!
-                sugar += food.sugar!!
+                calorie += food.calory!! * food.amount!!
+                carbohydrates += food.carbohydrates!! * food.amount!!
+                fat += food.fat!! * food.amount!!
+                saturated_fat += food.saturated_fat!! * food.amount!!
+                trans_fat += food.trans_fat!! * food.amount!!
+                cholesterol += food.cholesterol!! * food.amount!!
+                protein += food.protein!! * food.amount!!
+                sodium += food.sodium!! * food.amount!!
+                sugar += food.sugar!! * food.amount!!
             }
         }
         nutrition

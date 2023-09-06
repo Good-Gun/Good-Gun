@@ -211,6 +211,9 @@ class GraphActivity : AppCompatActivity() {
                     )
                     arr4[i].text = spannableString
                 }
+                0 -> {
+                    arr3[i].highlightView.color = ResourcesCompat.getColor(resources, R.color.graph, null)
+                }
                 -1 -> {
                     arr3[i].highlightView.color = ResourcesCompat.getColor(resources, R.color.yellow, null)
                     str += arr1[i] + " 섭취량이 적정량보다 약간 부족합니다!\n"

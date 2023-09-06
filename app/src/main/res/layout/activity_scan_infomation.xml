@@ -125,8 +125,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textStyle="bold"
-                        android:text="열량"
-                        android:gravity="center"/>
+                        android:text="@string/calorie"
+                        android:layout_marginStart="15dp"/>
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
@@ -155,8 +155,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textStyle="bold"
-                        android:text="탄수화물"
-                        android:gravity="center"/>
+                        android:text="@string/carbohydrate"
+                        android:layout_marginStart="15dp"/>
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
@@ -184,9 +184,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="당류"
+                        android:text="@string/sugar"
                         android:textStyle="bold"
-                        android:gravity="center"/>
+                        android:layout_marginStart="15dp"/>
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
@@ -214,9 +214,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="단백질"
+                        android:text="@string/protein"
                         android:textStyle="bold"
-                        android:gravity="center"/>
+                        android:layout_marginStart="15dp"/>
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
@@ -244,9 +244,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="지방"
+                        android:text="@string/fat"
                         android:textStyle="bold"
-                        android:gravity="center"/>
+                        android:layout_marginStart="15dp"/>
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
@@ -274,9 +274,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="트랜스지방"
+                        android:text="@string/trans_fat"
                         android:textStyle="bold"
-                        android:gravity="center"/>
+                        android:layout_marginStart="15dp"/>
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
@@ -304,9 +304,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="포화지방"
+                        android:text="@string/saturated_fat"
                         android:textStyle="bold"
-                        android:gravity="center"/>
+                        android:layout_marginStart="15dp"/>
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
@@ -334,9 +334,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="콜레스테롤"
+                        android:text="@string/cholesterol"
                         android:textStyle="bold"
-                        android:gravity="center"/>
+                        android:layout_marginStart="15dp"/>
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
@@ -364,9 +364,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="나트륨"
+                        android:text="@string/sodium"
                         android:textStyle="bold"
-                        android:gravity="center"/>
+                        android:layout_marginStart="15dp"/>
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
