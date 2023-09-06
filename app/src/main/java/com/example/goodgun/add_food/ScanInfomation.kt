@@ -79,9 +79,10 @@ class ScanInfomation : AppCompatActivity() {
 //            GlobalScope.launch(Dispatchers.IO) {
 //                val tmp: List<FoodEntity> = roomdb.foodDao().getAll()
 //                val message =
-//                    tmp.joinToString("\n") { "FoodEntity(id=${it.id}, name=${it.name}), calory=${it.calory})" }
+//                    tmp.joinToString("\n") { "FoodEntity(id=${it.id}, name=${it.name}), amount=${it.amount})" }
 //                withContext(Dispatchers.Main) {
 //                    Toast.makeText(this@ScanInfomation, message, Toast.LENGTH_SHORT).show()
+//                    Log.i("check",message)
 //                }
 //            }
 //        }
@@ -155,7 +156,22 @@ class ScanInfomation : AppCompatActivity() {
                     sumfood.sodium = tmpsodium
                 }
             }
-            roomdb.foodDao().saveFood(sumfood)
+            roomdb.foodDao().updateFood(
+                sumfood.name,
+                sumfood.calory!!,
+                sumfood.carbohydrates!!,
+                sumfood.sugar!!,
+                sumfood.protein!!,
+                sumfood.fat!!,
+                sumfood.trans_fat!!,
+                sumfood.saturated_fat!!,
+                sumfood.cholesterol!!,
+                sumfood.sodium!!,
+                sumfood.registerDate,
+                sumfood.registerTime,
+                sumfood.inroomdb,
+                sumfood.amount!!
+            )
             updateSum()
         }
     }
@@ -259,7 +275,22 @@ class ScanInfomation : AppCompatActivity() {
                         if (data.amount != formattedValue) {
                             data.amount = formattedValue
                             GlobalScope.launch(Dispatchers.IO) {
-                                roomdb.foodDao().updateFood(data)
+                                roomdb.foodDao().updateFood(
+                                    data.name,
+                                    data.calory!!,
+                                    data.carbohydrates!!,
+                                    data.sugar!!,
+                                    data.protein!!,
+                                    data.fat!!,
+                                    data.trans_fat!!,
+                                    data.saturated_fat!!,
+                                    data.cholesterol!!,
+                                    data.sodium!!,
+                                    data.registerDate,
+                                    data.registerTime,
+                                    data.inroomdb,
+                                    data.amount!!
+                                )
                                 withContext(Dispatchers.Main) {
                                     updateSumFoodEntity()
                                 }
@@ -270,16 +301,6 @@ class ScanInfomation : AppCompatActivity() {
                 binding.recyclerView.adapter = adapter
                 updateSumFoodEntity()
             }
-        }
-    }
-
-    // 해당 값이 double로 변환될 수 있는지
-    fun isStringConvertibleToDouble(input: String): Boolean {
-        return try {
-            input.toDouble()
-            true
-        } catch (e: NumberFormatException) {
-            false
         }
     }
 

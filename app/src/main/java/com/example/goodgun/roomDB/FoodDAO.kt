@@ -31,6 +31,32 @@ interface FoodDAO {
     @Query("SELECT count(*) FROM table_food WHERE name != 'is_sum_entity'")
     fun foodCount(): Int
 
-    @Update
-    fun updateFood(foodEntity: FoodEntity)
+    @Query("UPDATE table_food SET calory = :calory, " +
+            "carbohydrates = :carbohydrates, " +
+            "sugar = :sugar, " +
+            "protein = :protein, " +
+            "fat = :fat, " +
+            "trans_fat = :trans_fat, " +
+            "saturated_fat = :saturated_fat, " +
+            "cholesterol = :cholesterol, " +
+            "sodium = :sodium, " +
+            "inroomdb = :inroomdb, " +
+            "amount = :amount " +
+            "WHERE name = :name AND registerDate = :registerDate AND registerTime = :registerTime")
+    fun updateFood(
+        name: String,
+        calory: Double,
+        carbohydrates: Double,
+        sugar: Double,
+        protein: Double,
+        fat: Double,
+        trans_fat: Double,
+        saturated_fat: Double,
+        cholesterol: Double,
+        sodium: Double,
+        registerDate: String,
+        registerTime: String,
+        inroomdb: Boolean,
+        amount: Double
+    )
 }
