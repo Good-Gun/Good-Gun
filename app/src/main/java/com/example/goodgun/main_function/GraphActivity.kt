@@ -259,5 +259,4 @@ class GraphActivity : AppCompatActivity() {
         }
         binding.tvWarning.text = spannableString
     }
-
 }

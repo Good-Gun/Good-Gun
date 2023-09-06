@@ -28,9 +28,9 @@ data class FoodEntity(
     // 기본 생성자
     // 이름, 열량, 탄수화물, 당류, 단백질, 지방, 트랜스지방, 포화지방, 콜레스테롤, 등록일자, 등록시간
     constructor() : this(0, "기본 생성자", 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, LocalDate.now().toString(), LocalTime.now().toString(), false)
-    constructor(name: String) : this(0, name, 0.0, 0.0, 0.0, 0.0, 0.0,0.0, 0.0, 0.0, 0.0, LocalDate.now().toString(), LocalTime.now().toString(), false)
+    constructor(name: String) : this(0, name, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, LocalDate.now().toString(), LocalTime.now().toString(), false)
 
-    constructor(name: String, calory: Double?, carbohydrates: Double?, sugar: Double?, protein: Double?, fat: Double?, trans_fat: Double?, saturated_fat: Double?, cholesterol: Double?, sodium: Double?,inroomdb: Boolean) :
+    constructor(name: String, calory: Double?, carbohydrates: Double?, sugar: Double?, protein: Double?, fat: Double?, trans_fat: Double?, saturated_fat: Double?, cholesterol: Double?, sodium: Double?, inroomdb: Boolean) :
         this(
             0,
             name,

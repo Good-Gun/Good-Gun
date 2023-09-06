@@ -31,6 +31,7 @@ class FoodListAdapter(val items: ArrayList<FoodEntity>, val isChecked: ArrayList
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.foodName.text = items[position].name
+        holder.binding.foodName.isSelected = true
         holder.binding.checkBox.isChecked = isChecked[position]
     }
 }

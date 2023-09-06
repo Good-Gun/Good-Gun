@@ -34,7 +34,6 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 import java.util.Collections.addAll
-import kotlin.collections.ArrayList
 import kotlin.math.roundToInt
 
 class HomeFragment : Fragment() {

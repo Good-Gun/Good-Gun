@@ -233,6 +233,7 @@ class ScanInfomation : AppCompatActivity() {
                     override fun onEditClick(data: FoodEntity, position: Int) {
                         val dialog = FoodModifyDialog(data)
                         dialog.show(supportFragmentManager, "FoodModifyDialog")
+                        updateSumFoodEntity()
                     }
                 }
                 adapter.itemdelete = object : FoodAddAdapter.OnItemClickListener {
