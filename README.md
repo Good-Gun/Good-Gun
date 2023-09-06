@@ -3,6 +3,9 @@
 바코드 스캔 및 직접 입력을 통한 식품정보 기록과 영양관리 애플리케이션
 
 ## Project Architecture
+## 기본 구조
+![1](https://github.com/Good-Gun/Good-Gun/assets/101652649/255e9af3-bcd2-4dce-adc4-fb3a90b328a9)
+
 ### 카메라 관련
 ![KakaoTalk_20230831_202339858_01](https://github.com/Good-Gun/Good-Gun/assets/101652649/97d7b8a7-1bd4-4621-a37b-4a96f83a7c4a)
 
