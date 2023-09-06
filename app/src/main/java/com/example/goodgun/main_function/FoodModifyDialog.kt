@@ -9,9 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.example.goodgun.databinding.FragmentFoodModifyDialogBinding
-import com.example.goodgun.network.model.Food
+import com.example.goodgun.roomDB.FoodEntity
 
-class FoodModifyDialog(val food: Food) : DialogFragment() {
+class FoodModifyDialog(val food: FoodEntity) : DialogFragment() {
     private var binding: FragmentFoodModifyDialogBinding? = null
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         // 다이얼로그를 생성하고 설정합니다.

@@ -57,13 +57,12 @@
             android:gravity="center"
             >
             <ImageButton
-                android:id="@+id/food_add"
+                android:id="@+id/food_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
-                android:background="@drawable/button_round_gray"
                 android:layout_weight="1"
-                android:src="@drawable/baseline_check_circle_24"/>
+                android:src="@drawable/icon_edit"/>
             <ImageButton
                 android:id="@+id/food_delete"
                 android:layout_width="wrap_content"

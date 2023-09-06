@@ -1,14 +1,12 @@
 package com.example.goodgun.main
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.goodgun.databinding.FragmentHomeFoodBinding
-import com.example.goodgun.main_function.FoodModifyDialog
 import com.example.goodgun.network.model.Food
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -47,23 +45,6 @@ class HomeFoodFragment : Fragment() {
             tvC.text = food?.carbohydrates.toString()
             tvF.text = food?.fat.toString()
             tvP.text = food?.protein.toString()
-            fragment.setOnClickListener {
-                Log.i("food", food!!.name)
-                val nowFood = database!!.child("user_list").child(userid!!).child("food_list")
-                    .child(food!!.registerDate)
-                    .child(food!!.name).get().addOnCompleteListener {
-                        if (it.isSuccessful) {
-                            val dataSnapshot = it.result
-                            val food = dataSnapshot.getValue(Food::class.java)!!
-                            val dialog = FoodModifyDialog(food)
-                            dialog.show(requireActivity().supportFragmentManager, "FoodModifyDialog")
-                        } else {
-                            Log.e("food", "error")
-                        }
-                    }.addOnFailureListener {
-                        Log.e("food", it.toString())
-                    }
-            }
         }
         return binding!!.root
     }
