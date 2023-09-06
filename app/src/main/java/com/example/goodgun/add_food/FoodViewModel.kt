@@ -22,10 +22,10 @@ class FoodViewModel : ViewModel() {
         food = new
     }
 
-    fun getuserid(): String{
+    fun getuserid(): String {
         return userid
     }
-    fun setuserid(uid: String){
+    fun setuserid(uid: String) {
         userid = uid
     }
 }

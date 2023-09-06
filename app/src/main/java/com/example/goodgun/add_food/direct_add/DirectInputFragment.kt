@@ -27,8 +27,6 @@ import com.example.goodgun.roomDB.FoodDatabase
 import com.example.goodgun.roomDB.FoodEntity
 import com.example.goodgun.util.LoadingDialog
 import com.example.goodgun.util.ScreenUtil
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -95,7 +93,7 @@ class DirectInputFragment : DialogFragment() {
 
     private fun initRoomDB() {
         val uid = model.getuserid()
-        if (uid==""){
+        if (uid == "") {
             Toast.makeText(requireContext(), "유효하지 않은 유저입니다.", Toast.LENGTH_SHORT).show()
         }
         roomdb = DatabaseManager.getDatabaseInstance(uid, requireContext())
