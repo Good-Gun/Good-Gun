@@ -1,9 +1,12 @@
 package com.example.goodgun.main
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import com.example.goodgun.ApplicationClass
 import com.example.goodgun.R
 import com.example.goodgun.camera.CameraActivity
@@ -48,6 +51,20 @@ class MainActivity : AppCompatActivity() {
         }
         binding.ivAdd.setOnClickListener {
             startActivity(Intent(this, CameraActivity::class.java))
+        }
+    }
+
+    var mBackWait:Long = 0
+    override fun onBackPressed() {
+        // 뒤로가기 버튼 클릭
+        if(supportFragmentManager.fragments[0] == HomeFragment()) {
+            if (System.currentTimeMillis() - mBackWait >= 2000) {
+                mBackWait = System.currentTimeMillis()
+                Toast.makeText(this, "뒤로가기 버튼을 한번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show()
+                return
+            } else {
+                this.finishAffinity()
+            }
         }
     }
 
