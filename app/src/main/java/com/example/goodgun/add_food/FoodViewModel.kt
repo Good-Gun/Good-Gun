@@ -5,6 +5,7 @@ import com.example.goodgun.roomDB.FoodEntity
 
 class FoodViewModel : ViewModel() {
     var food: FoodEntity = FoodEntity()
+    var userid: String = ""
 
     fun reset() {
         food = FoodEntity()
@@ -19,5 +20,12 @@ class FoodViewModel : ViewModel() {
     }
     fun setfood(new: FoodEntity) {
         food = new
+    }
+
+    fun getuserid(): String{
+        return userid
+    }
+    fun setuserid(uid: String){
+        userid = uid
     }
 }
