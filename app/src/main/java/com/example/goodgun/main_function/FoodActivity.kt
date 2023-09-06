@@ -15,16 +15,16 @@ import com.example.goodgun.databinding.ActivityFoodBinding
 import com.example.goodgun.main_function.adapter.RecommendVPAdapter
 import com.example.goodgun.main_function.adapter.TodayVPAdapter
 import com.example.goodgun.network.NetworkManager
-import com.example.goodgun.network.model.Food
 import com.example.goodgun.network.model.Nutrition
 import com.example.goodgun.network.model.NutritionResponse
+import com.example.goodgun.roomDB.FoodEntity
 import com.example.goodgun.util.LoadingDialog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.Collections.addAll
+import kotlin.math.roundToInt
 
 /*오늘의 정보만 다루는 액티비티*/
 class FoodActivity : AppCompatActivity() {
@@ -38,7 +38,7 @@ class FoodActivity : AppCompatActivity() {
 
     private lateinit var todayVP: ViewPager2
     private lateinit var todayAdapter: TodayVPAdapter
-    private var fragmentToday = mutableListOf<Food>()
+    private var fragmentToday = mutableListOf<FoodEntity>()
 
     var completion: String ? = null
 
@@ -109,16 +109,16 @@ class FoodActivity : AppCompatActivity() {
     private fun setNutrition(nutrition: Nutrition) {
         val max = ApplicationClass.maxNutrition
         binding.apply {
-            tvFoodCalorie.text = nutrition.calorie.toString() + "/" + max.calorie
-            tvFoodCarbo.text = nutrition.carbohydrates.toString() + "/" + max.carbohydrates
-            tvFoodSugar.text = nutrition.sugar.toString() + "/" + max.sugar
-            tvFoodFat.text = nutrition.fat.toString() + "/" + max.fat
-            tvFoodTrans.text = nutrition.trans_fat.toString() + "/" + max.trans_fat
-            tvFoodSaturated.text = nutrition.saturated_fat.toString() + "/" + max.saturated_fat
-            tvFoodProtein.text = nutrition.protein.toString() + "/" + max.protein
-            tvFoodCholesterol.text = nutrition.cholesterol.toString() + "/" + max.cholesterol
-            tvFoodProtein.text = nutrition.protein.toString() + "/" + max.protein
-            tvFoodSodium.text = nutrition.sodium.toString() + "/" + max.sodium
+            tvFoodCalorie.text = nutrition.calorie.roundToInt().toString() + "/" + max.calorie.roundToInt()
+            tvFoodCarbo.text = nutrition.carbohydrates.roundToInt().toString() + "/" + max.carbohydrates.roundToInt()
+            tvFoodSugar.text = nutrition.sugar.roundToInt().toString() + "/" + max.sugar.roundToInt()
+            tvFoodFat.text = nutrition.fat.roundToInt().toString() + "/" + max.fat.roundToInt()
+            tvFoodTrans.text = nutrition.trans_fat.roundToInt().toString() + "/" + max.trans_fat.roundToInt()
+            tvFoodSaturated.text = nutrition.saturated_fat.roundToInt().toString() + "/" + max.saturated_fat.roundToInt()
+            tvFoodProtein.text = nutrition.protein.roundToInt().toString() + "/" + max.protein.roundToInt()
+            tvFoodCholesterol.text = nutrition.cholesterol.roundToInt().toString() + "/" + max.cholesterol.roundToInt()
+            tvFoodProtein.text = nutrition.protein.roundToInt().toString() + "/" + max.protein.roundToInt()
+            tvFoodSodium.text = nutrition.sodium.roundToInt().toString() + "/" + max.sodium.roundToInt()
         }
         loadingDialog.dismiss()
     }

@@ -5,14 +5,14 @@ import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
-@Database(entities = [FoodEntity::class], version = 5)
+@Database(entities = [FoodEntity::class], version = 7)
 abstract class FoodDatabase : RoomDatabase() {
 
     abstract fun foodDao(): FoodDAO
 
     // Migration 코드
     companion object {
-        val migration_4_to_5 = object : Migration(4, 5) {
+        val migration_5_to_7 = object : Migration(5, 7) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("DROP TABLE IF EXISTS table_food")
                 // 새로운 테이블 생성 (새 스키마에 맞게)
@@ -28,9 +28,11 @@ abstract class FoodDatabase : RoomDatabase() {
                         "`trans_fat` DOUBLE, " +
                         "`saturated_fat` DOUBLE, " +
                         "`cholesterol` DOUBLE, " +
+                        "`sodium` DOUBLE, " +
                         "`registerDate` TEXT NOT NULL, " +
                         "`registerTime` TEXT NOT NULL, " +
-                        "`inroomdb` INTEGER NOT NULL DEFAULT 1)",
+                        "`inroomdb` INTEGER NOT NULL DEFAULT 0, " +
+                        "`amount` DOUBLE)",
                 )
             }
         }

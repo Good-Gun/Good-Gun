@@ -7,12 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.goodgun.databinding.FragmentFoodTodayBinding
-import com.example.goodgun.network.model.Food
+import com.example.goodgun.roomDB.FoodEntity
 
 class FoodTodayFragment : Fragment() {
 
     var binding: FragmentFoodTodayBinding? = null
-    private var food: Food? = null
+    private var food: FoodEntity? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,7 +32,7 @@ class FoodTodayFragment : Fragment() {
         return binding!!.root
     }
 
-    fun setFood(food: Food) {
+    fun setFood(food: FoodEntity) {
         this.food = food
     }
 }

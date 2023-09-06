@@ -71,5 +71,6 @@ class FoodAddAdapter(var items: List<FoodEntity>, var context: Context) : Recycl
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.foodName.text = items[position].name
+        holder.binding.amount.setText(items[position].amount.toString())
     }
 }

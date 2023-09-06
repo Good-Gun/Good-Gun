@@ -24,9 +24,9 @@ import com.example.goodgun.add_food.ScanInfomation
 import com.example.goodgun.databinding.FragmentHomeBinding
 import com.example.goodgun.main_function.*
 import com.example.goodgun.network.NetworkManager
-import com.example.goodgun.network.model.Food
 import com.example.goodgun.network.model.NutritionResponse
 import com.example.goodgun.roomDB.DatabaseManager
+import com.example.goodgun.roomDB.FoodEntity
 import com.example.goodgun.util.LoadingDialog
 import kotlinx.coroutines.*
 import java.time.LocalDate
@@ -35,6 +35,7 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 import java.util.Collections.addAll
 import kotlin.collections.ArrayList
+import kotlin.math.roundToInt
 
 class HomeFragment : Fragment() {
 
@@ -43,10 +44,9 @@ class HomeFragment : Fragment() {
 
     private lateinit var todayVP: ViewPager2
     private lateinit var adapter: HomeVPAdapter
-    private val fragmentFood = mutableListOf<Food>()
+    private val fragmentFood = mutableListOf<FoodEntity>()
 
     lateinit var nutritionResponse: NutritionResponse // 영양 정보 저장을 위한 클래스
-    val food_list: ArrayList<Food> = arrayListOf() // 음식 리스트
     val today: String = LocalDateTime.now().format(DateTimeFormatter.ofPattern(" yyyy-MM-dd"))
     lateinit var date: String // 다른 날짜의 영양정보 탐색을 위한 변수
 
@@ -217,11 +217,11 @@ class HomeFragment : Fragment() {
             pvHomeFat.progress = (nutrition.fat / max.fat.toFloat() * 100.0).toFloat()
             pvHomeProtein.progress = (nutrition.protein / max.protein.toFloat() * 100.0).toFloat()
 
-            tvHomeCalorie1.text = nutrition.calorie.toString()
-            tvHomeCalorie2.text = "/ " + max.calorie.toString() + " kcal"
-            tvHomeCarbohydrates.text = nutrition.carbohydrates.toString() + " / " + max.carbohydrates.toString()
-            tvHomeProteins.text = nutrition.protein.toString() + " / " + max.protein.toString()
-            tvHomeFat.text = nutrition.fat.toString() + " / " + max.fat.toString()
+            tvHomeCalorie1.text = nutrition.calorie.roundToInt().toString()
+            tvHomeCalorie2.text = "/ " + max.calorie.roundToInt().toString() + " kcal"
+            tvHomeCarbohydrates.text = nutrition.carbohydrates.roundToInt().toString() + " / " + max.carbohydrates.roundToInt().toString()
+            tvHomeProteins.text = nutrition.protein.roundToInt().toString() + " / " + max.protein.roundToInt().toString()
+            tvHomeFat.text = nutrition.fat.roundToInt().toString() + " / " + max.fat.roundToInt().toString()
         }
         loadingDialog.dismiss()
     }
