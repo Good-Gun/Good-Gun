@@ -194,7 +194,7 @@ class GraphActivity : AppCompatActivity() {
             when (nutrition.calculateNutrientIntake(arr2[i])) {
                 2 -> {
                     arr3[i].highlightView.color = ResourcesCompat.getColor(resources, R.color.red, null)
-                    str += arr1[i] + " 섭취량이 적정량보다 매우 높습니다!!\n"
+                    str += arr1[i] + " 섭취량이 적정량보다 매우 높습니다!\n"
                     spannableString.setSpan(
                         ForegroundColorSpan(Color.RED),
                         0,
@@ -230,7 +230,7 @@ class GraphActivity : AppCompatActivity() {
                 }
                 -2 -> {
                     arr3[i].highlightView.color = ResourcesCompat.getColor(resources, R.color.red, null)
-                    str += arr1[i] + " 섭취량이 적정량보다 매우 부족합니다!!\n"
+                    str += arr1[i] + " 섭취량이 적정량보다 매우 부족합니다!\n"
                     spannableString.setSpan(
                         ForegroundColorSpan(Color.RED),
                         0,
@@ -247,7 +247,7 @@ class GraphActivity : AppCompatActivity() {
             str = str.removeSuffix("\n")
         }
 
-        val keyword = listOf<String>("약간 부족합니다!", "약간 높습니다!", "매우 부족합니다!", "매우 높습니다!!")
+        val keyword = listOf<String>("약간 부족합니다!", "약간 높습니다!", "매우 부족합니다!", "매우 높습니다!")
         val spannableString = SpannableString(str)
 
         for (i in 0..keyword.size - 1) {
