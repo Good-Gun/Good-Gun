@@ -23,6 +23,7 @@ data class FoodItem(
     @SerializedName("NUTR_CONT7") val cholesterol: String?,
     @SerializedName("NUTR_CONT8") val saturated_fat: String?,
     @SerializedName("NUTR_CONT9") val trans_fat: String?,
+    @SerializedName("MAKER_NAME") val maker_name: String?,
 
     // 번호, 음식 이름, 열량, 탄수화물, 단백질, 지방, 당류, 나트륨, 콜레스테롤, 포화지방산, 트랜스지방
 )
