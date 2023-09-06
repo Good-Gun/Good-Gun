@@ -22,7 +22,7 @@
             android:layout_margin="10dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/arrow_left"
+            android:src="@drawable/baseline_arrow_back_24"
             android:text="뒤로 가기" />
     </LinearLayout>
 
@@ -41,7 +41,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:layout_weight="1"
+
         android:background="@color/theme1_2"
+
         android:padding="10dp"></androidx.recyclerview.widget.RecyclerView>
 
     <LinearLayout
@@ -78,8 +80,10 @@
             android:id="@+id/cancel_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:background="@drawable/gray_button"
             android:textStyle="bold"
+
             android:text="취소" />
         <View
             android:layout_width="100dp"
@@ -88,9 +92,11 @@
             android:id="@+id/ok_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:background="@drawable/blue_button"
             android:textColor="@color/white"
             android:textStyle="bold"
+
             android:text="확인"/>
 
     </LinearLayout>
