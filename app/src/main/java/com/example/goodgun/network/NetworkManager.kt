@@ -94,7 +94,7 @@ object NetworkManager : NetworkInterface {
                             fat += food.fat!! * food.amount!!
                             saturated_fat += food.saturated_fat!! * food.amount!!
                             trans_fat += food.trans_fat!! * food.amount!!
-                            cholesterol += food.cholesterol!!* food.amount!!
+                            cholesterol += food.cholesterol!! * food.amount!!
                             protein += food.protein!! * food.amount!!
                             sodium += food.sodium!! * food.amount!!
                             sugar += food.sugar!! * food.amount!!
