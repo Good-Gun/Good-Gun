@@ -1,6 +1,6 @@
-
 package com.example.goodgun.add_food.direct_add
 
+import android.app.AlertDialog
 import android.app.Dialog
 import android.content.ContentValues
 import android.content.Context
@@ -16,7 +16,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.goodgun.BuildConfig
-import com.example.goodgun.R
 import com.example.goodgun.add_food.FoodViewModel
 import com.example.goodgun.add_food.ScanInfomation
 import com.example.goodgun.databinding.FragmentDirectInputBinding
@@ -37,7 +36,6 @@ class DirectInputFragment : DialogFragment() {
     private var _binding: FragmentDirectInputBinding? = null
     private val binding get() = _binding!!
 
-    lateinit var searchDialog: Dialog
     val model: FoodViewModel by activityViewModels()
 
     lateinit var adapter: SearchAdapter
@@ -54,42 +52,23 @@ class DirectInputFragment : DialogFragment() {
         val screenWidth = screenSize.first
         val screenHeight = screenSize.second
         val screenDensity = ScreenUtil.getScreenDensity(requireActivity())
+        val dialog = AlertDialog.Builder(requireActivity())
+            .setView(view)
+            .create()
 
         initRoomDB()
 
-//        val dialogBuilder = AlertDialog.Builder(requireActivity())
-//            .setView(view)
-//            .setPositiveButton("선택") {
-//                    dialog, _ ->
-//                // model 값 넣기
-//            }
-//            .setNegativeButton("취소") {
-//                    dialog, _ ->
-//                dialog.dismiss()
-//            }
-//
-//        dialog = dialogBuilder.create()
-//        dialog.setOnShowListener {
-//            dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.isEnabled = false
-//        }
-
-        searchDialog = Dialog(requireActivity(), R.style.CustomDialogTheme)
-        searchDialog.setContentView(view)
-        layoutParams.copyFrom(searchDialog.window?.attributes)
+        layoutParams.copyFrom(dialog!!.window?.attributes)
         layoutParams.width = screenWidth - 200 // 원하는 너비
-//        layoutParams.height = 600 // 원하는 높이
-        layoutParams.height = dpToPx(requireContext(), 150)
-//        resizeDialog(150)
-        searchDialog.window?.attributes = layoutParams
-        searchDialog.create()
-        searchDialog.show()
+        layoutParams.height = dpToPx(requireActivity(), 160)
+        dialog.window?.attributes = layoutParams
 
         initRecyclerView()
         initBtn()
 
         loadingDialog = LoadingDialog(requireContext())
 
-        return searchDialog
+        return dialog
     }
 
     private fun initRoomDB() {
@@ -134,7 +113,7 @@ class DirectInputFragment : DialogFragment() {
                         adapter.selectedItemPosition = position
                         adapter.notifyDataSetChanged()
 //                        dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.isEnabled = true
-                        searchDialog.dismiss()
+                        dialog!!.dismiss()
                     }
                 }
             }
@@ -184,7 +163,7 @@ class DirectInputFragment : DialogFragment() {
             binding.emptyTextView.visibility = View.VISIBLE
             binding.searchRecyclerView.visibility = View.GONE
             loadingDialog.dismiss()
-            resizeDialog(150)
+            resizeDialog(160)
         } else {
             CoroutineScope(Dispatchers.IO).launch {
                 FoodName(searchtext)
@@ -207,7 +186,7 @@ class DirectInputFragment : DialogFragment() {
                             adapter.setData(foodList)
                             checkRecyclerViewIsEmpty()
                             loadingDialog.dismiss()
-                            resizeDialog(if (foodList.isNotEmpty()) 600 else 150)
+                            resizeDialog(if (foodList.isNotEmpty()) 600 else 160)
                         }
                     }
                 }
@@ -220,8 +199,7 @@ class DirectInputFragment : DialogFragment() {
     }
 
     private fun resizeDialog(dp: Int) {
-        val dialog = searchDialog
-        val window = searchDialog.window
+        val window = dialog!!.window
         val layoutParams = window?.attributes
 
         val totalItemHeight = binding.searchRecyclerView.height ?: 0
