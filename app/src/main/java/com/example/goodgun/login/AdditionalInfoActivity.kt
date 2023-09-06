@@ -70,7 +70,6 @@ class AdditionalInfoActivity : AppCompatActivity() {
         loadAdditionalInfo(currentUser)
         // DB에 현재값 업로드
         uploadData(currentUser)
-
         setContentView(binding.root)
     }
     fun getAssetsTextArray(mContext: Context, fileName: String): Array<String> {
@@ -158,9 +157,16 @@ class AdditionalInfoActivity : AppCompatActivity() {
                     val uWeightValue = dataSnapshot.child("u_weight").getValue(String::class.java)
                     val uHeightValue = dataSnapshot.child("u_height").getValue(String::class.java)
                     val uAgeValue = dataSnapshot.child("u_age").getValue(String::class.java)
+                    val uGenderValue = dataSnapshot.child("u_gender").getValue(String::class.java)
+
                     binding.weightInput.setText(uWeightValue.toString())
                     binding.heightInput.setText(uHeightValue.toString())
                     binding.ageInput.setText(uAgeValue.toString())
+                    if(uGenderValue == "M"){
+                        binding.genderGroup.check(binding.radioButton.id)   //Male
+                    }else{
+                        binding.genderGroup.check(binding.radioButton2.id)   //Male
+                    }
                 }
             }
         } else {
@@ -182,9 +188,16 @@ class AdditionalInfoActivity : AppCompatActivity() {
         binding.startBtn.setOnClickListener {
             val uid = currentUser!!.uid
             val userRef = database.child("user_list").child(uid)
+            val gender = if(binding.genderGroup.checkedRadioButtonId ==binding.radioButton.id)
+                "M"
+            else
+                "F"
+
             val weight = binding.weightInput.text.toString()
             val height = binding.heightInput.text.toString()
             val age = binding.ageInput.text.toString()
+
+            userRef.child("u_gender").setValue(gender)
 
             if (isStringConvertibleToInt(height)) {
                 userRef.child("u_height").setValue(height)
