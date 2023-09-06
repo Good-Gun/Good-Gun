@@ -1,7 +1,6 @@
 package com.example.goodgun.add_food
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.goodgun.databinding.AddFoodRowBinding
@@ -12,17 +11,20 @@ class FoodAddAdapter(var items: List<FoodEntity>) : RecyclerView.Adapter<FoodAdd
     interface OnItemClickListener {
         fun onItemClick(data: FoodEntity, position: Int, amount: Double)
     }
+    interface OnEditClickListener {
+        fun onEditClick(data: FoodEntity, position: Int)
+    }
 
     // 하나의 data 에 대해 서로다른 이벤트리스너 등록가능
-    var itemadd: OnItemClickListener? = null
+    var itemedit: OnEditClickListener? = null
     var itemdelete: OnItemClickListener? = null
 
     inner class ViewHolder(val binding: AddFoodRowBinding) : RecyclerView.ViewHolder(binding.root) {
         init {
-            binding.foodAdd.setOnClickListener {
+            binding.foodEdit.setOnClickListener {
                 try {
                     val amt = binding.editTextNumber.text.toString().toDouble()
-                    itemadd?.onItemClick(items[adapterPosition], adapterPosition, amt)
+                    itemedit?.onEditClick(items[adapterPosition], adapterPosition)
                 } catch (e: Exception) {
                 }
             }
@@ -47,8 +49,5 @@ class FoodAddAdapter(var items: List<FoodEntity>) : RecyclerView.Adapter<FoodAdd
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.foodName.text = items[position].name
-        if (items[position].inroomdb) {
-            holder.binding.foodAdd.visibility = View.GONE
-        }
     }
 }

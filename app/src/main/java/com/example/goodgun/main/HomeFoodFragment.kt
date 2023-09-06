@@ -1,7 +1,6 @@
 package com.example.goodgun.main
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,24 +45,6 @@ class HomeFoodFragment : Fragment() {
             tvC.text = food?.carbohydrates.toString()
             tvF.text = food?.fat.toString()
             tvP.text = food?.protein.toString()
-            fragment.setOnClickListener {
-                Log.i("food", food!!.name)
-                val nowFood = database!!.child("user_list").child(userid!!).child("food_list")
-                    .child(food!!.registerDate)
-                    .child(food!!.name).get().addOnCompleteListener {
-                        if (it.isSuccessful) {
-                            val dataSnapshot = it.result
-                            for (child in dataSnapshot.children) {
-                                val value = child.getValue(Food::class.java)
-                                Log.i("food", value.toString())
-                            }
-                        } else {
-                            Log.e("food", "error")
-                        }
-                    }.addOnFailureListener {
-                        Log.e("food", it.toString())
-                    }
-            }
         }
         return binding!!.root
     }
