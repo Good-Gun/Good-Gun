@@ -190,12 +190,36 @@ class HomeFragment : Fragment() {
             /*tvHomeName.text = ApplicationClass.uname*/
 
             pbHomeCalorie.progress = (nutrition.calorie / max.calorie.toFloat() * 100.0).toFloat()
-            if(pbHomeCalorie.progress >= 100.0){
-                pbHomeCalorie.progressBarColor = Color.RED
-            }
             pvHomeCarbo.progress = (nutrition.carbohydrates / max.carbohydrates.toFloat() * 100.0).toFloat()
             pvHomeFat.progress = (nutrition.fat / max.fat.toFloat() * 100.0).toFloat()
             pvHomeProtein.progress = (nutrition.protein / max.protein.toFloat() * 100.0).toFloat()
+
+
+            if(pbHomeCalorie.progress >= 100.0){
+                pbHomeCalorie.progressBarColor = Color.RED
+            }else{
+                pbHomeCalorie.progressBarColor = Color.BLUE
+            }
+
+            if(pvHomeCarbo.progress >= 100.0){
+                pvHomeCarbo.highlightView.color =Color.RED
+            }else{
+                pvHomeCarbo.highlightView.color =Color.BLUE
+            }
+
+            if(pvHomeFat.progress >= 100.0){
+                pvHomeFat.highlightView.color =Color.RED
+            }else{
+                pvHomeFat.highlightView.color =Color.BLUE
+            }
+
+            if(pvHomeProtein.progress >= 100.0){
+                pvHomeProtein.highlightView.color =Color.RED
+            }else{
+                pvHomeProtein.highlightView.color =Color.BLUE
+            }
+
+
 
             tvHomeCalorie1.text = nutrition.calorie.roundToInt().toString()
             tvHomeCalorie2.text = "/ " + max.calorie.roundToInt().toString() + " kcal"
