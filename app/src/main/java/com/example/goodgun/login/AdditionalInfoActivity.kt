@@ -162,10 +162,10 @@ class AdditionalInfoActivity : AppCompatActivity() {
                     binding.weightInput.setText(uWeightValue.toString())
                     binding.heightInput.setText(uHeightValue.toString())
                     binding.ageInput.setText(uAgeValue.toString())
-                    if(uGenderValue == "M"){
-                        binding.genderGroup.check(binding.radioButton.id)   //Male
-                    }else{
-                        binding.genderGroup.check(binding.radioButton2.id)   //Male
+                    if (uGenderValue == "M") {
+                        binding.genderGroup.check(binding.radioButton.id) // Male
+                    } else {
+                        binding.genderGroup.check(binding.radioButton2.id) // Male
                     }
                 }
             }
@@ -188,10 +188,11 @@ class AdditionalInfoActivity : AppCompatActivity() {
         binding.startBtn.setOnClickListener {
             val uid = currentUser!!.uid
             val userRef = database.child("user_list").child(uid)
-            val gender = if(binding.genderGroup.checkedRadioButtonId ==binding.radioButton.id)
+            val gender = if (binding.genderGroup.checkedRadioButtonId == binding.radioButton.id) {
                 "M"
-            else
+            } else {
                 "F"
+            }
 
             val weight = binding.weightInput.text.toString()
             val height = binding.heightInput.text.toString()

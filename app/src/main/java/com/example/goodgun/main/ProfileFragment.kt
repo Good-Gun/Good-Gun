@@ -150,13 +150,9 @@ class ProfileFragment : Fragment() {
         val uid = currentUser!!.uid
         val userRef = database.child("user_list").child(uid)
 
-
         val height = binding.profileHeightInput.text.toString()
         val weight = binding.profileWeightInput.text.toString()
         val age = binding.profileAgeInput.text.toString()
-
-
-
 
         if (isStringConvertibleToInt(height)) {
             userRef.child("u_height").setValue(height)

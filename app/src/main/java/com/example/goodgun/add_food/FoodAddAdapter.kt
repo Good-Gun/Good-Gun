@@ -1,11 +1,8 @@
 package com.example.goodgun.add_food
 
 import android.content.Context
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import com.example.goodgun.databinding.AddFoodRowBinding
@@ -46,8 +43,8 @@ class FoodAddAdapter(var items: List<FoodEntity>, var context: Context) : Recycl
                 itemdelete?.onItemClick(items[adapterPosition], adapterPosition, 0.0)
             }
             binding.amount.addTextChangedListener {
-                if(isStringConvertibleToDouble(binding.amount.text.toString())){
-                    var amt =  binding.amount.text.toString().toDouble()
+                if (isStringConvertibleToDouble(binding.amount.text.toString())) {
+                    var amt = binding.amount.text.toString().toDouble()
                     itemchange?.onTextChanged(items[adapterPosition], adapterPosition, amt)
                 }
             }
@@ -65,6 +62,7 @@ class FoodAddAdapter(var items: List<FoodEntity>, var context: Context) : Recycl
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.foodName.text = items[position].name
+        holder.binding.foodName.isSelected = true
         holder.binding.amount.setText(items[position].amount.toString())
     }
 }

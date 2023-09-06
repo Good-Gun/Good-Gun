@@ -14,6 +14,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import kotlin.math.roundToInt
 
 class HomeFoodFragment : Fragment() {
 
@@ -41,10 +42,10 @@ class HomeFoodFragment : Fragment() {
         }
         binding?.apply {
             tvName.text = food?.name
-            tvCal.text = food?.calory.toString()
-            tvC.text = food?.carbohydrates.toString()
-            tvF.text = food?.fat.toString()
-            tvP.text = food?.protein.toString()
+            tvCal.text = food?.calory!!.roundToInt().toString()
+            tvC.text = food?.carbohydrates!!.roundToInt().toString()
+            tvF.text = food?.fat!!.roundToInt().toString()
+            tvP.text = food?.protein!!.roundToInt().toString()
         }
         return binding!!.root
     }
