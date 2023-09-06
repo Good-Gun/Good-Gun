@@ -2,7 +2,7 @@
 
 바코드 스캔 및 직접 입력을 통한 식품정보 기록과 영양관리 애플리케이션
 
-## External Libraries & License
+## External Libraries
 **androidx**
 - Apache 2.0
 - (https://developer.android.com/license)
@@ -50,3 +50,6 @@
 **PrimeCalendar by aminography**
 - Apache 2.0
 - (https://github.com/aminography/PrimeCalendar/blob/master/LICENSE.md)
+
+## License
+This project is licensed under the MIT license - [LICENSE](https://github.com/Good-Gun/Good-Gun/blob/main/LICENSE)
