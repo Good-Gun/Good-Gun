@@ -4,7 +4,6 @@ import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
@@ -16,9 +15,12 @@ class FoodAddAdapter(var items: List<FoodEntity>, var context: Context) : Recycl
     interface OnItemClickListener {
         fun onItemClick(data: FoodEntity, position: Int, amount: Double)
     }
+    interface OnEditClickListener {
+        fun onEditClick(data: FoodEntity, position: Int)
+    }
 
     // 하나의 data 에 대해 서로다른 이벤트리스너 등록가능
-    var itemadd: OnItemClickListener? = null
+    var itemedit: OnEditClickListener? = null
     var itemdelete: OnItemClickListener? = null
 
     fun isStringConvertibleToDouble(input: String): Boolean {
@@ -32,6 +34,7 @@ class FoodAddAdapter(var items: List<FoodEntity>, var context: Context) : Recycl
 
     inner class ViewHolder(val binding: AddFoodRowBinding) : RecyclerView.ViewHolder(binding.root) {
         init {
+
             var amt = 1.0
             binding.amount.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(p0: Editable?) {
@@ -48,12 +51,13 @@ class FoodAddAdapter(var items: List<FoodEntity>, var context: Context) : Recycl
             })
 
 
-            binding.foodAdd.setOnClickListener {
-                if(isStringConvertibleToDouble(binding.amount.text.toString())){
-                    val amt =  binding.amount.text.toString().toDouble()
-                    itemadd?.onItemClick(items[adapterPosition], adapterPosition, amt)
-                }else{
-                    Toast.makeText(context, "올바른 값을 입력해주세요", Toast.LENGTH_SHORT).show()
+
+            binding.foodEdit.setOnClickListener {
+                try {
+                    val amt = binding.amount.text.toString().toDouble()
+                    itemedit?.onEditClick(items[adapterPosition], adapterPosition)
+                } catch (e: Exception) {
+
                 }
 
             }
@@ -74,8 +78,5 @@ class FoodAddAdapter(var items: List<FoodEntity>, var context: Context) : Recycl
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.foodName.text = items[position].name
-        if (items[position].inroomdb) {
-            holder.binding.foodAdd.visibility = View.GONE
-        }
     }
 }

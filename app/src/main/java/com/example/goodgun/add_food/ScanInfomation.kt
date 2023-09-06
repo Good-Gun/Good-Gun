@@ -3,8 +3,6 @@ package com.example.goodgun.add_food
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +14,7 @@ import com.example.goodgun.R
 import com.example.goodgun.add_food.direct_add.DirectInputFragment
 import com.example.goodgun.databinding.ActivityScanInfomationBinding
 import com.example.goodgun.main.MainActivity
+import com.example.goodgun.main_function.FoodModifyDialog
 import com.example.goodgun.network.NetworkManager
 import com.example.goodgun.roomDB.DatabaseManager
 import com.example.goodgun.roomDB.FoodDatabase
@@ -88,6 +87,7 @@ class ScanInfomation : AppCompatActivity() {
 //        }
         binding.directAdd.setOnClickListener {
             model.reset()
+            model.setuserid(userid)
             val dialog = DirectInputFragment()
             dialog.show(supportFragmentManager, "DirectInputFragment")
         }
@@ -210,26 +210,29 @@ class ScanInfomation : AppCompatActivity() {
                 binding.recyclerView.layoutManager =
                     LinearLayoutManager(this@ScanInfomation, LinearLayoutManager.VERTICAL, false)
 
-                adapter.itemadd = object : FoodAddAdapter.OnItemClickListener {
-                    override fun onItemClick(data: FoodEntity, position: Int, amount: Double) {
-                        GlobalScope.launch(Dispatchers.IO) {
-                            data.inroomdb = true
-
-                            data.calory = data.calory?.times(amount)
-                            data.carbohydrates = data.carbohydrates?.times(amount)
-                            data.sugar = data.sugar?.times(amount)
-                            data.protein = data.protein?.times(amount)
-                            data.fat = data.fat?.times(amount)
-                            data.trans_fat = data.trans_fat?.times(amount)
-                            data.saturated_fat = data.saturated_fat?.times(amount)
-                            data.cholesterol = data.cholesterol?.times(amount)
-
-                            roomdb.foodDao().saveFood(data)
-                            updateSumFoodEntity()
-                        }
-                        binding.recyclerView.findViewHolderForAdapterPosition(position)?.itemView?.findViewById<ImageButton>(
-                            R.id.food_add,
-                        )?.visibility = View.GONE
+//                adapter.itemadd = object : FoodAddAdapter.OnItemClickListener {
+//                    override fun onItemClick(data: FoodEntity, position: Int, amount: Double) {
+//                        GlobalScope.launch(Dispatchers.IO) {
+//                            data.inroomdb = true
+//
+//                            data.calory = data.calory?.times(amount)
+//                            data.carbohydrates = data.carbohydrates?.times(amount)
+//                            data.sugar = data.sugar?.times(amount)
+//                            data.protein = data.protein?.times(amount)
+//                            data.fat = data.fat?.times(amount)
+//                            data.trans_fat = data.trans_fat?.times(amount)
+//                            data.saturated_fat = data.saturated_fat?.times(amount)
+//                            data.cholesterol = data.cholesterol?.times(amount)
+//
+//                            roomdb.foodDao().saveFood(data)
+//                            updateSumFoodEntity()
+//                        }
+//                    }
+//                }
+                adapter.itemedit = object : FoodAddAdapter.OnEditClickListener {
+                    override fun onEditClick(data: FoodEntity, position: Int) {
+                        val dialog = FoodModifyDialog(data)
+                        dialog.show(supportFragmentManager, "FoodModifyDialog")
                     }
                 }
                 adapter.itemdelete = object : FoodAddAdapter.OnItemClickListener {
@@ -240,8 +243,6 @@ class ScanInfomation : AppCompatActivity() {
                             roomdb.foodDao().deleteFood(data.name, data.registerDate)
                             updateSumFoodEntity()
                         }
-                        val itemView = binding.recyclerView.findViewHolderForAdapterPosition(position)?.itemView
-                        itemView?.findViewById<ImageButton>(R.id.food_add)?.visibility = View.VISIBLE
                         adapter.notifyItemRemoved(position)
                     }
                 }
