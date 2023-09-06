@@ -13,7 +13,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
@@ -30,7 +29,6 @@ import com.example.goodgun.network.model.NutritionResponse
 import com.example.goodgun.roomDB.DatabaseManager
 import com.example.goodgun.roomDB.FoodEntity
 import com.example.goodgun.util.LoadingDialog
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.*
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -53,7 +51,6 @@ class HomeFragment : Fragment() {
     lateinit var date: String // 다른 날짜의 영양정보 탐색을 위한 변수
 
     var binding: FragmentHomeBinding? = null
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
