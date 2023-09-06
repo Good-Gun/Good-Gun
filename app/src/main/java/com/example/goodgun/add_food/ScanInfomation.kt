@@ -170,7 +170,7 @@ class ScanInfomation : AppCompatActivity() {
                 sumfood.registerDate,
                 sumfood.registerTime,
                 sumfood.inroomdb,
-                sumfood.amount!!
+                sumfood.amount!!,
             )
             updateSum()
         }
@@ -289,7 +289,7 @@ class ScanInfomation : AppCompatActivity() {
                                     data.registerDate,
                                     data.registerTime,
                                     data.inroomdb,
-                                    data.amount!!
+                                    data.amount!!,
                                 )
                                 withContext(Dispatchers.Main) {
                                     updateSumFoodEntity()

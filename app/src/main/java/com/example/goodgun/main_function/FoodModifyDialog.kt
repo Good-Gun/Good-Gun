@@ -52,8 +52,22 @@ class FoodModifyDialog(val food: FoodEntity) : DialogFragment() {
                         sodium = binding!!.sodium.text.toString().toDouble()
                     }
                     CoroutineScope(Dispatchers.IO).launch {
-                        roomDB!!.foodDao().updateFood(food)
-                        Log.i("dialog", "update")
+                        roomDB!!.foodDao().updateFood(
+                            food.name,
+                            food.calory!!,
+                            food.carbohydrates!!,
+                            food.sugar!!,
+                            food.protein!!,
+                            food.fat!!,
+                            food.trans_fat!!,
+                            food.saturated_fat!!,
+                            food.cholesterol!!,
+                            food.sodium!!,
+                            food.registerDate,
+                            food.registerTime,
+                            food.inroomdb,
+                            food.amount!!,
+                        )
                         (activity as ScanInfomation).onUpdateFood()
                     }
                     Log.i("dialog", "setfood")
