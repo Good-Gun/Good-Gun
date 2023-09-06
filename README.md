@@ -2,7 +2,7 @@
 
 바코드 스캔 및 직접 입력을 통한 식품정보 기록과 영양관리 애플리케이션
 
-## License
+## External Libraries & License
 **androidx**
 - Apache 2.0
 - (https://developer.android.com/license)
