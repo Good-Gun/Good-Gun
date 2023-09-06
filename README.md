@@ -2,7 +2,26 @@
 
 바코드 스캔 및 직접 입력을 통한 식품정보 기록과 영양관리 애플리케이션
 
-### License
+## License
+**androidx**
+- Apache 2.0
+- (https://developer.android.com/license)
+
+**Retrofit by squareup**
+- Apache 2.0
+- (https://square.github.io/retrofit/)
+
+**openai-kotlin by aallam**
+- MIT License
+- (https://github.com/aallam/openai-kotlin/blob/main/LICENSE.md)
+
+**FoodLensSDK by doinglab**
+- MIT Lincense
+- (https://github.com/doinglab/FoodLensSDK/blob/master/LICENSE)
+
+**Firebase by Google**
+- Apache 2.0
+- (https://github.com/firebase/quickstart-android/blob/master/LICENSE)
 
 **ProgressView by skydoves**
 - Apache 2.0
