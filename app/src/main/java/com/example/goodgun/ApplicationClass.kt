@@ -32,7 +32,7 @@ class ApplicationClass : Application() {
             arrayOf(1.0, 1.0, 1.0),
             arrayOf(0.5, 0.3, 0.2),
             arrayOf(0.5, 0.2, 0.3),
-            arrayOf(0.5, 0.3, 0.2)
+            arrayOf(0.5, 0.3, 0.2),
         )
 
         /*파이어베이스로부터 USER 데이터 가져옴*/
@@ -56,9 +56,9 @@ class ApplicationClass : Application() {
         /*사용자의 하루 영양소 섭취 권장량 계산*/
         fun calculateMaxNut() {
             val goal = goal_level[user.u_physical_goals.toInt()]
-            val cal = if(user.u_physical_goals.toInt() == 1){
+            val cal = if (user.u_physical_goals.toInt() == 1) {
                 -500
-            } else if(user.u_physical_goals.toInt() == 3){
+            } else if (user.u_physical_goals.toInt() == 3) {
                 500
             } else {
                 0
@@ -90,6 +90,7 @@ class ApplicationClass : Application() {
             maxNutrition.sugar = 25.0
             maxNutrition.sodium = 2000.0
             maxNutrition.cholesterol = 300.0
+
         }
     }
 

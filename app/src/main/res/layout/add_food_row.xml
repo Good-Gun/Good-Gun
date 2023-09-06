@@ -13,9 +13,15 @@
         android:layout_margin="20dp"
         android:gravity="center_vertical"
         android:textSize="20dp"
+        android:layout_weight="1"
         android:background="@drawable/underline"
         android:textStyle="bold"
-        android:layout_weight="1"
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+
         android:text="제품명"/>
 
     <TextView
@@ -31,11 +37,11 @@
         />
 
     <EditText
-        android:id="@+id/editTextNumber"
-        android:layout_width="30dp"
+        android:id="@+id/amount"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:gravity="left"
+        android:ems="2"
+        android:gravity="right"
         android:text="1"
         android:textSize="20dp"
         android:textStyle="bold"
@@ -57,13 +63,12 @@
             android:gravity="center"
             >
             <ImageButton
-                android:id="@+id/food_add"
+                android:id="@+id/food_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
-                android:background="@drawable/button_round_gray"
                 android:layout_weight="1"
-                android:src="@drawable/baseline_check_circle_24"/>
+                android:src="@drawable/icon_edit"/>
             <ImageButton
                 android:id="@+id/food_delete"
                 android:layout_width="wrap_content"
