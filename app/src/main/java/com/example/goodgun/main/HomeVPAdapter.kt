@@ -4,9 +4,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.goodgun.network.model.Food
+import com.example.goodgun.roomDB.FoodEntity
 
-class HomeVPAdapter(val fragmentFood: MutableList<Food>, fragmentManager: FragmentManager, lifecycle: Lifecycle) :
+class HomeVPAdapter(val fragmentFood: MutableList<FoodEntity>, fragmentManager: FragmentManager, lifecycle: Lifecycle) :
     FragmentStateAdapter(fragmentManager, lifecycle) {
 
 //    private val fragmentFood = mutableListOf<Food>()

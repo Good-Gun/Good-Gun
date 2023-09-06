@@ -6,14 +6,14 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.goodgun.main_function.FoodTodayFragment
-import com.example.goodgun.network.model.Food
+import com.example.goodgun.roomDB.FoodEntity
 
 class TodayVPAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
     FragmentStateAdapter(fragmentManager, lifecycle) {
 
-    private val fragmentFood = mutableListOf<Food>()
+    private val fragmentFood = mutableListOf<FoodEntity>()
 
-    fun setFragmentFood(food: List<Food>) {
+    fun setFragmentFood(food: List<FoodEntity>) {
         fragmentFood.clear()
         fragmentFood.addAll(food)
         notifyDataSetChanged()

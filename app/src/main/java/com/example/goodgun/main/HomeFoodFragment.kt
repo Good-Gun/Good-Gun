@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.goodgun.databinding.FragmentHomeFoodBinding
-import com.example.goodgun.network.model.Food
+import com.example.goodgun.roomDB.FoodEntity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
@@ -19,7 +19,7 @@ import com.google.firebase.ktx.Firebase
 class HomeFoodFragment : Fragment() {
 
     var binding: FragmentHomeFoodBinding? = null
-    private var food: Food? = null
+    private var food: FoodEntity? = null
     var database: DatabaseReference? = null
     private var auth: FirebaseAuth? = null
     var currentUser: FirebaseUser? = null
@@ -54,7 +54,7 @@ class HomeFoodFragment : Fragment() {
                         if (it.isSuccessful) {
                             val dataSnapshot = it.result
                             for (child in dataSnapshot.children) {
-                                val value = child.getValue(Food::class.java)
+                                val value = child.getValue(FoodEntity::class.java)
                                 Log.i("food", value.toString())
                             }
                         } else {
@@ -67,7 +67,7 @@ class HomeFoodFragment : Fragment() {
         }
         return binding!!.root
     }
-    fun setFood(food: Food) {
+    fun setFood(food: FoodEntity) {
         this.food = food
     }
 }

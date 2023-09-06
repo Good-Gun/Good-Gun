@@ -102,6 +102,7 @@ class DirectInputFragment : DialogFragment() {
                         data.trans_fat?.toDoubleOrNull() ?: 0.0,
                         data.saturated_fat?.toDoubleOrNull() ?: 0.0,
                         data.cholesterol?.toDoubleOrNull() ?: 0.0,
+                        data.sodium?.toDoubleOrNull() ?: 0.0,
                         false,
                     )
                     model.setfood(selectFood)

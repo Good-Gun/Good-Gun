@@ -10,10 +10,10 @@ import com.aallam.openai.api.model.ModelId
 import com.aallam.openai.client.OpenAI
 import com.example.goodgun.ApplicationClass
 import com.example.goodgun.BuildConfig
-import com.example.goodgun.network.model.Food
 import com.example.goodgun.network.model.Nutrition
 import com.example.goodgun.network.model.NutritionResponse
 import com.example.goodgun.network.model.User
+import com.example.goodgun.roomDB.FoodEntity
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -41,22 +41,22 @@ object NetworkManager : NetworkInterface {
                 if (date1 == date2) {
                     val innerSnapshot = datesRef.child(dateSnapshot.key!!).get().await()
                     for (foodSnapshot in innerSnapshot.children) {
-                        val food = foodSnapshot.getValue(Food::class.java)!!
+                        val food = foodSnapshot.getValue(FoodEntity::class.java)!!
                         Log.d(
                             "Firebase Communication",
                             "Adding food: ${food.name}, regDate: ${food.registerDate}",
                         )
                         response.food_list.add(food)
                         response.nutrition.apply {
-                            calorie += food.calory
-                            carbohydrates += food.carbohydrates
-                            fat += food.fat
-                            saturated_fat += food.saturated_fat
-                            trans_fat += food.trans_fat
-                            cholesterol += food.cholesterol
-                            protein += food.protein
-                            sodium += food.sodium
-                            sugar += food.sugar
+                            calorie += food.calory!!
+                            carbohydrates += food.carbohydrates!!
+                            fat += food.fat!!
+                            saturated_fat += food.saturated_fat!!
+                            trans_fat += food.trans_fat!!
+                            cholesterol += food.cholesterol!!
+                            protein += food.protein!!
+                            sodium += food.sodium!!
+                            sugar += food.sugar!!
                         }
                     }
                 }
@@ -87,17 +87,17 @@ object NetworkManager : NetworkInterface {
                     days++
                     val innerSnapshot = datesRef.child(dateSnapshot.key!!).get().await()
                     for (foodSnapshot in innerSnapshot.children) {
-                        val food = foodSnapshot.getValue(Food::class.java)!!
+                        val food = foodSnapshot.getValue(FoodEntity::class.java)!!
                         nutrition.apply {
-                            calorie += food.calory
-                            carbohydrates += food.carbohydrates
-                            fat += food.fat
-                            saturated_fat += food.saturated_fat
-                            trans_fat += food.trans_fat
-                            cholesterol += food.cholesterol
-                            protein += food.protein
-                            sodium += food.sodium
-                            sugar += food.sugar
+                            calorie += food.calory!!
+                            carbohydrates += food.carbohydrates!!
+                            fat += food.fat!!
+                            saturated_fat += food.saturated_fat!!
+                            trans_fat += food.trans_fat!!
+                            cholesterol += food.cholesterol!!
+                            protein += food.protein!!
+                            sodium += food.sodium!!
+                            sugar += food.sugar!!
                         }
                     }
                 }
@@ -129,17 +129,17 @@ object NetworkManager : NetworkInterface {
         val dataSnapshot: DataSnapshot = datesRef.get().await()
         for (snapshot in dataSnapshot.children) {
             Log.d("Firebase Communication", "in day Nutrition, ${snapshot.key}")
-            val food = snapshot.getValue(Food::class.java)!!
+            val food = snapshot.getValue(FoodEntity::class.java)!!
             nutrition.apply {
-                calorie += food.calory
-                carbohydrates += food.carbohydrates
-                fat += food.fat
-                saturated_fat += food.saturated_fat
-                trans_fat += food.trans_fat
-                cholesterol += food.cholesterol
-                protein += food.protein
-                sodium += food.sodium
-                sugar += food.sugar
+                calorie += food.calory!!
+                carbohydrates += food.carbohydrates!!
+                fat += food.fat!!
+                saturated_fat += food.saturated_fat!!
+                trans_fat += food.trans_fat!!
+                cholesterol += food.cholesterol!!
+                protein += food.protein!!
+                sodium += food.sodium!!
+                sugar += food.sugar!!
             }
         }
         nutrition
@@ -155,7 +155,7 @@ object NetworkManager : NetworkInterface {
     }
 
     /*임시로 만들어둔 음식 등록용 함수*/
-    override fun postFoodData(date: String, food: Food) {
+    override fun postFoodData(date: String, food: FoodEntity) {
         val foodRef =
             FirebaseDatabase.getInstance().getReference(path_user).child(userId).child(path_food).child(date.trim()).push()
         foodRef.setValue(food)
