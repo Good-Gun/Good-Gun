@@ -152,19 +152,7 @@ class HomeFragment : Fragment() {
         todayVP = binding!!.vpHomeToday
         adapter = HomeVPAdapter(fragmentFood, childFragmentManager, lifecycle)
         todayVP.adapter = adapter
-    }
-
-    private var currentPage = 0
-    private val DELAY_MS: Long = 3000 // 페이지 전환 간격 (3초)
-
-    private val PERIOD_MS: Long = 5000 // 페이지 전환 주기 (5초)
-
-    private val handler = Handler(Looper.getMainLooper())
-    private val runnable = java.lang.Runnable {
-        if (currentPage == todayVP.adapter?.itemCount) {
-            currentPage = 0
-        }
-        todayVP.setCurrentItem(currentPage++, true)
+        binding!!.indicatorToday.attachTo(todayVP)
     }
 
     /*날짜를 바꿀 시 파이어베이스 요청*/
@@ -187,17 +175,6 @@ class HomeFragment : Fragment() {
                     binding!!.tvNoFood.visibility = View.VISIBLE
                 } else {
                     binding!!.tvNoFood.visibility = View.GONE
-
-                    val timer = Timer()
-                    timer.schedule(
-                        object : TimerTask() {
-                            override fun run() {
-                                handler.post(runnable)
-                            }
-                        },
-                        DELAY_MS,
-                        PERIOD_MS,
-                    )
                 }
             }
             setData()
