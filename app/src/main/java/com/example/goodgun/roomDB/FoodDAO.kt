@@ -1,9 +1,6 @@
 package com.example.goodgun.roomDB
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface FoodDAO {
@@ -33,4 +30,7 @@ interface FoodDAO {
 
     @Query("SELECT count(*) FROM table_food WHERE name != 'is_sum_entity'")
     fun foodCount(): Int
+
+    @Update
+    fun updateFood(foodEntity: FoodEntity)
 }

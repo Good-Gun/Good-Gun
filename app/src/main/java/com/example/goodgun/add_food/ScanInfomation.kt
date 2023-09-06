@@ -246,7 +246,9 @@ class ScanInfomation : AppCompatActivity() {
                         tmpdata.removeAt(position)
                         GlobalScope.launch(Dispatchers.IO) {
                             roomdb.foodDao().deleteFood(data.name, data.registerDate)
-                            updateSumFoodEntity()
+                            withContext(Dispatchers.Main) {
+                                updateSumFoodEntity()
+                            }
                         }
                         adapter.notifyItemRemoved(position)
                     }
@@ -257,8 +259,10 @@ class ScanInfomation : AppCompatActivity() {
                         if (data.amount!=formattedValue){
                             data.amount=formattedValue
                             GlobalScope.launch(Dispatchers.IO) {
-                                roomdb.foodDao().saveFood(data)
-                                updateSumFoodEntity()
+                                roomdb.foodDao().updateFood(data)
+                                withContext(Dispatchers.Main) {
+                                    updateSumFoodEntity()
+                                }
                             }
                         }
                     }
