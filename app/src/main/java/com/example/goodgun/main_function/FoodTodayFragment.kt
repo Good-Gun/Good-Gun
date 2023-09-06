@@ -25,6 +25,7 @@ class FoodTodayFragment : Fragment() {
         Log.d("Check OpenAI", "from FoodTodayFragment${food?.name}")
         binding?.apply {
             tvName.text = food?.name
+            tvName.isSelected = true
             tvCal.text = food?.calory!!.roundToInt().toString()
             tvC.text = food?.carbohydrates!!.roundToInt().toString()
             tvF.text = food?.fat!!.roundToInt().toString()

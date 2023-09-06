@@ -24,7 +24,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import kotlin.math.roundToInt
 
 /*오늘의 정보만 다루는 액티비티*/
 class FoodActivity : AppCompatActivity() {
@@ -108,18 +107,18 @@ class FoodActivity : AppCompatActivity() {
 
     private fun setNutrition(nutrition: Nutrition) {
         val max = ApplicationClass.maxNutrition
-        binding.apply {
-            tvFoodCalorie.text = nutrition.calorie.roundToInt().toString() + "/" + max.calorie.roundToInt()
-            tvFoodCarbo.text = nutrition.carbohydrates.roundToInt().toString() + "/" + max.carbohydrates.roundToInt()
-            tvFoodSugar.text = nutrition.sugar.roundToInt().toString() + "/" + max.sugar.roundToInt()
-            tvFoodFat.text = nutrition.fat.roundToInt().toString() + "/" + max.fat.roundToInt()
-            tvFoodTrans.text = nutrition.trans_fat.roundToInt().toString() + "/" + max.trans_fat.roundToInt()
-            tvFoodSaturated.text = nutrition.saturated_fat.roundToInt().toString() + "/" + max.saturated_fat.roundToInt()
-            tvFoodProtein.text = nutrition.protein.roundToInt().toString() + "/" + max.protein.roundToInt()
-            tvFoodCholesterol.text = nutrition.cholesterol.roundToInt().toString() + "/" + max.cholesterol.roundToInt()
-            tvFoodProtein.text = nutrition.protein.roundToInt().toString() + "/" + max.protein.roundToInt()
-            tvFoodSodium.text = nutrition.sodium.roundToInt().toString() + "/" + max.sodium.roundToInt()
-        }
+//        binding.apply {
+//            tvFoodCalorie.text = nutrition.calorie.roundToInt().toString() + "/" + max.calorie.roundToInt()
+//            tvFoodCarbo.text = nutrition.carbohydrates.roundToInt().toString() + "/" + max.carbohydrates.roundToInt()
+//            tvFoodSugar.text = nutrition.sugar.roundToInt().toString() + "/" + max.sugar.roundToInt()
+//            tvFoodFat.text = nutrition.fat.roundToInt().toString() + "/" + max.fat.roundToInt()
+//            tvFoodTrans.text = nutrition.trans_fat.roundToInt().toString() + "/" + max.trans_fat.roundToInt()
+//            tvFoodSaturated.text = nutrition.saturated_fat.roundToInt().toString() + "/" + max.saturated_fat.roundToInt()
+//            tvFoodProtein.text = nutrition.protein.roundToInt().toString() + "/" + max.protein.roundToInt()
+//            tvFoodCholesterol.text = nutrition.cholesterol.roundToInt().toString() + "/" + max.cholesterol.roundToInt()
+//            tvFoodProtein.text = nutrition.protein.roundToInt().toString() + "/" + max.protein.roundToInt()
+//            tvFoodSodium.text = nutrition.sodium.roundToInt().toString() + "/" + max.sodium.roundToInt()
+//        }
         loadingDialog.dismiss()
     }
 
