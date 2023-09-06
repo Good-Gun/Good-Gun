@@ -54,5 +54,6 @@ class SearchAdapter(private var foodList: List<FoodItem>) : RecyclerView.Adapter
 //        holder.binding.num.text = foodList[position].number
         holder.binding.searchName.text = foodList[position].foodName
         holder.binding.searchName.isSelected = true
+        holder.binding.makerName.text = foodList[position].maker_name ?: "제조사 불명"
     }
 }

@@ -13,6 +13,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.goodgun.BuildConfig
 import com.example.goodgun.R
@@ -102,7 +103,12 @@ class DirectInputFragment : DialogFragment() {
     private fun initRecyclerView() {
         binding.searchRecyclerView.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-
+        binding.searchRecyclerView.addItemDecoration(
+            DividerItemDecoration(
+                requireActivity(),
+                LinearLayoutManager.VERTICAL,
+            ),
+        )
         adapter = SearchAdapter(emptyList())
         adapter.click = object : SearchAdapter.OnItemClickListener {
             override fun onItemClick(data: FoodItem, position: Int) {
@@ -163,6 +169,9 @@ class DirectInputFragment : DialogFragment() {
             searchBtn.setOnClickListener {
                 loadingDialog.show()
                 performSearch()
+            }
+            backBtn.setOnClickListener {
+                dialog!!.dismiss()
             }
         }
     }

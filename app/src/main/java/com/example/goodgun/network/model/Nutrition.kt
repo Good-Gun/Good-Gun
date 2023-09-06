@@ -54,7 +54,7 @@ data class Nutrition(
         when (nutrient) {
             "calories" -> res = calculateIntake2(this.calorie, max.calorie)
             "carbohydrates" -> res = calculateIntake2(this.carbohydrates, max.carbohydrates)
-            "proteins" -> res = calculateIntake2(this.protein,  max.protein)
+            "proteins" -> res = calculateIntake2(this.protein, max.protein)
             "fats" -> res = calculateIntake2(this.fat, max.fat)
             "sugar" -> res = calculateIntake1(this.sugar, max.sugar)
             "trans_fat" -> res = calculateIntake1(this.trans_fat, max.trans_fat)
