@@ -36,15 +36,15 @@ class FoodAddAdapter(var items: List<FoodEntity>, var context: Context) : Recycl
         init {
 
             var amt = 1.0
+
             binding.amount.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(p0: Editable?) {
                     if(isStringConvertibleToDouble(binding.amount.text.toString())){
                         amt =  binding.amount.text.toString().toDouble()
-                        //amt를 db의 모든 영양소에 곱하기
+                        //amt를 db의 모든 영양소에 곱해서 db업데이트
                         //ex) 칼로리 * amt
                         // 탄수화물 * amt   ...
                     }
-
                 }
                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
                 override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
