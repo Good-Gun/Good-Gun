@@ -18,8 +18,8 @@ data class Nutrition(
         0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
     )
 
-    private val arr1: List<String> = listOf("탄수화물", "당류", "지방", "트랜스지방", "포화지방", "단백질", "나트륨", "콜레스테롤")
-    private val arr2: List<String> = listOf("carbohydrates", "sugar", "fats", "trans_fat", "saturated_fat", "proteins", "sodium", "cholesterol")
+    private val arr1: List<String> = listOf("칼로리", "탄수화물", "당류", "지방", "트랜스지방", "포화지방", "단백질", "나트륨", "콜레스테롤")
+    private val arr2: List<String> = listOf("calories", "carbohydrates", "sugar", "fats", "trans_fat", "saturated_fat", "proteins", "sodium", "cholesterol")
 
     /*case 1: 음식 추천, 2: 솔루션 */
     fun getQuestion(case: Int): String? {
@@ -52,20 +52,21 @@ data class Nutrition(
         var max = ApplicationClass.maxNutrition
 
         when (nutrient) {
-            "carbohydrates" -> res = calculateIntake(this.carbohydrates, 65.0, 55.0)
-            "proteins" -> res = calculateIntake(this.protein, 20.0, 7.0)
-            "fats" -> res = calculateIntake(this.fat, 30.0, 15.0)
-            "sugar" -> res = calculateIntake(this.sugar, max.sugar)
-            "trans_fat" -> res = calculateIntake(this.trans_fat, max.trans_fat)
-            "saturated_fat" -> res = calculateIntake(saturated_fat, max.saturated_fat)
-            "sodium" -> res = calculateIntake(this.sodium, max.sodium)
-            "cholesterol" -> res = calculateIntake(this.cholesterol, max.cholesterol)
+            "calories" -> res = calculateIntake2(this.calorie, max.calorie)
+            "carbohydrates" -> res = calculateIntake2(this.carbohydrates, max.carbohydrates)
+            "proteins" -> res = calculateIntake2(this.protein,  max.protein)
+            "fats" -> res = calculateIntake2(this.fat, max.fat)
+            "sugar" -> res = calculateIntake1(this.sugar, max.sugar)
+            "trans_fat" -> res = calculateIntake1(this.trans_fat, max.trans_fat)
+            "saturated_fat" -> res = calculateIntake1(saturated_fat, max.saturated_fat)
+            "sodium" -> res = calculateIntake1(this.sodium, max.sodium)
+            "cholesterol" -> res = calculateIntake1(this.cholesterol, max.cholesterol)
         }
         return res
     }
 
     // 적용가능: 당류, 콜레스테롤, 나트륨, 포화지방, 트랜스지방
-    fun calculateIntake(nutrient: Double, amount: Double): Int {
+    fun calculateIntake1(nutrient: Double, amount: Double): Int {
         var res = 0
 
         if (nutrient >= amount * 1.1) {
@@ -77,19 +78,16 @@ data class Nutrition(
     }
 
     // 적용가능: 탄수화물, 단백질, 지방
-    private fun calculateIntake(nutrient: Double, up: Double, down: Double): Int {
+    private fun calculateIntake2(nutrient: Double, max: Double): Int {
         var res = 0
-        val user_calorie = ApplicationClass.calorie
-        val upper_bound = user_calorie * up
-        val lower_bound = user_calorie * down
 
-        if (nutrient >= upper_bound * 1.1) {
+        if (nutrient >= max * 1.1) {
             res = 2
-        } else if (nutrient < upper_bound * 1.1 && nutrient > upper_bound) {
+        } else if (nutrient < max * 1.1 && nutrient > max) {
             res = 1
-        } else if (nutrient < lower_bound && nutrient > lower_bound * 0.9) {
+        } else if (nutrient < max && nutrient > max * 0.9) {
             res = -1
-        } else if (nutrient <= lower_bound * 0.9) {
+        } else if (nutrient <= max * 0.9) {
             res = -2
         }
 

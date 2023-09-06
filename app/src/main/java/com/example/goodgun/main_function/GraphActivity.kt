@@ -153,8 +153,9 @@ class GraphActivity : AppCompatActivity() {
 
     private fun setViewColor() {
         var str: String = ""
-        val arr1: List<String> = listOf("탄수화물", "당류", "지방", "트랜스지방", "포화지방", "단백질", "나트륨", "콜레스테롤")
+        val arr1: List<String> = listOf("칼로리", "탄수화물", "당류", "지방", "트랜스지방", "포화지방", "단백질", "나트륨", "콜레스테롤")
         val arr2: List<String> = listOf(
+            "calories",
             "carbohydrates",
             "sugar",
             "fats",
@@ -165,6 +166,7 @@ class GraphActivity : AppCompatActivity() {
             "cholesterol",
         )
         val arr3: List<ProgressView> = listOf(
+            binding.pvCalorie,
             binding.pvCarbohydrates,
             binding.pvSugar,
             binding.pvFat,
@@ -176,6 +178,7 @@ class GraphActivity : AppCompatActivity() {
         )
 
         val arr4: List<TextView> = listOf(
+            binding.tvFoodCalorie,
             binding.tvFoodCarbo,
             binding.tvFoodSugar,
             binding.tvFoodFat,
