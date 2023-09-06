@@ -170,7 +170,7 @@ class ScanInfomation : AppCompatActivity() {
                 sumfood.registerDate,
                 sumfood.registerTime,
                 sumfood.inroomdb,
-                sumfood.amount!!
+                sumfood.amount!!,
             )
             updateSum()
         }
@@ -272,8 +272,8 @@ class ScanInfomation : AppCompatActivity() {
                 adapter.itemchange = object : FoodAddAdapter.OnTextChangeListener {
                     override fun onTextChanged(data: FoodEntity, position: Int, amount: Double) {
                         val formattedValue = String.format("%.2f", amount).toDouble()
-                        if (data.amount!=formattedValue){
-                            data.amount=formattedValue
+                        if (data.amount != formattedValue) {
+                            data.amount = formattedValue
                             GlobalScope.launch(Dispatchers.IO) {
                                 roomdb.foodDao().updateFood(
                                     data.name,
@@ -289,7 +289,7 @@ class ScanInfomation : AppCompatActivity() {
                                     data.registerDate,
                                     data.registerTime,
                                     data.inroomdb,
-                                    data.amount!!
+                                    data.amount!!,
                                 )
                                 withContext(Dispatchers.Main) {
                                     updateSumFoodEntity()
@@ -311,5 +311,9 @@ class ScanInfomation : AppCompatActivity() {
             updateSumFoodEntity()
             adapter.notifyDataSetChanged()
         }
+    }
+
+    fun onUpdateFood() {
+        updateSumFoodEntity()
     }
 }

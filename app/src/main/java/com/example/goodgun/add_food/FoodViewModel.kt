@@ -2,7 +2,6 @@ package com.example.goodgun.add_food
 
 import androidx.lifecycle.ViewModel
 import com.example.goodgun.roomDB.FoodEntity
-
 class FoodViewModel : ViewModel() {
     var food: FoodEntity = FoodEntity()
     var userid: String = ""
@@ -22,10 +21,10 @@ class FoodViewModel : ViewModel() {
         food = new
     }
 
-    fun getuserid(): String{
+    fun getuserid(): String {
         return userid
     }
-    fun setuserid(uid: String){
+    fun setuserid(uid: String) {
         userid = uid
     }
 }

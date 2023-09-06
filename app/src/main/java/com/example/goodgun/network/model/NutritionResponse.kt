@@ -7,6 +7,6 @@ data class NutritionResponse(
     val food_list: ArrayList<FoodEntity> = arrayListOf(),
 ) {
     constructor() : this(
-        Nutrition(0.0, 0.0, 0.0, 0.0, 0.0, 0.0,0.0, 0.0, 0.0),
+        Nutrition(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
     )
 }
