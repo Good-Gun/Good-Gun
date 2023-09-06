@@ -109,6 +109,7 @@ class ScanInfomation : AppCompatActivity() {
                     transFat.text = ((sumfood.trans_fat!! * 10.0).roundToInt() / 10.0).toString()
                     saturatedFat.text = ((sumfood.saturated_fat!! * 10.0).roundToInt() / 10.0).toString()
                     cholesterol.text = ((sumfood.cholesterol!! * 10.0).roundToInt() / 10.0).toString()
+                    sodium.text = ((sumfood.sodium!! * 10.0).roundToInt() / 10.0).toString()
                 }
             }
         }
@@ -127,15 +128,18 @@ class ScanInfomation : AppCompatActivity() {
             var tmptrans_fat = 0.0
             var tmpsaturated_fat = 0.0
             var tmpcholesterol = 0.0
+            var tmpsodium = 0.0
             for (food in allfood) {
-                tmpcalory += food.calory ?: 0.0
-                tmpcarbohydrates += food.carbohydrates ?: 0.0
-                tmpsugar += food.sugar ?: 0.0
-                tmpprotein += food.protein ?: 0.0
-                tmpfat += food.fat ?: 0.0
-                tmptrans_fat += food.trans_fat ?: 0.0
-                tmpsaturated_fat += food.saturated_fat ?: 0.0
-                tmpcholesterol += food.cholesterol ?: 0.0
+                val amt = food.amount
+                tmpcalory += food.calory?.times(amt!!) ?: 0.0
+                tmpcarbohydrates += food.carbohydrates?.times(amt!!) ?: 0.0
+                tmpsugar += food.sugar?.times(amt!!) ?: 0.0
+                tmpprotein += food.protein?.times(amt!!) ?: 0.0
+                tmpfat += food.fat?.times(amt!!) ?: 0.0
+                tmptrans_fat += food.trans_fat?.times(amt!!) ?: 0.0
+                tmpsaturated_fat += food.saturated_fat?.times(amt!!) ?: 0.0
+                tmpcholesterol += food.cholesterol?.times(amt!!) ?: 0.0
+                tmpsodium += food.sodium?.times(amt!!) ?: 0.0
             }
 
             withContext(Dispatchers.Main) {
@@ -148,6 +152,7 @@ class ScanInfomation : AppCompatActivity() {
                     sumfood.trans_fat = tmptrans_fat
                     sumfood.saturated_fat = tmpsaturated_fat
                     sumfood.cholesterol = tmpcholesterol
+                    sumfood.sodium = tmpsodium
                 }
             }
             roomdb.foodDao().saveFood(sumfood)
@@ -246,9 +251,31 @@ class ScanInfomation : AppCompatActivity() {
                         adapter.notifyItemRemoved(position)
                     }
                 }
+                adapter.itemchange = object : FoodAddAdapter.OnTextChangeListener {
+                    override fun onTextChanged(data: FoodEntity, position: Int, amount: Double) {
+                        val formattedValue = String.format("%.2f", amount).toDouble()
+                        if (data.amount!=formattedValue){
+                            data.amount=formattedValue
+                            GlobalScope.launch(Dispatchers.IO) {
+                                roomdb.foodDao().saveFood(data)
+                                updateSumFoodEntity()
+                            }
+                        }
+                    }
+                }
                 binding.recyclerView.adapter = adapter
                 updateSumFoodEntity()
             }
+        }
+    }
+
+    // 해당 값이 double로 변환될 수 있는지
+    fun isStringConvertibleToDouble(input: String): Boolean {
+        return try {
+            input.toDouble()
+            true
+        } catch (e: NumberFormatException) {
+            false
         }
     }
 

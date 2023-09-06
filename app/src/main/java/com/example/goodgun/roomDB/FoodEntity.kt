@@ -23,6 +23,7 @@ data class FoodEntity(
     val registerDate: String = LocalDate.now().toString(),
     val registerTime: String = LocalTime.now().toString(),
     var inroomdb: Boolean = true,
+    var amount: Double? = 1.0,
 ) {
     // LocalDate 타입은 sdk 버전 26 이상부터 작동하므로 minSdk를 26 이상으로 설정해야함
     // 기본 생성자
