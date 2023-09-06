@@ -27,6 +27,12 @@ class ApplicationClass : Application() {
         var calorie: Double = 0.0
         var maxNutrition: Nutrition = Nutrition()
         var workout_level: List<Double> = listOf(1.2, 1.375, 1.55, 1.725, 1.9)
+        var goal_level: Array<Array<Double>> = arrayOf(
+            arrayOf(1.0, 1.0, 1.0),
+            arrayOf(0.5, 0.3, 0.2),
+            arrayOf(0.5, 0.2, 0.3),
+            arrayOf(0.5, 0.3, 0.2)
+        )
 
         fun updateUserInfo() {
             val auth = Firebase.auth
@@ -46,9 +52,18 @@ class ApplicationClass : Application() {
         }
 
         fun calculateMaxNut() {
+            val goal = goal_level[user.u_physical_goals.toInt()]
+            val cal = if(user.u_physical_goals.toInt() == 1){
+                -500
+            } else if(user.u_physical_goals.toInt() == 3){
+                500
+            } else {
+                0
+            }
+
             BMR = 88.362 + (13.397 * user.u_weight.toInt()) + (4.799 * user.u_height.toInt()) - (5.677 * user.u_age.toInt()) // user.u_age도 등록해야함
 
-            calorie = if (user.u_exercise_freq.toInt() < 1) {
+            calorie = cal + if (user.u_exercise_freq.toInt() < 1) {
                 BMR * 1.2 // * 평소 운동 강도
             } else if (user.u_exercise_freq.toInt() > 5) {
                 BMR * 1.9
@@ -59,11 +74,11 @@ class ApplicationClass : Application() {
             Log.d("Calorie Check", "$calorie")
 
             maxNutrition.calorie = calorie.toInt()
-            maxNutrition.carbohydrates = (calorie * 0.5).toInt()
-            maxNutrition.protein = (calorie * 0.2).toInt()
-            maxNutrition.fat = (calorie * 0.3).toInt()
-            maxNutrition.trans_fat = (calorie * 0.01).toInt()
-            maxNutrition.saturated_fat = (calorie * if (user.u_age.toInt() >= 19) 0.07 else 0.08).toInt()
+            maxNutrition.carbohydrates = (calorie * goal[0] / 4).toInt()
+            maxNutrition.protein = (calorie * goal[1]/ 4).toInt()
+            maxNutrition.fat = (calorie * goal[2] / 9).toInt()
+            maxNutrition.trans_fat = (calorie * 0.01 / 9).toInt()
+            maxNutrition.saturated_fat = (calorie * (if (user.u_age.toInt() >= 19) 0.07 else 0.08) / 9).toInt()
             maxNutrition.sugar = 25
             maxNutrition.sodium = 2000
             maxNutrition.cholesterol = 300
