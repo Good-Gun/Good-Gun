@@ -71,5 +71,9 @@
 - Apache 2.0
 - (https://github.com/aminography/PrimeCalendar/blob/master/LICENSE.md)
 
+**ZXing by ZXing Team**
+- Apache 2.0
+- (https://github.com/zxing/zxing/blob/master/LICENSE)
+
 ## License
 This project is licensed under the MIT license - [LICENSE](https://github.com/Good-Gun/Good-Gun/blob/main/LICENSE)
