@@ -112,8 +112,8 @@ class GraphActivity : AppCompatActivity() {
                 4 -> {
                     for (i in 1..6) {
                         days += YearMonth.now().minusMonths(i.toLong()).lengthOfMonth()
-                        time = time.minusMonths(6)
                     }
+                    time = time.minusMonths(6)
                 }
             }
             val formatter = DateTimeFormatter.ofPattern(" yyyy-MM-dd")
